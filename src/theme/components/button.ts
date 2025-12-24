@@ -35,12 +35,12 @@ export const buttonStyles = {
         },
       },
       containedPrimary: {
-        background: 'linear-gradient(135deg, #5B8FC7, #3D6B9E)',
-        border: '1px solid rgba(91, 143, 199, 0.3)',
-        boxShadow: '0 4px 16px rgba(91, 143, 199, 0.15), inset 0 0 20px rgba(91, 143, 199, 0.04)',
+        background: 'linear-gradient(135deg, #4A7DAF, #345A82)',
+        border: '1px solid rgba(91, 143, 199, 0.25)',
+        boxShadow: '0 4px 16px rgba(91, 143, 199, 0.08), inset 0 0 20px rgba(91, 143, 199, 0.02)',
         '&:hover': {
-          background: 'linear-gradient(135deg, #6B9FD7, #4D7BAE)',
-          boxShadow: '0 6px 20px rgba(91, 143, 199, 0.2), inset 0 0 20px rgba(91, 143, 199, 0.06)',
+          background: 'linear-gradient(135deg, #5B8FC7, #3D6B9E)',
+          boxShadow: '0 6px 20px rgba(91, 143, 199, 0.12), inset 0 0 20px rgba(91, 143, 199, 0.03)',
         },
       },
       containedSecondary: {
