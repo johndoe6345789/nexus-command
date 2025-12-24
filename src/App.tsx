@@ -35,10 +35,10 @@ function App() {
         <AnimatePresence mode="wait">
           <motion.div
             key={currentScreen}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.3 }}
+            initial={{ opacity: 0, x: 30, scale: 0.98 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: -30, scale: 0.98 }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             className="w-full"
           >
             {currentScreen === 'main' && <MainMenu onNavigate={handleNavigate} />}
@@ -54,11 +54,15 @@ function App() {
         position="top-center"
         toastOptions={{
           style: {
-            background: 'oklch(0.18 0.02 250)',
-            color: 'oklch(0.98 0 0)',
-            border: '1px solid oklch(0.65 0.25 250)',
+            background: 'oklch(0.16 0.03 250 / 0.95)',
+            backdropFilter: 'blur(20px)',
+            color: 'oklch(0.98 0.01 250)',
+            border: '2px solid oklch(0.68 0.28 245)',
             fontFamily: 'Orbitron, sans-serif',
             fontWeight: 'bold',
+            fontSize: '14px',
+            padding: '16px 24px',
+            boxShadow: '0 0 30px oklch(0.68 0.28 245 / 0.4), 0 10px 40px rgba(0, 0, 0, 0.5)',
           },
         }}
       />

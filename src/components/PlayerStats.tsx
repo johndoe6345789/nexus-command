@@ -56,7 +56,7 @@ function StatCard({ icon: Icon, label, value, color, delay }: StatCardProps) {
       transition={{ delay, type: "spring", stiffness: 100 }}
       whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.2 } }}
     >
-      <Card className={`p-6 sm:p-8 glow-border ${color} relative overflow-hidden group bg-card/50 backdrop-blur-md hover:bg-card/70 hover:shadow-[0_0_25px_rgba(99,102,241,0.2)] transition-all duration-300`}>
+      <Card className={`p-6 sm:p-8 glow-border ${color} relative overflow-hidden group glass-effect hover:bg-card/80 hover:shadow-[0_0_35px_rgba(99,102,241,0.3)] transition-all duration-400`}>
         <div className="relative z-10">
           <div className="flex items-center gap-3 mb-4">
             <div className={`p-3 rounded-md ${color.replace('text-', 'bg-')}/20 border-2 border-current group-hover:scale-110 transition-transform duration-200`}>
@@ -129,19 +129,22 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
           className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6 mb-10 sm:mb-14"
         >
           <div className="w-full sm:w-auto">
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black glow-text mb-3 tracking-tight">PLAYER STATS</h1>
-            <p className="text-muted-foreground font-body tracking-widest text-sm sm:text-base flex items-center gap-2">
-              <Sword size={18} weight="bold" className="text-accent" />
-              CALLSIGN: <span className="text-accent font-black">{playerName}</span>
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-1.5 h-16 bg-gradient-to-b from-primary via-accent to-primary rounded-full shadow-lg shadow-primary/50" />
+              <h1 className="text-4xl sm:text-5xl md:text-7xl font-black glow-text tracking-tight">PLAYER STATS</h1>
+            </div>
+            <p className="text-muted-foreground font-body tracking-[0.15em] text-sm sm:text-base flex items-center gap-3 ml-6">
+              <Sword size={20} weight="bold" className="text-accent" />
+              OPERATOR: <span className="text-accent font-black tracking-wider">{playerName}</span>
             </p>
           </div>
           <Button
             onClick={onBack}
             variant="outline"
-            className="glow-border w-full sm:w-auto h-12 px-8 font-bold hover:scale-105 active:scale-95 hover:bg-primary/10 hover:border-primary transition-all duration-200"
+            className="glow-border w-full sm:w-auto h-14 px-10 font-black text-base hover:scale-[1.05] active:scale-95 hover:bg-primary/15 hover:border-primary hover:shadow-[0_0_30px_rgba(99,102,241,0.3)] transition-all duration-300 backdrop-blur-md"
           >
-            <ArrowLeft size={20} weight="bold" className="mr-2" />
-            BACK
+            <ArrowLeft size={22} weight="bold" className="mr-3" />
+            RETURN
           </Button>
         </motion.div>
 
@@ -182,7 +185,7 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.6 }}
           >
-            <Card className="p-7 sm:p-10 glow-border bg-card/50 backdrop-blur-md hover:shadow-[0_0_20px_rgba(99,102,241,0.15)] transition-all duration-300">
+            <Card className="p-7 sm:p-10 glow-border glass-effect hover:shadow-[0_0_35px_rgba(99,102,241,0.25)] transition-all duration-400">
               <h2 className="text-2xl sm:text-3xl font-black mb-8 text-primary tracking-wide flex items-center gap-4">
                 <span className="w-2 h-10 bg-accent rounded"></span>
                 RECENT MATCHES
@@ -233,7 +236,7 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.6 }}
           >
-            <Card className="p-7 sm:p-10 glow-border bg-card/50 backdrop-blur-md hover:shadow-[0_0_20px_rgba(99,102,241,0.15)] transition-all duration-300">
+            <Card className="p-7 sm:p-10 glow-border glass-effect hover:shadow-[0_0_35px_rgba(99,102,241,0.25)] transition-all duration-400">
               <h2 className="text-2xl sm:text-3xl font-black mb-8 text-primary tracking-wide flex items-center gap-4">
                 <span className="w-2 h-10 bg-accent rounded"></span>
                 WEAPON STATISTICS

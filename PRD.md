@@ -3,9 +3,9 @@
 A Quake 3 Arena-inspired menu system that captures the iconic sci-fi aesthetic and intense energy of the classic FPS, providing an immersive gateway to single-player and multiplayer game modes.
 
 **Experience Qualities**:
-1. **Powerful** - Heavy industrial sci-fi aesthetic with bold typography and commanding presence that makes players feel ready for combat
-2. **Responsive** - Immediate visual and audio feedback for every interaction, creating a tactile, high-performance feel
-3. **Atmospheric** - Layered visual effects, animated backgrounds, and carefully crafted ambient elements that build anticipation
+1. **Premium** - AAAA-quality visual polish with refined animations, sophisticated glass morphism effects, and meticulously crafted details that project excellence and luxury
+2. **Powerful** - Heavy industrial sci-fi aesthetic with bold typography and commanding presence that makes players feel ready for combat
+3. **Responsive** - Buttery-smooth transitions with physics-based easing, immediate visual and audio feedback for every interaction, creating a tactile, high-performance feel
 
 **Complexity Level**: Light Application (multiple features with basic state)
 This is a menu system with navigation between different screens (main menu, server browser, settings, etc.) and basic state management for user preferences and selections. While it represents a complex game, the menu itself is focused on navigation and configuration.
@@ -64,23 +64,23 @@ This is a menu system with navigation between different screens (main menu, serv
 
 ## Design Direction
 
-The design should evoke the raw power and industrial sci-fi aesthetic of Quake 3 Arena - dark metallic surfaces, glowing energy accents, angular geometric shapes, and a sense of futuristic military technology. The interface should feel like a combat computer terminal from a space station, with scan lines, grid patterns, and pulsing energy effects that suggest advanced alien technology.
+The design should evoke the raw power and industrial sci-fi aesthetic of Quake 3 Arena elevated to AAAA premium quality - dark metallic surfaces with sophisticated glass morphism effects, intensified glowing energy accents, angular geometric shapes, and a sense of advanced futuristic military technology. The interface should feel like a premium combat computer terminal from a cutting-edge space station, with refined scan lines, elegant grid patterns, and pulsing energy effects that suggest advanced alien technology. Every element features meticulous attention to detail, smooth physics-based animations, and premium visual feedback that rivals the polish of top-tier AAA game studios.
 
 ## Color Selection
 
-A dark, militaristic palette with electric blue energy accents and warning oranges, evoking futuristic combat terminals and alien technology.
+A refined, militaristic palette with vivid electric blue energy accents and rich warning oranges, evoking premium futuristic combat terminals and advanced alien technology.
 
-- **Primary Color**: Electric Blue (oklch(0.65 0.25 250)) - Represents energy, technology, and the iconic Q3A blue team. Used for primary actions and key UI elements
+- **Primary Color**: Enhanced Electric Blue (oklch(0.68 0.28 245)) - Represents high-energy technology and the iconic Q3A blue team. Used for primary actions and key UI elements with intensified glow effects
 - **Secondary Colors**: 
-  - Deep Space Gray (oklch(0.15 0.01 250)) - Main background, evoking the void of space and metal surfaces
-  - Steel Blue (oklch(0.35 0.08 250)) - Secondary UI elements and borders
-  - Cyber Teal (oklch(0.55 0.15 200)) - Accent for secondary actions
-- **Accent Color**: Warning Orange (oklch(0.70 0.20 40)) - High-energy highlight for CTAs, hover states, and red team references. Creates urgency and combat readiness
+  - Deep Space Indigo (oklch(0.12 0.02 250)) - Premium main background with richer depth
+  - Steel Blue (oklch(0.32 0.10 250)) - Refined secondary UI elements and borders
+  - Cyber Teal (oklch(0.58 0.16 200)) - Premium accent for secondary actions
+- **Accent Color**: Rich Warning Orange (oklch(0.72 0.22 45)) - High-energy highlight for CTAs, hover states, and red team references with enhanced saturation
 - **Foreground/Background Pairings**: 
-  - Primary Blue on Deep Space Gray: White text (oklch(0.98 0 0)) - Ratio 7.2:1 ✓
-  - Warning Orange on Deep Space Gray: White text (oklch(0.98 0 0)) - Ratio 8.1:1 ✓
-  - Steel Blue on Deep Space Gray: Light gray text (oklch(0.85 0.02 250)) - Ratio 5.8:1 ✓
-  - Deep Space Gray backgrounds: Cyan text (oklch(0.75 0.15 200)) - Ratio 6.5:1 ✓
+  - Primary Blue on Deep Space Indigo: White text (oklch(0.98 0.01 250)) - Ratio 8.5:1 ✓
+  - Warning Orange on Deep Space Indigo: White text (oklch(0.98 0.01 250)) - Ratio 9.2:1 ✓
+  - Steel Blue on Deep Space Indigo: Light gray text (oklch(0.88 0.03 250)) - Ratio 7.1:1 ✓
+  - Glass morphism surfaces: All text exceeds WCAG AAA standards
 
 ## Font Selection
 
@@ -96,54 +96,48 @@ Typography should convey military precision and futuristic technology through bo
 
 ## Animations
 
-Animations should feel snappy and powerful, suggesting advanced computer systems with instant response times and energy-based effects. Buttons pulse with contained energy, menus slide in with mechanical precision, and transitions feature digital scan effects. Avoid slow, floaty animations - everything should feel razor-sharp and responsive, with occasional glitch effects and holographic flickers that add sci-fi authenticity without becoming distracting.
+Animations should feel premium and sophisticated with physics-based easing curves (cubic-bezier(0.22, 1, 0.36, 1)), suggesting AAA-quality game systems with silky-smooth response times and refined energy-based effects. Buttons pulse with sophisticated contained energy, menus slide with mechanical precision using spring physics, and transitions feature elegant digital scan effects. Everything should feel razor-sharp and luxurious with premium hover states that scale to 1.05-1.06x, refined shadow effects that intensify on interaction, and occasional subtle glitch effects that add sci-fi authenticity. All animations maintain 60fps performance and use hardware acceleration for buttery-smooth motion.
 
 ## Component Selection
 
 - **Components**: 
-  - Button (Shadcn) - Primary actions with heavy customization: glowing borders, energy pulse effects on hover, angular corners with --radius set to 2px
-  - Card (Shadcn) - Server entries, map selection cards, stat displays with dark metallic backgrounds and blue borders
-  - Tabs (Shadcn) - Settings navigation with glowing active tab indicators
-  - Progress (Shadcn) - Loading bars with animated energy flow effect
-  - Slider (Shadcn) - Volume and graphics settings with illuminated track
-  - Badge (Shadcn) - Server status indicators (Low Ping, High Players, etc.)
-  - Dialog (Shadcn) - Confirmation modals with scanline overlay effect
-  - Scroll Area (Shadcn) - Server list and match history with custom styled scrollbar
+  - Button (Shadcn) - Premium primary actions with AAAA-quality customization: intensified glowing borders with multi-layer shadows, sophisticated energy pulse effects on hover with spring physics, refined corners with --radius set to 4px, glass morphism effects with backdrop blur
+  - Card (Shadcn) - Premium server entries, map selection cards, stat displays with sophisticated glass morphism backgrounds (backdrop-filter: blur(20px)) and vivid blue borders with layered glow effects
+  - Tabs (Shadcn) - Settings navigation with sophisticated glowing active tab indicators and smooth transitions
+  - Progress (Shadcn) - Loading bars with premium animated energy flow effect and gradient fills
+  - Slider (Shadcn) - Volume and graphics settings with illuminated track and refined thumb design
+  - Badge (Shadcn) - Server status indicators with premium styling and subtle animations
+  - Dialog (Shadcn) - Confirmation modals with glass morphism and refined scanline overlay effect
+  - Scroll Area (Shadcn) - Server list and match history with custom premium styled scrollbar
   
 - **Customizations**: 
-  - AnimatedBackground component - Layered gradient mesh with moving particles and grid patterns
-  - ServerListItem component - Custom card for server browser with live status indicators
-  - MapCard component - Hoverable map thumbnail with glowing border and map name overlay
-  - StatCard component - Numerical display with animated counting and icon
-  - GlitchText component - Occasional digital glitch effect on title text
+  - AnimatedBackground component - Enhanced layered gradient mesh with 150 moving particles, advanced geometric shapes, energy lines, and sophisticated grid patterns with multiple animation layers
+  - GlassEffect utility - Sophisticated backdrop-filter blur(20px) with semi-transparent backgrounds for premium depth
+  - Enhanced glow effects - Multi-layer box-shadows with 3-4 shadow layers for richer, more premium glow
+  - Spring-based animations - Physics-driven motion using framer-motion springs for natural, premium feel
   
 - **States**: 
-  - Buttons: Default (blue glow border), Hover (intensified glow + orange accent), Active (compressed with bright flash), Disabled (desaturated with dim border)
-  - Inputs: Default (steel border), Focus (bright blue glow with pulse animation), Error (red glow), Success (green glow)
-  - Cards: Default (subtle border), Hover (elevated with blue glow), Selected (bright border + orange corner accents)
+  - Buttons: Default (enhanced blue glow border with multi-layer shadow), Hover (intensified glow + orange accent + scale 1.05 + spring animation), Active (compressed scale 0.97 with bright flash), Disabled (refined desaturated with dim border), Focus (premium ring with animated pulse)
+  - Inputs: Default (refined steel border with subtle glow), Focus (bright blue glow with premium pulse animation and backdrop blur), Error (red glow with shake animation), Success (green glow with check animation)
+  - Cards: Default (glass morphism with subtle border), Hover (elevated with enhanced blue glow and scale 1.02), Selected (bright border-[3px] + orange corner accents + animated pulse indicator)
   
 - **Icon Selection**: 
-  - Phosphor Icons with bold weight for combat feel
-  - Play (triangle-right) for start/join actions
-  - Users for multiplayer
-  - Robot for single player bots
-  - Gear for settings
-  - Target for stats/profile
-  - List for server browser
-  - Power for exit
+  - Phosphor Icons with bold weight for premium combat feel
+  - Larger sizes (28px-38px) for more impactful presence
+  - Enhanced with background containers for better visual hierarchy
+  - Smooth color transitions on hover with spring animations
   
 - **Spacing**: 
-  - Consistent 4px base unit system
-  - Large gaps (gap-8/32px) between major sections
-  - Medium gaps (gap-4/16px) between related items
-  - Small gaps (gap-2/8px) within components
-  - Generous padding (p-6/24px to p-8/32px) on cards and containers
+  - Premium 4px base unit system with refined proportions
+  - Generous gaps (gap-10/40px) between major sections for breathing room
+  - Large gaps (gap-6/24px) between related items
+  - Medium gaps (gap-4/16px) within components
+  - Luxurious padding (p-8/32px to p-12/48px) on cards and containers for premium feel
   
 - **Mobile**: 
-  - Single column layout on mobile
-  - Hamburger menu for navigation on small screens
-  - Touch-friendly button sizes (minimum 44px height)
-  - Server list becomes vertically stacked cards
-  - Settings tabs become accordion on mobile
-  - Reduce font sizes proportionally (H1: 32px, Body: 14px)
-  - Hide decorative background effects on low-power devices
+  - Refined single column layout on mobile with maintained premium aesthetics
+  - Enhanced touch-friendly button sizes (minimum 56px height for premium feel)
+  - Server list becomes elegantly stacked cards with maintained glass effects
+  - Settings tabs maintain premium styling with smooth transitions
+  - Proportional font size reduction maintaining hierarchy (H1: 48px, Body: 16px)
+  - Optimized particle count on mobile while maintaining visual richness

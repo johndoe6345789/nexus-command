@@ -1,33 +1,33 @@
 :root {
-  --background: oklch(0.15 0.01 250);
-  --foreground: oklch(0.98 0 0);
+  --background: oklch(0.12 0.02 250);
+  --foreground: oklch(0.98 0.01 250);
 
-  --card: oklch(0.18 0.02 250);
-  --card-foreground: oklch(0.95 0.02 250);
+  --card: oklch(0.16 0.03 250);
+  --card-foreground: oklch(0.96 0.02 250);
 
-  --popover: oklch(0.16 0.02 250);
-  --popover-foreground: oklch(0.95 0.02 250);
+  --popover: oklch(0.14 0.03 250);
+  --popover-foreground: oklch(0.96 0.02 250);
 
-  --primary: oklch(0.65 0.25 250);
-  --primary-foreground: oklch(0.98 0 0);
+  --primary: oklch(0.68 0.28 245);
+  --primary-foreground: oklch(0.98 0.01 250);
 
-  --secondary: oklch(0.35 0.08 250);
-  --secondary-foreground: oklch(0.85 0.02 250);
+  --secondary: oklch(0.30 0.10 250);
+  --secondary-foreground: oklch(0.88 0.03 250);
 
-  --muted: oklch(0.25 0.03 250);
-  --muted-foreground: oklch(0.60 0.05 250);
+  --muted: oklch(0.22 0.04 250);
+  --muted-foreground: oklch(0.58 0.06 250);
 
-  --accent: oklch(0.70 0.20 40);
-  --accent-foreground: oklch(0.98 0 0);
+  --accent: oklch(0.72 0.22 45);
+  --accent-foreground: oklch(0.98 0.01 250);
 
-  --destructive: oklch(0.55 0.25 25);
-  --destructive-foreground: oklch(0.98 0 0);
+  --destructive: oklch(0.58 0.28 28);
+  --destructive-foreground: oklch(0.98 0.01 250);
 
-  --border: oklch(0.35 0.08 250);
-  --input: oklch(0.35 0.08 250);
-  --ring: oklch(0.65 0.25 250);
+  --border: oklch(0.32 0.10 250);
+  --input: oklch(0.28 0.08 250);
+  --ring: oklch(0.68 0.28 245);
 
-  --radius: 2px;
+  --radius: 4px;
 }
 
 @theme {
@@ -85,10 +85,12 @@ h1, h2, h3, h4, h5, h6 {
 
 @keyframes pulse-glow {
   0%, 100% {
-    box-shadow: 0 0 10px oklch(0.65 0.25 250 / 0.3);
+    box-shadow: 0 0 15px oklch(0.68 0.28 245 / 0.4),
+                0 0 30px oklch(0.68 0.28 245 / 0.2);
   }
   50% {
-    box-shadow: 0 0 20px oklch(0.65 0.25 250 / 0.6);
+    box-shadow: 0 0 25px oklch(0.68 0.28 245 / 0.6),
+                0 0 45px oklch(0.68 0.28 245 / 0.3);
   }
 }
 
@@ -124,32 +126,61 @@ h1, h2, h3, h4, h5, h6 {
 
 @keyframes subtle-pulse {
   0%, 100% {
-    text-shadow: 0 0 10px oklch(0.65 0.25 250 / 0.6),
-                 0 0 20px oklch(0.65 0.25 250 / 0.4),
-                 0 0 30px oklch(0.65 0.25 250 / 0.2);
+    text-shadow: 0 0 20px oklch(0.68 0.28 245 / 0.7),
+                 0 0 40px oklch(0.68 0.28 245 / 0.5),
+                 0 0 60px oklch(0.68 0.28 245 / 0.3),
+                 0 0 80px oklch(0.68 0.28 245 / 0.1);
   }
   50% {
-    text-shadow: 0 0 15px oklch(0.65 0.25 250 / 0.7),
-                 0 0 25px oklch(0.65 0.25 250 / 0.5),
-                 0 0 35px oklch(0.65 0.25 250 / 0.3);
+    text-shadow: 0 0 25px oklch(0.68 0.28 245 / 0.8),
+                 0 0 50px oklch(0.68 0.28 245 / 0.6),
+                 0 0 75px oklch(0.68 0.28 245 / 0.4),
+                 0 0 100px oklch(0.68 0.28 245 / 0.2);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
   }
 }
 
 .glow-text {
-  text-shadow: 0 0 10px oklch(0.65 0.25 250 / 0.6),
-               0 0 20px oklch(0.65 0.25 250 / 0.4),
-               0 0 30px oklch(0.65 0.25 250 / 0.2);
-  animation: subtle-pulse 3s ease-in-out infinite;
+  text-shadow: 0 0 20px oklch(0.68 0.28 245 / 0.7),
+               0 0 40px oklch(0.68 0.28 245 / 0.5),
+               0 0 60px oklch(0.68 0.28 245 / 0.3),
+               0 0 80px oklch(0.68 0.28 245 / 0.1);
+  animation: subtle-pulse 4s ease-in-out infinite;
 }
 
 .glow-border {
-  border: 1px solid oklch(0.65 0.25 250);
-  box-shadow: 0 0 10px oklch(0.65 0.25 250 / 0.4),
-              inset 0 0 10px oklch(0.65 0.25 250 / 0.1);
+  border: 2px solid oklch(0.68 0.28 245);
+  box-shadow: 0 0 20px oklch(0.68 0.28 245 / 0.5),
+              0 0 40px oklch(0.68 0.28 245 / 0.2),
+              inset 0 0 15px oklch(0.68 0.28 245 / 0.15);
 }
 
 .glow-accent {
-  border: 1px solid oklch(0.70 0.20 40);
-  box-shadow: 0 0 15px oklch(0.70 0.20 40 / 0.5),
-              inset 0 0 10px oklch(0.70 0.20 40 / 0.2);
+  border: 2px solid oklch(0.72 0.22 45);
+  box-shadow: 0 0 25px oklch(0.72 0.22 45 / 0.6),
+              0 0 50px oklch(0.72 0.22 45 / 0.3),
+              inset 0 0 20px oklch(0.72 0.22 45 / 0.2);
+}
+
+.glass-effect {
+  background: oklch(0.16 0.03 250 / 0.6);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid oklch(0.32 0.10 250 / 0.5);
 }

@@ -104,10 +104,13 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
           className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6 mb-10 sm:mb-14"
         >
           <div className="w-full sm:w-auto">
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black glow-text mb-3 tracking-tight">MULTIPLAYER</h1>
-            <p className="text-muted-foreground font-body tracking-widest text-sm sm:text-base flex items-center gap-2">
-              <Globe size={18} weight="bold" className="text-accent" />
-              JOIN ONLINE COMBAT - {servers.length} SERVERS ACTIVE
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-1.5 h-16 bg-gradient-to-b from-primary via-accent to-primary rounded-full shadow-lg shadow-primary/50" />
+              <h1 className="text-4xl sm:text-5xl md:text-7xl font-black glow-text tracking-tight">MULTIPLAYER</h1>
+            </div>
+            <p className="text-muted-foreground font-body tracking-[0.15em] text-sm sm:text-base flex items-center gap-3 ml-6">
+              <Globe size={20} weight="bold" className="text-accent" />
+              ONLINE NETWORK • {servers.length} ACTIVE NODES
             </p>
           </div>
           <div className="flex gap-3 w-full sm:w-auto">
@@ -115,22 +118,22 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
               onClick={handleRefresh}
               disabled={isRefreshing}
               variant="outline"
-              className="glow-border flex-1 sm:flex-none h-12 px-6 sm:px-8 font-bold hover:scale-105 active:scale-95 hover:bg-primary/10 hover:border-primary transition-all duration-200"
+              className="glow-border flex-1 sm:flex-none h-14 px-8 sm:px-10 font-black text-base hover:scale-[1.05] active:scale-95 hover:bg-primary/15 hover:border-primary hover:shadow-[0_0_30px_rgba(99,102,241,0.3)] transition-all duration-300 backdrop-blur-md"
             >
               <ArrowsClockwise 
-                size={20} 
+                size={22} 
                 weight="bold" 
-                className={`mr-2 ${isRefreshing ? 'animate-spin' : ''}`}
+                className={`mr-3 ${isRefreshing ? 'animate-spin' : ''}`}
               />
-              <span className="hidden sm:inline">REFRESH</span>
+              <span className="hidden sm:inline">SCAN</span>
             </Button>
             <Button
               onClick={onBack}
               variant="outline"
-              className="glow-border flex-1 sm:flex-none h-12 px-6 sm:px-8 font-bold hover:scale-105 active:scale-95 hover:bg-primary/10 hover:border-primary transition-all duration-200"
+              className="glow-border flex-1 sm:flex-none h-14 px-8 sm:px-10 font-black text-base hover:scale-[1.05] active:scale-95 hover:bg-primary/15 hover:border-primary hover:shadow-[0_0_30px_rgba(99,102,241,0.3)] transition-all duration-300 backdrop-blur-md"
             >
-              <ArrowLeft size={20} weight="bold" className="mr-2" />
-              BACK
+              <ArrowLeft size={22} weight="bold" className="mr-3" />
+              RETURN
             </Button>
           </div>
         </motion.div>
@@ -140,7 +143,7 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <Card className="p-5 sm:p-8 glow-border mb-10 bg-card/50 backdrop-blur-md hover:shadow-[0_0_20px_rgba(99,102,241,0.15)] transition-all duration-300">
+          <Card className="p-5 sm:p-8 glow-border mb-10 glass-effect hover:shadow-[0_0_35px_rgba(99,102,241,0.25)] transition-all duration-400">
             <div className="hidden lg:grid grid-cols-12 gap-4 text-xs font-black text-muted-foreground/70 mb-6 px-4 pb-4 border-b border-border/50">
               <div className="col-span-4">SERVER NAME</div>
               <div className="col-span-2">MAP</div>
@@ -161,10 +164,10 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
                   >
                     <Card
                       className={`
-                        p-5 sm:p-6 cursor-pointer transition-all duration-300 relative overflow-hidden group
+                        p-5 sm:p-6 cursor-pointer transition-all duration-400 relative overflow-hidden group
                         ${selectedServer === server.id 
-                          ? 'glow-accent bg-accent/10 border-accent border-2 shadow-[0_0_25px_rgba(245,166,35,0.25)]' 
-                          : 'glow-border hover:bg-card/80 hover:border-primary/50 hover:shadow-[0_0_15px_rgba(99,102,241,0.15)]'}
+                          ? 'glow-accent glass-effect border-accent border-[3px] shadow-[0_0_40px_rgba(245,166,35,0.4)]' 
+                          : 'glow-border glass-effect hover:bg-card/90 hover:border-primary/60 hover:shadow-[0_0_25px_rgba(99,102,241,0.25)]'}
                       `}
                       onClick={() => setSelectedServer(server.id)}
                     >
@@ -257,23 +260,36 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
             onClick={handleJoinServer}
             disabled={!selectedServer || isConnecting}
             className={`
-              w-full sm:w-auto px-16 sm:px-20 h-16 sm:h-20 text-xl sm:text-2xl font-black tracking-wider
-              ${!selectedServer || isConnecting ? 'opacity-50 cursor-not-allowed' : 'glow-accent hover:scale-[1.05] active:scale-[0.98]'}
-              transition-all duration-200 relative overflow-hidden bg-accent/20 border-2 border-accent shadow-[0_0_30px_rgba(245,166,35,0.3)]
+              w-full sm:w-auto px-20 sm:px-28 h-20 sm:h-24 text-2xl sm:text-3xl font-black tracking-[0.15em]
+              ${!selectedServer || isConnecting ? 'opacity-50 cursor-not-allowed' : 'glow-accent hover:scale-[1.06] active:scale-[0.97]'}
+              transition-all duration-300 relative overflow-hidden glass-effect border-[3px] border-accent shadow-[0_0_50px_rgba(245,166,35,0.5)]
             `}
             size="lg"
           >
             {!selectedServer && !isConnecting && (
               <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-accent/0 via-accent/30 to-accent/0"
+                className="absolute inset-0 bg-gradient-to-r from-accent/0 via-accent/40 to-accent/0"
                 animate={{ x: ['-100%', '200%'] }}
-                transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
+                transition={{ repeat: Infinity, duration: 2.5, ease: "linear" }}
               />
             )}
-            <span className="relative z-10 flex items-center gap-4">
-              <Play size={32} weight="fill" className={isConnecting ? 'animate-pulse' : ''} />
-              {isConnecting ? 'CONNECTING...' : 'JOIN SERVER'}
+            <span className="relative z-10 flex items-center gap-5">
+              <Play size={38} weight="fill" className={isConnecting ? 'animate-pulse' : ''} />
+              {isConnecting ? 'CONNECTING...' : 'CONNECT'}
             </span>
+            {!isConnecting && selectedServer && (
+              <motion.div
+                className="absolute inset-0 bg-accent/20"
+                animate={{
+                  opacity: [0.2, 0.4, 0.2],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+            )}
           </Button>
         </motion.div>
       </motion.div>

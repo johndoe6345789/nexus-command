@@ -50,19 +50,22 @@ export function Settings({ onBack }: SettingsProps) {
           className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6 mb-10 sm:mb-14"
         >
           <div className="w-full sm:w-auto">
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black glow-text mb-3 tracking-tight">SETTINGS</h1>
-            <p className="text-muted-foreground font-body tracking-widest text-sm sm:text-base flex items-center gap-2">
-              <GameController size={18} weight="bold" className="text-accent" />
-              CONFIGURE SYSTEM PARAMETERS
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-1.5 h-16 bg-gradient-to-b from-primary via-accent to-primary rounded-full shadow-lg shadow-primary/50" />
+              <h1 className="text-4xl sm:text-5xl md:text-7xl font-black glow-text tracking-tight">SETTINGS</h1>
+            </div>
+            <p className="text-muted-foreground font-body tracking-[0.15em] text-sm sm:text-base flex items-center gap-3 ml-6">
+              <GameController size={20} weight="bold" className="text-accent" />
+              SYSTEM CONFIGURATION • PARAMETERS
             </p>
           </div>
           <Button
             onClick={onBack}
             variant="outline"
-            className="glow-border w-full sm:w-auto h-12 px-8 font-bold hover:scale-105 active:scale-95 hover:bg-primary/10 hover:border-primary transition-all duration-200"
+            className="glow-border w-full sm:w-auto h-14 px-10 font-black text-base hover:scale-[1.05] active:scale-95 hover:bg-primary/15 hover:border-primary hover:shadow-[0_0_30px_rgba(99,102,241,0.3)] transition-all duration-300 backdrop-blur-md"
           >
-            <ArrowLeft size={20} weight="bold" className="mr-2" />
-            BACK
+            <ArrowLeft size={22} weight="bold" className="mr-3" />
+            RETURN
           </Button>
         </motion.div>
 
@@ -71,7 +74,7 @@ export function Settings({ onBack }: SettingsProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <Card className="p-5 sm:p-10 glow-border bg-card/50 backdrop-blur-md">
+          <Card className="p-5 sm:p-10 glow-border glass-effect hover:shadow-[0_0_35px_rgba(99,102,241,0.25)] transition-all duration-400">
             <Tabs defaultValue="profile" className="w-full">
               <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 mb-10 h-auto bg-background/50 p-2 gap-2">
                 <TabsTrigger value="profile" className="text-xs sm:text-sm font-bold py-4 data-[state=active]:glow-accent data-[state=active]:bg-accent/10 data-[state=active]:shadow-[0_0_20px_rgba(245,166,35,0.2)] gap-2 transition-all duration-200">

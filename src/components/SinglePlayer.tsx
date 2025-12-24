@@ -61,19 +61,22 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
           className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6 mb-10 sm:mb-14"
         >
           <div className="w-full sm:w-auto">
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black glow-text mb-3 tracking-tight">SINGLE PLAYER</h1>
-            <p className="text-muted-foreground font-body tracking-widest text-sm sm:text-base flex items-center gap-2">
-              <Skull size={18} weight="bold" className="text-accent" />
-              TRAIN AGAINST AI OPPONENTS
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-1.5 h-16 bg-gradient-to-b from-primary via-accent to-primary rounded-full shadow-lg shadow-primary/50" />
+              <h1 className="text-4xl sm:text-5xl md:text-7xl font-black glow-text tracking-tight">SINGLE PLAYER</h1>
+            </div>
+            <p className="text-muted-foreground font-body tracking-[0.15em] text-sm sm:text-base flex items-center gap-3 ml-6">
+              <Skull size={20} weight="bold" className="text-accent" />
+              COMBAT SIMULATION • AI TRAINING MODE
             </p>
           </div>
           <Button
             onClick={onBack}
             variant="outline"
-            className="glow-border w-full sm:w-auto h-12 px-8 font-bold hover:scale-105 active:scale-95 hover:bg-primary/10 hover:border-primary transition-all duration-200"
+            className="glow-border w-full sm:w-auto h-14 px-10 font-black text-base hover:scale-[1.05] active:scale-95 hover:bg-primary/15 hover:border-primary hover:shadow-[0_0_30px_rgba(99,102,241,0.3)] transition-all duration-300 backdrop-blur-md"
           >
-            <ArrowLeft size={20} weight="bold" className="mr-2" />
-            BACK
+            <ArrowLeft size={22} weight="bold" className="mr-3" />
+            RETURN
           </Button>
         </motion.div>
 
@@ -83,10 +86,12 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
           transition={{ delay: 0.2 }}
           className="mb-10"
         >
-          <Card className="p-6 sm:p-10 glow-border w-full bg-card/50 backdrop-blur-md hover:shadow-[0_0_20px_rgba(99,102,241,0.15)] transition-all duration-300">
-            <h2 className="text-2xl sm:text-3xl font-black mb-8 text-primary tracking-wide flex items-center gap-3">
-              <Skull size={28} weight="bold" />
-              DIFFICULTY SETTING
+          <Card className="p-6 sm:p-10 glow-border w-full glass-effect hover:shadow-[0_0_35px_rgba(99,102,241,0.25)] transition-all duration-400">
+            <h2 className="text-2xl sm:text-3xl font-black mb-8 text-primary tracking-wide flex items-center gap-4">
+              <div className="p-3 bg-primary/20 rounded-md">
+                <Skull size={32} weight="bold" />
+              </div>
+              <span>DIFFICULTY PROTOCOL</span>
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {difficulties.map((diff, index) => (
@@ -100,15 +105,23 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
                     onClick={() => setSelectedDifficulty(diff.id)}
                     variant={selectedDifficulty === diff.id ? 'default' : 'outline'}
                     className={`
-                      h-20 sm:h-24 font-black tracking-wider text-sm sm:text-base w-full
-                      flex flex-col gap-2
-                      ${selectedDifficulty === diff.id ? 'glow-accent bg-accent/20 border-accent shadow-[0_0_20px_rgba(245,166,35,0.2)]' : 'glow-border bg-card/60 hover:bg-card/80'}
+                      h-24 sm:h-28 font-black tracking-[0.1em] text-base sm:text-lg w-full
+                      flex flex-col gap-3 relative overflow-hidden group
+                      ${selectedDifficulty === diff.id ? 'glow-accent glass-effect border-accent shadow-[0_0_35px_rgba(245,166,35,0.35)]' : 'glow-border glass-effect hover:bg-card/80'}
                       ${selectedDifficulty === diff.id ? diff.color : 'text-muted-foreground'}
-                      hover:scale-105 active:scale-95 transition-all duration-200
+                      hover:scale-[1.05] active:scale-95 transition-all duration-300
                     `}
                   >
-                    <span className="text-base opacity-70">{diff.icon}</span>
+                    <span className="text-xl opacity-70">{diff.icon}</span>
                     <span>{diff.label}</span>
+                    {selectedDifficulty === diff.id && (
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-t from-accent/20 to-transparent pointer-events-none"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    )}
                   </Button>
                 </motion.div>
               ))}
@@ -155,10 +168,10 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
           transition={{ delay: 0.4 }}
           className="mb-10"
         >
-          <h2 className="text-2xl sm:text-3xl font-black mb-8 text-primary tracking-wide flex items-center gap-4">
-            <span className="w-2 h-10 bg-accent rounded"></span>
-            MAP SELECTION
-          </h2>
+          <div className="flex items-center gap-4 mb-8">
+            <div className="w-1.5 h-12 bg-gradient-to-b from-accent via-primary to-accent rounded-full shadow-lg shadow-accent/50" />
+            <h2 className="text-2xl sm:text-3xl font-black text-primary tracking-wide">ARENA SELECTION</h2>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-7">
             {maps.map((map, index) => (
               <motion.div
@@ -170,50 +183,58 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
               >
                 <Card
                   className={`
-                    p-6 cursor-pointer transition-all duration-300 relative overflow-hidden group
-                    ${selectedMap === map.id ? 'glow-accent bg-accent/10 border-accent border-2 shadow-[0_0_25px_rgba(245,166,35,0.25)]' : 'glow-border hover:bg-card/80 hover:border-primary/50 hover:shadow-[0_0_15px_rgba(99,102,241,0.15)]'}
+                    p-6 sm:p-7 cursor-pointer transition-all duration-400 relative overflow-hidden group
+                    ${selectedMap === map.id ? 'glow-accent glass-effect border-accent border-[3px] shadow-[0_0_40px_rgba(245,166,35,0.4)]' : 'glow-border glass-effect hover:bg-card/90 hover:border-primary/60 hover:shadow-[0_0_25px_rgba(99,102,241,0.25)]'}
                   `}
                   onClick={() => setSelectedMap(map.id)}
                 >
-                  <div className={`aspect-video bg-gradient-to-br ${map.gradient} mb-5 rounded-md relative overflow-hidden border-2 ${selectedMap === map.id ? 'border-accent/50' : 'border-border/50'} transition-all duration-300`}>
+                  <div className={`aspect-video bg-gradient-to-br ${map.gradient} mb-5 rounded-lg relative overflow-hidden border-2 ${selectedMap === map.id ? 'border-accent/60' : 'border-border/40'} transition-all duration-300 shadow-lg`}>
                     <div 
-                      className="absolute inset-0 opacity-30" 
+                      className="absolute inset-0 opacity-20" 
                       style={{
                         backgroundImage: `
-                          repeating-linear-gradient(0deg, transparent, transparent 8px, oklch(0.65 0.25 250 / 0.15) 8px, oklch(0.65 0.25 250 / 0.15) 9px),
-                          repeating-linear-gradient(90deg, transparent, transparent 8px, oklch(0.65 0.25 250 / 0.15) 8px, oklch(0.65 0.25 250 / 0.15) 9px)
+                          repeating-linear-gradient(0deg, transparent, transparent 10px, oklch(0.68 0.28 245 / 0.2) 10px, oklch(0.68 0.28 245 / 0.2) 11px),
+                          repeating-linear-gradient(90deg, transparent, transparent 10px, oklch(0.68 0.28 245 / 0.2) 10px, oklch(0.68 0.28 245 / 0.2) 11px)
                         `,
                       }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-4xl sm:text-5xl font-black text-primary/20 group-hover:text-primary/40 transition-colors duration-300">
+                      <span className="text-5xl sm:text-6xl font-black text-primary/20 group-hover:text-primary/50 transition-all duration-400">
                         {map.id.toUpperCase()}
                       </span>
                     </div>
                     {selectedMap === map.id && (
-                      <motion.div
-                        className="absolute top-4 right-4 flex gap-1.5"
-                        initial={{ scale: 0, rotate: -180 }}
-                        animate={{ scale: 1, rotate: 0 }}
-                        transition={{ type: "spring", stiffness: 260, damping: 20 }}
-                      >
-                        <div className="w-3 h-3 bg-accent rounded-full animate-pulse shadow-lg shadow-accent/50" />
-                        <div className="w-3 h-3 bg-accent rounded-full animate-pulse shadow-lg shadow-accent/50" style={{ animationDelay: '0.2s' }} />
-                      </motion.div>
+                      <>
+                        <motion.div
+                          className="absolute top-4 right-4 flex items-center gap-2 bg-accent/90 backdrop-blur-sm px-4 py-2 rounded-full"
+                          initial={{ scale: 0, rotate: -180 }}
+                          animate={{ scale: 1, rotate: 0 }}
+                          transition={{ type: "spring", stiffness: 260, damping: 20 }}
+                        >
+                          <div className="w-2.5 h-2.5 bg-accent-foreground rounded-full animate-pulse" />
+                          <span className="text-accent-foreground text-xs font-black tracking-wider">SELECTED</span>
+                        </motion.div>
+                        <motion.div
+                          className="absolute inset-0 border-4 border-accent pointer-events-none"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: [0, 1, 0] }}
+                          transition={{ duration: 1.5, repeat: Infinity }}
+                        />
+                      </>
                     )}
                   </div>
-                  <h3 className="font-black text-xl sm:text-2xl mb-4 tracking-wide">{map.name}</h3>
+                  <h3 className="font-black text-xl sm:text-2xl mb-4 tracking-[0.05em]">{map.name}</h3>
                   <div className="flex gap-3 flex-wrap">
-                    <Badge variant="secondary" className="text-xs sm:text-sm font-bold px-3 py-1.5">{map.type}</Badge>
-                    <Badge variant="outline" className="text-xs sm:text-sm font-bold px-3 py-1.5 border-primary/30">{map.size}</Badge>
+                    <Badge variant="secondary" className="text-xs sm:text-sm font-bold px-4 py-1.5">{map.type}</Badge>
+                    <Badge variant="outline" className="text-xs sm:text-sm font-bold px-4 py-1.5 border-primary/40">{map.size}</Badge>
                   </div>
                   
                   <motion.div
-                    className="absolute bottom-0 left-0 right-0 h-1.5 bg-accent shadow-lg shadow-accent/50"
+                    className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-transparent via-accent to-transparent shadow-[0_0_20px_rgba(245,166,35,0.8)]"
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: selectedMap === map.id ? 1 : 0 }}
-                    transition={{ duration: 0.3 }}
+                    transition={{ duration: 0.4 }}
                   />
                 </Card>
               </motion.div>
@@ -231,23 +252,36 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
             onClick={handleStartMatch}
             disabled={!selectedMap || isLoading}
             className={`
-              w-full sm:w-auto px-16 sm:px-20 h-16 sm:h-20 text-xl sm:text-2xl font-black tracking-wider
-              ${!selectedMap || isLoading ? 'opacity-50 cursor-not-allowed' : 'glow-accent hover:scale-[1.05] active:scale-[0.98]'}
-              transition-all duration-200 relative overflow-hidden group bg-accent/20 border-2 border-accent shadow-[0_0_30px_rgba(245,166,35,0.3)]
+              w-full sm:w-auto px-20 sm:px-28 h-20 sm:h-24 text-2xl sm:text-3xl font-black tracking-[0.15em]
+              ${!selectedMap || isLoading ? 'opacity-50 cursor-not-allowed' : 'glow-accent hover:scale-[1.06] active:scale-[0.97]'}
+              transition-all duration-300 relative overflow-hidden group glass-effect border-[3px] border-accent shadow-[0_0_50px_rgba(245,166,35,0.5)]
             `}
             size="lg"
           >
             {!selectedMap && !isLoading && (
               <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-accent/0 via-accent/30 to-accent/0"
+                className="absolute inset-0 bg-gradient-to-r from-accent/0 via-accent/40 to-accent/0"
                 animate={{ x: ['-100%', '200%'] }}
-                transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
+                transition={{ repeat: Infinity, duration: 2.5, ease: "linear" }}
               />
             )}
-            <span className="relative z-10 flex items-center gap-4">
-              <Play size={32} weight="fill" className={isLoading ? 'animate-pulse' : ''} />
-              {isLoading ? 'INITIALIZING...' : 'START MATCH'}
+            <span className="relative z-10 flex items-center gap-5">
+              <Play size={38} weight="fill" className={isLoading ? 'animate-pulse' : ''} />
+              {isLoading ? 'INITIALIZING...' : 'ENGAGE'}
             </span>
+            {!isLoading && selectedMap && (
+              <motion.div
+                className="absolute inset-0 bg-accent/20"
+                animate={{
+                  opacity: [0.2, 0.4, 0.2],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+            )}
           </Button>
         </motion.div>
       </motion.div>
