@@ -58,8 +58,8 @@
   --radius-2xl: calc(var(--radius) * 3);
   --radius-full: 9999px;
 
-  --font-heading: 'Rajdhani', system-ui, sans-serif;
-  --font-body: 'Inter', system-ui, sans-serif;
+  --font-heading: 'Orbitron', system-ui, sans-serif;
+  --font-body: 'Space Grotesk', system-ui, sans-serif;
 }
 
 * {
@@ -86,7 +86,7 @@ html {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.03em;
 }
 
 @keyframes float {

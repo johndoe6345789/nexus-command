@@ -84,15 +84,15 @@ A refined, contemporary palette with cool blues and warm orange accents, creatin
 
 ## Font Selection
 
-Typography conveys premium quality through clean, modern letterforms with excellent readability.
+Typography conveys futuristic, technical sophistication through distinctive geometric letterforms that evoke high-tech command systems and sci-fi interfaces.
 
 - **Typographic Hierarchy**:
-  - H1 (Game Title): Rajdhani Black/96px/tight tracking/-0.02em - Maximum impact
-  - H2 (Section Headers): Rajdhani Bold/48px/tight tracking - Clear sections
-  - H3 (Card Titles): Rajdhani Bold/24px/normal spacing - Content hierarchy
-  - Body (Descriptions): Inter Medium/16px/normal spacing - Excellent readability
-  - Labels (UI): Inter Semibold/14px/uppercase - UI elements
-  - Stats (Numbers): Rajdhani Bold/32px/tabular - Precise data display
+  - H1 (Game Title): Orbitron Black/96px/tight tracking/0.05em - Maximum sci-fi impact with technical precision
+  - H2 (Section Headers): Orbitron Bold/48px/normal tracking/0.03em - Clear futuristic sections
+  - H3 (Card Titles): Orbitron SemiBold/24px/normal spacing/0.02em - Technical hierarchy
+  - Body (Descriptions): Space Grotesk Medium/16px/normal spacing - Modern geometric readability
+  - Labels (UI): Space Grotesk SemiBold/14px/uppercase/0.05em - Clean technical UI elements
+  - Stats (Numbers): Orbitron Bold/32px/tabular/0.03em - Precise futuristic data display
 
 ## Animations
 
