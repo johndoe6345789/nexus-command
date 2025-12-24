@@ -1,6 +1,7 @@
 import { Button, Card, CardContent, Typography, Box, Stack } from '@mui/material'
 import { Play, Users, Gear, ChartBar, SignOut } from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
+import { Logo } from './Logo'
 
 interface MainMenuProps {
   onNavigate: (screen: string) => void
@@ -26,38 +27,35 @@ export function MainMenu({ onNavigate }: MainMenuProps) {
       }}
     >
       <Box sx={{ width: '100%', maxWidth: '1200px' }}>
-        <motion.div
-          initial={{ opacity: 0, y: -30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            mb: 10,
+          }}
         >
-          <Typography
-            variant="h1"
-            align="center"
-            sx={{
-              mb: 2,
-              background: 'linear-gradient(90deg, oklch(0.75 0.20 220), oklch(0.70 0.18 35), oklch(0.75 0.20 220))',
-              backgroundClip: 'text',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              animation: 'glow-pulse 3s ease-in-out infinite',
-            }}
+          <Logo size={100} showText={true} animate={true} />
+          
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.2 }}
           >
-            NEXUS COMMAND
-          </Typography>
-          <Typography
-            variant="body1"
-            align="center"
-            sx={{
-              color: 'text.secondary',
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              mb: 12,
-            }}
-          >
-            Next Generation Combat
-          </Typography>
-        </motion.div>
+            <Typography
+              variant="body1"
+              align="center"
+              sx={{
+                color: 'text.secondary',
+                letterSpacing: '0.15em',
+                textTransform: 'uppercase',
+                mt: 3,
+              }}
+            >
+              Next Generation Combat
+            </Typography>
+          </motion.div>
+        </Box>
 
         <Box
           sx={{
