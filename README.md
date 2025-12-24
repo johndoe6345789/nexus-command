@@ -1,6 +1,6 @@
-# 🎮 Arena Command - Game Menu System
+# 🎮 Nexus Command - Game Menu System
 
-A cyberpunk-styled game menu system for a Quake 3 Arena clone, built with React, TypeScript, and animated canvas backgrounds.
+A premium tactical game menu system for a Quake 3 Arena clone, built with React, TypeScript, and animated canvas backgrounds.
 
 ## ✨ Features
 

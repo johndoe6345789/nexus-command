@@ -43,7 +43,7 @@ export function MainMenu({ onNavigate }: MainMenuProps) {
               animation: 'glow-pulse 3s ease-in-out infinite',
             }}
           >
-            APEX ARENA
+            NEXUS COMMAND
           </Typography>
           <Typography
             variant="body1"

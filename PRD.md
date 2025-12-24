@@ -1,6 +1,6 @@
 # Planning Guide
 
-A premium AAA-quality game menu system inspired by modern shooters like Apex Legends, Call of Duty, and Halo Infinite - featuring clean layouts, generous spacing, sophisticated glass morphism, and cinematic animations.
+A premium AAA-quality game menu system for NEXUS COMMAND inspired by modern shooters like Apex Legends, Call of Duty, and Halo Infinite - featuring clean layouts, generous spacing, sophisticated glass morphism, and cinematic animations.
 
 **Experience Qualities**:
 1. **Premium** - AAAA-quality visual polish with refined glass morphism effects, sophisticated animations with physics-based easing, and meticulous attention to spacing and hierarchy

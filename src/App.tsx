@@ -18,7 +18,7 @@ function App() {
 
   const handleNavigate = (screen: string) => {
     if (screen === 'exit') {
-      if (confirm('Exit APEX ARENA?')) {
+      if (confirm('Exit NEXUS COMMAND?')) {
         window.close()
       }
       return
