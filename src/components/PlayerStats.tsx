@@ -43,31 +43,38 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
   return (
     <Box sx={{ minHeight: '100vh', p: 4 }}>
       <Box sx={{ maxWidth: '1400px', mx: 'auto' }}>
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
+        <Button
+          variant="outlined"
+          startIcon={<ArrowLeft size={20} weight="bold" />}
+          onClick={onBack}
+          sx={{ mb: 4 }}
         >
-          <Button
-            variant="outlined"
-            startIcon={<ArrowLeft size={20} weight="bold" />}
-            onClick={onBack}
-            sx={{ mb: 4 }}
-          >
-            Back to Menu
-          </Button>
+          Back to Menu
+        </Button>
 
-          <Stack direction="row" justifyContent="space-between" alignItems="flex-start" sx={{ mb: 6 }}>
-            <Box>
-              <Typography variant="h2" sx={{ mb: 2 }}>
-                Profile
-              </Typography>
-              <Typography variant="body1" color="text.secondary">
-                {playerName} • Level 42 • Elite Rank
-              </Typography>
-            </Box>
-            <Trophy size={80} weight="duotone" color="oklch(0.70 0.18 35)" />
-          </Stack>
-        </motion.div>
+        <Card sx={{ 
+          p: 4, 
+          bgcolor: 'rgba(10, 15, 30, 0.6)',
+          backdropFilter: 'blur(20px)',
+          border: '1px solid rgba(74, 158, 255, 0.2)',
+        }}>
+          <CardContent sx={{ p: 0 }}>
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+            >
+              <Stack direction="row" justifyContent="space-between" alignItems="flex-start" sx={{ mb: 6 }}>
+                <Box>
+                  <Typography variant="h2" sx={{ mb: 2 }}>
+                    Profile
+                  </Typography>
+                  <Typography variant="body1" color="text.secondary">
+                    {playerName} • Level 42 • Elite Rank
+                  </Typography>
+                </Box>
+                <Trophy size={80} weight="duotone" color="oklch(0.70 0.18 35)" />
+              </Stack>
+            </motion.div>
 
         <Grid container spacing={3} sx={{ mb: 4 }}>
           <Grid size={{ xs: 12, sm: 6, md: 3 }}>
@@ -315,6 +322,8 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
             </motion.div>
           </Grid>
         </Grid>
+          </CardContent>
+        </Card>
       </Box>
     </Box>
   )
