@@ -1,24 +1,20 @@
-import { PageLayout } from './templates'
-import { TabbedPanel } from './organisms'
-import { AudioControls } from './organisms'
-import { GlassCard, ActionButton } from './molecules'
-import { Text } from './atoms'
+import { Card, CardContent, TextField, Stack, Tabs, Tab, Button } from '@mui/material'
 import { Monitor, SpeakerHigh, GameController, User } from '@phosphor-icons/react'
-import {
-  Stack,
-  FormControlLabel,
-  Switch,
-  TextField,
-  Box,
-  Button as MuiButton,
-} from '@mui/material'
+import { motion } from 'framer-motion'
 import { useKV } from '@github/spark/hooks'
+import { useState } from 'react'
+import { PageContainer } from './atoms/PageContainer'
+import { BackButton } from './atoms/BackButton'
+import { ContentCard } from './atoms/ContentCard'
+import { PageHeader } from './atoms/PageHeader'
+import { VolumeControl } from './molecules/VolumeControl'
+import { DebugToggle } from './molecules/DebugToggle'
 
-interface SettingsRefactoredProps {
+interface SettingsProps {
   onBack: () => void
 }
 
-export function SettingsRefactored({ onBack }: SettingsRefactoredProps) {
+export function Settings({ onBack }: SettingsProps) {
   const [graphicsQuality, setGraphicsQuality] = useKV<string>('graphics-quality', 'high')
   const [masterVolume, setMasterVolume] = useKV<number>('master-volume', 80)
   const [musicVolume, setMusicVolume] = useKV<number>('music-volume', 60)
@@ -29,164 +25,152 @@ export function SettingsRefactored({ onBack }: SettingsRefactoredProps) {
   const [vsync, setVsync] = useKV<boolean>('vsync', false)
   const [antiAliasing, setAntiAliasing] = useKV<boolean>('anti-aliasing', true)
   const [motionBlur, setMotionBlur] = useKV<boolean>('motion-blur', false)
-
-  const tabs = [
-    {
-      label: 'Graphics',
-      icon: Monitor,
-      content: (
-        <GlassCard hoverable={false}>
-          <Stack spacing={4}>
-            <Box>
-              <Text variant="h6" sx={{ mb: 2 }}>
-                Graphics Quality
-              </Text>
-              <Stack direction="row" spacing={2}>
-                {['low', 'medium', 'high', 'ultra'].map((quality) => (
-                  <ActionButton
-                    key={quality}
-                    variant={graphicsQuality === quality ? 'contained' : 'outlined'}
-                    onClick={() => setGraphicsQuality(quality)}
-                    sx={{ flex: 1, height: '56px' }}
-                  >
-                    {quality.charAt(0).toUpperCase() + quality.slice(1)}
-                  </ActionButton>
-                ))}
-              </Stack>
-            </Box>
-
-            <Stack spacing={2}>
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={vsync}
-                    onChange={(e) => setVsync(e.target.checked)}
-                  />
-                }
-                label={<Text variant="h6">V-Sync</Text>}
-                labelPlacement="start"
-                sx={{ justifyContent: 'space-between', ml: 0 }}
-              />
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={antiAliasing}
-                    onChange={(e) => setAntiAliasing(e.target.checked)}
-                  />
-                }
-                label={<Text variant="h6">Anti-Aliasing</Text>}
-                labelPlacement="start"
-                sx={{ justifyContent: 'space-between', ml: 0 }}
-              />
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={motionBlur}
-                    onChange={(e) => setMotionBlur(e.target.checked)}
-                  />
-                }
-                label={<Text variant="h6">Motion Blur</Text>}
-                labelPlacement="start"
-                sx={{ justifyContent: 'space-between', ml: 0 }}
-              />
-            </Stack>
-          </Stack>
-        </GlassCard>
-      ),
-    },
-    {
-      label: 'Audio',
-      icon: SpeakerHigh,
-      content: (
-        <GlassCard hoverable={false}>
-          <AudioControls
-            masterVolume={masterVolume ?? 80}
-            musicVolume={musicVolume ?? 60}
-            sfxVolume={sfxVolume ?? 90}
-            onMasterVolumeChange={setMasterVolume}
-            onMusicVolumeChange={setMusicVolume}
-            onSfxVolumeChange={setSfxVolume}
-          />
-        </GlassCard>
-      ),
-    },
-    {
-      label: 'Controls',
-      icon: GameController,
-      content: (
-        <GlassCard hoverable={false}>
-          <Stack spacing={6}>
-            <Box 
-              sx={{ 
-                p: 3, 
-                borderRadius: '12px',
-                background: 'rgba(74, 158, 255, 0.05)',
-                border: '1px solid rgba(74, 158, 255, 0.2)',
-              }}
-            >
-              <Text variant="h5" sx={{ mb: 2 }}>
-                Mouse Sensitivity: {mouseSensitivity}%
-              </Text>
-            </Box>
-
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={invertY}
-                  onChange={(e) => setInvertY(e.target.checked)}
-                />
-              }
-              label={<Text variant="h6">Invert Y-Axis</Text>}
-              labelPlacement="start"
-              sx={{ justifyContent: 'space-between', ml: 0 }}
-            />
-
-            <Box sx={{ pt: 3, borderTop: 1, borderColor: 'divider' }}>
-              <MuiButton variant="outlined" size="large" fullWidth>
-                Customize Key Bindings
-              </MuiButton>
-            </Box>
-          </Stack>
-        </GlassCard>
-      ),
-    },
-    {
-      label: 'Profile',
-      icon: User,
-      content: (
-        <GlassCard hoverable={false}>
-          <Stack spacing={4}>
-            <TextField
-              label="Display Name"
-              value={playerName}
-              onChange={(e) => setPlayerName(e.target.value)}
-              fullWidth
-              variant="outlined"
-            />
-
-            <Box sx={{ pt: 3, borderTop: 1, borderColor: 'divider' }}>
-              <Stack spacing={2}>
-                <MuiButton variant="outlined" size="large" fullWidth>
-                  Change Avatar
-                </MuiButton>
-                <MuiButton variant="outlined" size="large" fullWidth>
-                  Manage Account
-                </MuiButton>
-              </Stack>
-            </Box>
-          </Stack>
-        </GlassCard>
-      ),
-    },
-  ]
+  const [activeTab, setActiveTab] = useState(0)
 
   return (
-    <PageLayout
-      title="Settings"
-      subtitle="Configure your experience"
-      onBack={onBack}
-    >
-      <TabbedPanel tabs={tabs} />
-    </PageLayout>
+    <PageContainer maxWidth="1200px">
+      <BackButton onBack={onBack} />
+      <ContentCard>
+        <PageHeader title="Settings" subtitle="Configure your experience" />
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+        >
+          <Tabs
+            value={activeTab}
+            onChange={(_, newValue) => setActiveTab(newValue)}
+            sx={{ mb: 4 }}
+          >
+            <Tab
+              icon={<Monitor size={20} weight="bold" />}
+              iconPosition="start"
+              label="Graphics"
+            />
+            <Tab
+              icon={<SpeakerHigh size={20} weight="bold" />}
+              iconPosition="start"
+              label="Audio"
+            />
+            <Tab
+              icon={<GameController size={20} weight="bold" />}
+              iconPosition="start"
+              label="Controls"
+            />
+            <Tab
+              icon={<User size={20} weight="bold" />}
+              iconPosition="start"
+              label="Profile"
+            />
+          </Tabs>
+
+          {activeTab === 0 && (
+            <Card>
+              <CardContent sx={{ p: 4 }}>
+                <Stack spacing={4}>
+                  <Stack direction="row" spacing={2}>
+                    {['low', 'medium', 'high', 'ultra'].map((quality) => (
+                      <Button
+                        key={quality}
+                        variant={graphicsQuality === quality ? 'contained' : 'outlined'}
+                        onClick={() => setGraphicsQuality(quality)}
+                        sx={{ flex: 1, height: '56px' }}
+                      >
+                        {quality.charAt(0).toUpperCase() + quality.slice(1)}
+                      </Button>
+                    ))}
+                  </Stack>
+                  <Stack spacing={2}>
+                    <DebugToggle
+                      title="V-Sync"
+                      description="Synchronize frame rate with display"
+                      checked={vsync ?? false}
+                      onChange={setVsync}
+                    />
+                    <DebugToggle
+                      title="Anti-Aliasing"
+                      description="Smooth jagged edges"
+                      checked={antiAliasing ?? true}
+                      onChange={setAntiAliasing}
+                    />
+                    <DebugToggle
+                      title="Motion Blur"
+                      description="Add motion blur effect"
+                      checked={motionBlur ?? false}
+                      onChange={setMotionBlur}
+                    />
+                  </Stack>
+                </Stack>
+              </CardContent>
+            </Card>
+          )}
+
+          {activeTab === 1 && (
+            <Card>
+              <CardContent sx={{ p: 4 }}>
+                <Stack spacing={6}>
+                  <VolumeControl
+                    label="Master Volume"
+                    value={masterVolume ?? 80}
+                    onChange={setMasterVolume}
+                    iconWeight="bold"
+                  />
+                  <VolumeControl
+                    label="Music Volume"
+                    value={musicVolume ?? 60}
+                    onChange={setMusicVolume}
+                    iconWeight="duotone"
+                  />
+                  <VolumeControl
+                    label="SFX Volume"
+                    value={sfxVolume ?? 90}
+                    onChange={setSfxVolume}
+                    iconWeight="fill"
+                  />
+                </Stack>
+              </CardContent>
+            </Card>
+          )}
+
+          {activeTab === 2 && (
+            <Card>
+              <CardContent sx={{ p: 4 }}>
+                <Stack spacing={6}>
+                  <VolumeControl
+                    label="Mouse Sensitivity"
+                    value={mouseSensitivity ?? 50}
+                    onChange={setMouseSensitivity}
+                    iconWeight="bold"
+                  />
+                  <DebugToggle
+                    title="Invert Y-Axis"
+                    description="Invert vertical mouse movement"
+                    checked={invertY ?? false}
+                    onChange={setInvertY}
+                  />
+                </Stack>
+              </CardContent>
+            </Card>
+          )}
+
+          {activeTab === 3 && (
+            <Card>
+              <CardContent sx={{ p: 4 }}>
+                <Stack spacing={4}>
+                  <TextField
+                    label="Display Name"
+                    value={playerName}
+                    onChange={(e) => setPlayerName(e.target.value)}
+                    fullWidth
+                    variant="outlined"
+                  />
+                </Stack>
+              </CardContent>
+            </Card>
+          )}
+        </motion.div>
+      </ContentCard>
+    </PageContainer>
   )
 }

@@ -1,5 +1,5 @@
 import { Box, BoxProps } from '@mui/material'
-import { ActionButton, PageHeader } from '../molecules'
+import { ActionButton, MoleculePageHeader } from '../molecules'
 import { ArrowLeft } from '@phosphor-icons/react'
 import { ReactNode } from 'react'
 
@@ -33,7 +33,7 @@ export function PageLayout({
           </ActionButton>
         )}
 
-        <PageHeader 
+        <MoleculePageHeader 
           title={title} 
           subtitle={subtitle} 
           sx={{ mb: 6 }} 

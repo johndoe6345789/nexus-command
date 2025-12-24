@@ -1,14 +1,14 @@
 import { useState } from 'react'
-import { TwoColumnLayout } from './templates'
-import { MapSelector, DifficultySelector } from './organisms'
-import { GlassCard, ActionButton } from './molecules'
-import { Text } from './atoms'
-import { Play } from '@phosphor-icons/react'
-import { CircularProgress, Box, Stack } from '@mui/material'
-import { motion } from 'framer-motion'
+import { Grid } from '@mui/material'
 import { toast } from 'sonner'
+import { PageContainer } from './atoms/PageContainer'
+import { BackButton } from './atoms/BackButton'
+import { ContentCard } from './atoms/ContentCard'
+import { PageHeader } from './atoms/PageHeader'
+import { MapSelectionGrid } from './organisms/MapSelectionGrid'
+import { MissionControlPanel } from './organisms/MissionControlPanel'
 
-interface SinglePlayerRefactoredProps {
+interface SinglePlayerProps {
   onBack: () => void
 }
 
@@ -28,7 +28,7 @@ const difficulties = [
   { id: 'legendary' as Difficulty, label: 'Legendary', color: '#f87171' },
 ]
 
-export function SinglePlayerRefactored({ onBack }: SinglePlayerRefactoredProps) {
+export function SinglePlayer({ onBack }: SinglePlayerProps) {
   const [selectedMap, setSelectedMap] = useState<string | null>(null)
   const [difficulty, setDifficulty] = useState<Difficulty>('veteran')
   const [loading, setLoading] = useState(false)
@@ -46,66 +46,32 @@ export function SinglePlayerRefactored({ onBack }: SinglePlayerRefactoredProps) 
     }, 2000)
   }
 
-  const selectedMapData = maps.find(m => m.id === selectedMap)
-  const selectedDifficultyData = difficulties.find(d => d.id === difficulty)
-
   return (
-    <TwoColumnLayout
-      title="Campaign"
-      subtitle="Select your battlefield and difficulty"
-      onBack={onBack}
-      leftColumn={
-        <MapSelector
-          maps={maps}
-          selectedMap={selectedMap}
-          onSelectMap={setSelectedMap}
-        />
-      }
-      rightColumn={
-        <GlassCard hoverable={false}>
-          <Stack spacing={4}>
-            <DifficultySelector
+    <PageContainer>
+      <BackButton onBack={onBack} />
+      <ContentCard>
+        <PageHeader title="Campaign" subtitle="Select your battlefield and difficulty" />
+        <Grid container spacing={4}>
+          <Grid size={{ xs: 12, lg: 8 }}>
+            <MapSelectionGrid
+              maps={maps}
+              selectedMap={selectedMap}
+              onSelectMap={setSelectedMap}
+            />
+          </Grid>
+          <Grid size={{ xs: 12, lg: 4 }}>
+            <MissionControlPanel
               difficulties={difficulties}
               selectedDifficulty={difficulty}
-              onSelectDifficulty={setDifficulty as (id: string) => void}
+              onSelectDifficulty={(id) => setDifficulty(id as Difficulty)}
+              selectedMap={selectedMap}
+              mapName={maps.find(m => m.id === selectedMap)?.name}
+              onStart={handleStart}
+              loading={loading}
             />
-
-            <Box sx={{ pt: 3, borderTop: 1, borderColor: 'divider' }}>
-              <ActionButton
-                variant="contained"
-                size="large"
-                fullWidth
-                onClick={handleStart}
-                disabled={!selectedMap || loading}
-                icon={Play}
-                iconWeight="fill"
-                sx={{ height: '64px', fontSize: '1.25rem' }}
-              >
-                {loading ? <CircularProgress size={20} /> : 'Start Mission'}
-              </ActionButton>
-            </Box>
-
-            {selectedMap && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-              >
-                <Stack spacing={1} sx={{ fontSize: '0.875rem', color: 'text.secondary' }}>
-                  <Text variant="body2">
-                    <strong>Map:</strong> {selectedMapData?.name}
-                  </Text>
-                  <Text variant="body2">
-                    <strong>Difficulty:</strong> {selectedDifficultyData?.label}
-                  </Text>
-                  <Text variant="body2">
-                    <strong>AI Bots:</strong> Enabled
-                  </Text>
-                </Stack>
-              </motion.div>
-            )}
-          </Stack>
-        </GlassCard>
-      }
-    />
+          </Grid>
+        </Grid>
+      </ContentCard>
+    </PageContainer>
   )
 }
