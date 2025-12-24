@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { ArrowLeft, Play, Skull } from '@phosphor-icons/react'
+import { ArrowLeft, Play, Skull, Robot } from '@phosphor-icons/react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 
@@ -70,7 +70,7 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
           <Button
             onClick={onBack}
             variant="outline"
-            className="glow-border w-full sm:w-auto h-12 px-8 font-bold hover:scale-105 transition-transform"
+            className="glow-border w-full sm:w-auto h-12 px-8 font-bold hover:scale-105 active:scale-95 hover:bg-primary/10 hover:border-primary transition-all duration-200"
           >
             <ArrowLeft size={20} weight="bold" className="mr-2" />
             BACK
@@ -83,8 +83,11 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
           transition={{ delay: 0.2 }}
           className="mb-10"
         >
-          <Card className="p-6 sm:p-10 glow-border w-full bg-card/50 backdrop-blur-md">
-            <h2 className="text-2xl sm:text-3xl font-black mb-8 text-primary tracking-wide">DIFFICULTY SETTING</h2>
+          <Card className="p-6 sm:p-10 glow-border w-full bg-card/50 backdrop-blur-md hover:shadow-[0_0_20px_rgba(99,102,241,0.15)] transition-all duration-300">
+            <h2 className="text-2xl sm:text-3xl font-black mb-8 text-primary tracking-wide flex items-center gap-3">
+              <Skull size={28} weight="bold" />
+              DIFFICULTY SETTING
+            </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {difficulties.map((diff, index) => (
                 <motion.div
@@ -99,9 +102,9 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
                     className={`
                       h-20 sm:h-24 font-black tracking-wider text-sm sm:text-base w-full
                       flex flex-col gap-2
-                      ${selectedDifficulty === diff.id ? 'glow-accent bg-accent/20 border-accent' : 'glow-border bg-card/60'}
+                      ${selectedDifficulty === diff.id ? 'glow-accent bg-accent/20 border-accent shadow-[0_0_20px_rgba(245,166,35,0.2)]' : 'glow-border bg-card/60 hover:bg-card/80'}
                       ${selectedDifficulty === diff.id ? diff.color : 'text-muted-foreground'}
-                      hover:scale-105 transition-all duration-200
+                      hover:scale-105 active:scale-95 transition-all duration-200
                     `}
                   >
                     <span className="text-base opacity-70">{diff.icon}</span>
@@ -114,23 +117,28 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
             <div className="mt-8 pt-8 border-t border-border/50">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
                 <div>
-                  <h3 className="text-base sm:text-lg font-bold text-primary mb-2">BOT COUNT</h3>
+                  <h3 className="text-base sm:text-lg font-bold text-primary mb-2 flex items-center gap-2">
+                    <Robot size={20} weight="bold" />
+                    BOT COUNT
+                  </h3>
                   <p className="text-xs sm:text-sm text-muted-foreground">Number of AI opponents in match</p>
                 </div>
                 <div className="flex items-center gap-4">
                   <Button
                     size="sm"
                     variant="outline"
-                    className="h-10 w-10 p-0 glow-border font-black text-lg"
+                    className="h-10 w-10 p-0 glow-border font-black text-lg hover:bg-accent/10 hover:border-accent hover:scale-110 active:scale-95 transition-all duration-200"
                     onClick={() => setBotCount(Math.max(1, botCount - 1))}
                   >
                     −
                   </Button>
-                  <span className="text-3xl sm:text-4xl font-black text-accent w-16 text-center tabular-nums">{botCount}</span>
+                  <span className="text-3xl sm:text-4xl font-black text-accent w-16 text-center tabular-nums">
+                    {botCount}
+                  </span>
                   <Button
                     size="sm"
                     variant="outline"
-                    className="h-10 w-10 p-0 glow-border font-black text-lg"
+                    className="h-10 w-10 p-0 glow-border font-black text-lg hover:bg-accent/10 hover:border-accent hover:scale-110 active:scale-95 transition-all duration-200"
                     onClick={() => setBotCount(Math.min(15, botCount + 1))}
                   >
                     +
@@ -163,11 +171,11 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
                 <Card
                   className={`
                     p-6 cursor-pointer transition-all duration-300 relative overflow-hidden group
-                    ${selectedMap === map.id ? 'glow-accent bg-accent/10 border-accent border-2' : 'glow-border hover:bg-card/80 hover:border-primary/50'}
+                    ${selectedMap === map.id ? 'glow-accent bg-accent/10 border-accent border-2 shadow-[0_0_25px_rgba(245,166,35,0.25)]' : 'glow-border hover:bg-card/80 hover:border-primary/50 hover:shadow-[0_0_15px_rgba(99,102,241,0.15)]'}
                   `}
                   onClick={() => setSelectedMap(map.id)}
                 >
-                  <div className={`aspect-video bg-gradient-to-br ${map.gradient} mb-5 rounded-md relative overflow-hidden border-2 border-border/50`}>
+                  <div className={`aspect-video bg-gradient-to-br ${map.gradient} mb-5 rounded-md relative overflow-hidden border-2 ${selectedMap === map.id ? 'border-accent/50' : 'border-border/50'} transition-all duration-300`}>
                     <div 
                       className="absolute inset-0 opacity-30" 
                       style={{
@@ -224,18 +232,20 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
             disabled={!selectedMap || isLoading}
             className={`
               w-full sm:w-auto px-16 sm:px-20 h-16 sm:h-20 text-xl sm:text-2xl font-black tracking-wider
-              ${!selectedMap || isLoading ? 'opacity-50' : 'glow-accent hover:scale-105'}
-              transition-all duration-200 relative overflow-hidden group
+              ${!selectedMap || isLoading ? 'opacity-50 cursor-not-allowed' : 'glow-accent hover:scale-[1.05] active:scale-[0.98]'}
+              transition-all duration-200 relative overflow-hidden group bg-accent/20 border-2 border-accent shadow-[0_0_30px_rgba(245,166,35,0.3)]
             `}
             size="lg"
           >
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-accent/0 via-accent/30 to-accent/0"
-              animate={{ x: ['-100%', '200%'] }}
-              transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
-            />
+            {!selectedMap && !isLoading && (
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-accent/0 via-accent/30 to-accent/0"
+                animate={{ x: ['-100%', '200%'] }}
+                transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
+              />
+            )}
             <span className="relative z-10 flex items-center gap-4">
-              <Play size={32} weight="fill" />
+              <Play size={32} weight="fill" className={isLoading ? 'animate-pulse' : ''} />
               {isLoading ? 'INITIALIZING...' : 'START MATCH'}
             </span>
           </Button>

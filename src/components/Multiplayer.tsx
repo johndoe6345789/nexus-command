@@ -115,7 +115,7 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
               onClick={handleRefresh}
               disabled={isRefreshing}
               variant="outline"
-              className="glow-border flex-1 sm:flex-none h-12 px-6 sm:px-8 font-bold hover:scale-105 transition-transform"
+              className="glow-border flex-1 sm:flex-none h-12 px-6 sm:px-8 font-bold hover:scale-105 active:scale-95 hover:bg-primary/10 hover:border-primary transition-all duration-200"
             >
               <ArrowsClockwise 
                 size={20} 
@@ -127,7 +127,7 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
             <Button
               onClick={onBack}
               variant="outline"
-              className="glow-border flex-1 sm:flex-none h-12 px-6 sm:px-8 font-bold hover:scale-105 transition-transform"
+              className="glow-border flex-1 sm:flex-none h-12 px-6 sm:px-8 font-bold hover:scale-105 active:scale-95 hover:bg-primary/10 hover:border-primary transition-all duration-200"
             >
               <ArrowLeft size={20} weight="bold" className="mr-2" />
               BACK
@@ -140,7 +140,7 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <Card className="p-5 sm:p-8 glow-border mb-10 bg-card/50 backdrop-blur-md">
+          <Card className="p-5 sm:p-8 glow-border mb-10 bg-card/50 backdrop-blur-md hover:shadow-[0_0_20px_rgba(99,102,241,0.15)] transition-all duration-300">
             <div className="hidden lg:grid grid-cols-12 gap-4 text-xs font-black text-muted-foreground/70 mb-6 px-4 pb-4 border-b border-border/50">
               <div className="col-span-4">SERVER NAME</div>
               <div className="col-span-2">MAP</div>
@@ -157,14 +157,14 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
                     initial={{ opacity: 0, x: -30 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.3 + index * 0.05 }}
-                    whileHover={{ x: 6, transition: { duration: 0.2 } }}
+                    whileHover={{ x: 6, scale: 1.01, transition: { duration: 0.2 } }}
                   >
                     <Card
                       className={`
                         p-5 sm:p-6 cursor-pointer transition-all duration-300 relative overflow-hidden group
                         ${selectedServer === server.id 
-                          ? 'glow-accent bg-accent/10 border-accent border-2' 
-                          : 'glow-border hover:bg-card/80 hover:border-primary/50'}
+                          ? 'glow-accent bg-accent/10 border-accent border-2 shadow-[0_0_25px_rgba(245,166,35,0.25)]' 
+                          : 'glow-border hover:bg-card/80 hover:border-primary/50 hover:shadow-[0_0_15px_rgba(99,102,241,0.15)]'}
                       `}
                       onClick={() => setSelectedServer(server.id)}
                     >
@@ -258,18 +258,20 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
             disabled={!selectedServer || isConnecting}
             className={`
               w-full sm:w-auto px-16 sm:px-20 h-16 sm:h-20 text-xl sm:text-2xl font-black tracking-wider
-              ${!selectedServer || isConnecting ? 'opacity-50' : 'glow-accent hover:scale-105'}
-              transition-all duration-200 relative overflow-hidden
+              ${!selectedServer || isConnecting ? 'opacity-50 cursor-not-allowed' : 'glow-accent hover:scale-[1.05] active:scale-[0.98]'}
+              transition-all duration-200 relative overflow-hidden bg-accent/20 border-2 border-accent shadow-[0_0_30px_rgba(245,166,35,0.3)]
             `}
             size="lg"
           >
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-accent/0 via-accent/30 to-accent/0"
-              animate={{ x: ['-100%', '200%'] }}
-              transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
-            />
+            {!selectedServer && !isConnecting && (
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-accent/0 via-accent/30 to-accent/0"
+                animate={{ x: ['-100%', '200%'] }}
+                transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
+              />
+            )}
             <span className="relative z-10 flex items-center gap-4">
-              <Play size={32} weight="fill" />
+              <Play size={32} weight="fill" className={isConnecting ? 'animate-pulse' : ''} />
               {isConnecting ? 'CONNECTING...' : 'JOIN SERVER'}
             </span>
           </Button>

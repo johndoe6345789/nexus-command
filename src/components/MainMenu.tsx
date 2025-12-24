@@ -52,10 +52,10 @@ export function MainMenu({ onNavigate }: MainMenuProps) {
               onClick={() => onNavigate(item.screen)}
               className={`
                 w-full h-12 sm:h-14 text-base sm:text-lg font-bold tracking-wider relative overflow-hidden
-                ${item.color === 'primary' ? 'bg-card hover:bg-primary/20 glow-border' : ''}
-                ${item.color === 'secondary' ? 'bg-card hover:bg-secondary glow-border' : ''}
-                ${item.color === 'destructive' ? 'bg-card hover:bg-destructive/20 border border-destructive' : ''}
-                transition-all duration-200 group
+                ${item.color === 'primary' ? 'bg-card hover:bg-primary/20 glow-border hover:shadow-[0_0_15px_rgba(99,102,241,0.2)]' : ''}
+                ${item.color === 'secondary' ? 'bg-card hover:bg-secondary glow-border hover:shadow-[0_0_15px_rgba(99,102,241,0.2)]' : ''}
+                ${item.color === 'destructive' ? 'bg-card hover:bg-destructive/20 border border-destructive hover:shadow-[0_0_15px_rgba(239,68,68,0.2)]' : ''}
+                transition-all duration-200 group hover:scale-[1.02] active:scale-[0.98]
               `}
               variant="outline"
             >

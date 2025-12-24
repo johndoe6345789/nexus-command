@@ -54,12 +54,12 @@ function StatCard({ icon: Icon, label, value, color, delay }: StatCardProps) {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, type: "spring", stiffness: 100 }}
-      whileHover={{ y: -6, scale: 1.03, transition: { duration: 0.2 } }}
+      whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.2 } }}
     >
-      <Card className={`p-6 sm:p-8 glow-border ${color} relative overflow-hidden group bg-card/50 backdrop-blur-md hover:bg-card/70 transition-all duration-300`}>
+      <Card className={`p-6 sm:p-8 glow-border ${color} relative overflow-hidden group bg-card/50 backdrop-blur-md hover:bg-card/70 hover:shadow-[0_0_25px_rgba(99,102,241,0.2)] transition-all duration-300`}>
         <div className="relative z-10">
           <div className="flex items-center gap-3 mb-4">
-            <div className={`p-3 rounded-md ${color.replace('text-', 'bg-')}/20 border-2 border-current`}>
+            <div className={`p-3 rounded-md ${color.replace('text-', 'bg-')}/20 border-2 border-current group-hover:scale-110 transition-transform duration-200`}>
               <Icon size={28} weight="bold" className={`${color}`} />
             </div>
             <h3 className="font-black text-sm sm:text-base text-muted-foreground tracking-widest">{label}</h3>
@@ -68,7 +68,7 @@ function StatCard({ icon: Icon, label, value, color, delay }: StatCardProps) {
             {formattedValue}
           </div>
         </div>
-        <div className="absolute -bottom-4 -right-4 opacity-5 group-hover:opacity-10 transition-opacity">
+        <div className="absolute -bottom-4 -right-4 opacity-5 group-hover:opacity-10 transition-opacity duration-300">
           <Icon size={140} weight="bold" className="sm:w-[180px] sm:h-[180px]" />
         </div>
         <motion.div
@@ -138,7 +138,7 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
           <Button
             onClick={onBack}
             variant="outline"
-            className="glow-border w-full sm:w-auto h-12 px-8 font-bold hover:scale-105 transition-transform"
+            className="glow-border w-full sm:w-auto h-12 px-8 font-bold hover:scale-105 active:scale-95 hover:bg-primary/10 hover:border-primary transition-all duration-200"
           >
             <ArrowLeft size={20} weight="bold" className="mr-2" />
             BACK
@@ -182,7 +182,7 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.6 }}
           >
-            <Card className="p-7 sm:p-10 glow-border bg-card/50 backdrop-blur-md">
+            <Card className="p-7 sm:p-10 glow-border bg-card/50 backdrop-blur-md hover:shadow-[0_0_20px_rgba(99,102,241,0.15)] transition-all duration-300">
               <h2 className="text-2xl sm:text-3xl font-black mb-8 text-primary tracking-wide flex items-center gap-4">
                 <span className="w-2 h-10 bg-accent rounded"></span>
                 RECENT MATCHES
@@ -194,8 +194,9 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.7 + index * 0.08 }}
+                    whileHover={{ x: 6, transition: { duration: 0.2 } }}
                   >
-                    <div className="p-5 bg-card/60 rounded-lg glow-border hover:bg-card/80 transition-all duration-200 group">
+                    <div className="p-5 bg-card/60 rounded-lg glow-border hover:bg-card/80 hover:shadow-[0_0_15px_rgba(99,102,241,0.15)] transition-all duration-200 group">
                       <div className="flex justify-between items-start mb-4">
                         <div>
                           <div className="font-black text-base sm:text-lg flex items-center gap-2">
@@ -232,7 +233,7 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.6 }}
           >
-            <Card className="p-7 sm:p-10 glow-border bg-card/50 backdrop-blur-md">
+            <Card className="p-7 sm:p-10 glow-border bg-card/50 backdrop-blur-md hover:shadow-[0_0_20px_rgba(99,102,241,0.15)] transition-all duration-300">
               <h2 className="text-2xl sm:text-3xl font-black mb-8 text-primary tracking-wide flex items-center gap-4">
                 <span className="w-2 h-10 bg-accent rounded"></span>
                 WEAPON STATISTICS
@@ -244,6 +245,7 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.7 + index * 0.08 }}
+                    whileHover={{ x: -6, transition: { duration: 0.2 } }}
                   >
                     <div className="space-y-3">
                       <div className="flex justify-between items-center">
@@ -255,7 +257,7 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
                       <div className="flex items-center gap-4">
                         <div className="flex-1 h-3 bg-secondary/30 rounded-full overflow-hidden border border-border/30">
                           <motion.div
-                            className="h-full bg-gradient-to-r from-primary to-accent"
+                            className="h-full bg-gradient-to-r from-primary to-accent shadow-[0_0_10px_rgba(99,102,241,0.5)]"
                             initial={{ width: 0 }}
                             animate={{ width: `${weapon.accuracy}%` }}
                             transition={{ delay: 0.8 + index * 0.1, duration: 0.8, ease: "easeOut" }}
