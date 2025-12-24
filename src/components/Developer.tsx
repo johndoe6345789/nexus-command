@@ -6,6 +6,7 @@ import { PageContainer } from './atoms/PageContainer'
 import { BackButton } from './atoms/BackButton'
 import { ContentCard } from './atoms/ContentCard'
 import { PageHeader } from './atoms/PageHeader'
+import { GenerationProgressPopup } from './atoms/GenerationProgressPopup'
 import { DeveloperTabs } from './organisms/DeveloperTabs'
 import { OverviewTab } from './organisms/OverviewTab'
 import { DebugOptionsTab } from './organisms/DebugOptionsTab'
@@ -29,6 +30,9 @@ export function Developer({ onBack }: DeveloperProps) {
   const [noclip, setNoclip] = useKV<boolean>('noclip', false)
   const [consoleInput, setConsoleInput] = useState('')
   const [consoleOutput, setConsoleOutput] = useState<string[]>(INITIAL_CONSOLE_OUTPUT)
+  const [isGenerating, setIsGenerating] = useState(false)
+  const [generationProgress, setGenerationProgress] = useState(0)
+  const [generationType, setGenerationType] = useState<string>('')
 
   const systemStats: SystemStats = {
     fps: 144,
@@ -61,6 +65,13 @@ export function Developer({ onBack }: DeveloperProps) {
 
   return (
     <PageContainer>
+      <GenerationProgressPopup
+        isVisible={isGenerating}
+        progress={generationProgress}
+        label="Generating map..."
+        type={generationType}
+      />
+      
       <BackButton onBack={onBack} />
       <ContentCard>
         <PageHeader
@@ -107,7 +118,25 @@ export function Developer({ onBack }: DeveloperProps) {
 
           {activeTab === 4 && <RenderStatsTab systemStats={systemStats} />}
 
-          {activeTab === 5 && <ProceduralGenTab />}
+          {activeTab === 5 && (
+            <ProceduralGenTab 
+              isGenerating={isGenerating}
+              generationProgress={generationProgress}
+              onGenerationStart={(type: string) => {
+                setIsGenerating(true)
+                setGenerationType(type)
+                setGenerationProgress(0)
+              }}
+              onGenerationProgress={(progress: number) => {
+                setGenerationProgress(progress)
+              }}
+              onGenerationEnd={() => {
+                setIsGenerating(false)
+                setGenerationProgress(0)
+                setGenerationType('')
+              }}
+            />
+          )}
 
           {activeTab === 6 && <LoadingTab />}
         </AnimatePresence>

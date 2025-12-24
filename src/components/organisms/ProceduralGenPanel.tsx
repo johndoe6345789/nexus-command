@@ -3,7 +3,7 @@ import { Cube, Planet, Tree, Mountains, Building, Shuffle, Download, Play, Arrow
 import { useState, useRef, useEffect } from 'react'
 import { toast } from 'sonner'
 import { useKV } from '@github/spark/hooks'
-import { ProgressBar, Spinner } from '../atoms'
+import { Spinner } from '../atoms'
 
 interface GenerationOption {
   id: string
@@ -21,6 +21,14 @@ interface MapData {
   preview: string
 }
 
+interface ProceduralGenPanelProps {
+  isGenerating: boolean
+  generationProgress: number
+  onGenerationStart: (type: string) => void
+  onGenerationProgress: (progress: number) => void
+  onGenerationEnd: () => void
+}
+
 const generationTypes: GenerationOption[] = [
   { id: 'arena', name: 'Arena Map', icon: Building, color: 'oklch(0.75 0.20 220)', description: 'Generate combat arena layouts' },
   { id: 'terrain', name: 'Terrain', icon: Mountains, color: '#4ade80', description: 'Generate heightmap-based landscapes' },
@@ -30,12 +38,16 @@ const generationTypes: GenerationOption[] = [
   { id: 'meshes', name: 'Custom Meshes', icon: Cube, color: '#f59e0b', description: 'Procedural 3D geometry' },
 ]
 
-export function ProceduralGenPanel() {
+export function ProceduralGenPanel({
+  isGenerating,
+  generationProgress,
+  onGenerationStart,
+  onGenerationProgress,
+  onGenerationEnd
+}: ProceduralGenPanelProps) {
   const [selectedType, setSelectedType] = useState<string>('arena')
   const [seed, setSeed] = useState<string>('')
   const [complexity, setComplexity] = useState<string>('medium')
-  const [isGenerating, setIsGenerating] = useState(false)
-  const [generationProgress, setGenerationProgress] = useState(0)
   const [generationHistory, setGenerationHistory] = useKV<MapData[]>('map-generation-history', [])
   const [currentMapData, setCurrentMapData] = useState<MapData | null>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -261,16 +273,16 @@ export function ProceduralGenPanel() {
   }
 
   const handleGenerate = async () => {
-    setIsGenerating(true)
-    setGenerationProgress(0)
     const actualSeed = seed || Math.floor(Math.random() * 1000000).toString()
+    
+    onGenerationStart(selectedType)
     
     toast.loading(`Generating ${selectedType}...`, { id: 'gen-toast' })
     
     const steps = 5
     for (let i = 0; i <= steps; i++) {
       await new Promise(resolve => setTimeout(resolve, 180))
-      setGenerationProgress((i / steps) * 100)
+      onGenerationProgress((i / steps) * 100)
     }
     
     const mapData: MapData = {
@@ -286,8 +298,7 @@ export function ProceduralGenPanel() {
     setGenerationHistory((current) => [mapData, ...(current || [])].slice(0, 10))
     
     toast.success(`Generated ${selectedType} with seed: ${actualSeed}`, { id: 'gen-toast' })
-    setIsGenerating(false)
-    setGenerationProgress(0)
+    onGenerationEnd()
   }
 
   const handleRandomSeed = () => {
@@ -411,17 +422,6 @@ export function ProceduralGenPanel() {
                   ))}
                 </Stack>
               </Box>
-
-              {isGenerating && (
-                <Box sx={{ py: 2 }}>
-                  <ProgressBar 
-                    value={generationProgress} 
-                    label="Generating map..."
-                    color="oklch(0.65 0.25 230)"
-                    height={12}
-                  />
-                </Box>
-              )}
 
               <Stack direction="row" spacing={2} sx={{ pt: 2 }}>
                 <Button
