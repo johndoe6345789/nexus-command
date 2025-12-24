@@ -47,6 +47,13 @@ This is a menu system with navigation between different screens (main menu, serv
 - **Progression**: Menu → Stats screen → View overall stats → Browse match history → View weapon statistics → Return to menu
 - **Success criteria**: Stats are accurately calculated and displayed, charts render correctly, data persists
 
+### Automated Testing Suite
+- **Functionality**: Comprehensive Playwright end-to-end tests covering all UI interactions, animations, styling, and performance
+- **Purpose**: Ensure background is not boring (black/white), verify all features work correctly, and maintain quality across updates
+- **Trigger**: Run via `npm test` or automatically in CI/CD pipeline
+- **Progression**: Tests start → Dev server launches → Browser automation runs → Canvas animations verified → Navigation flows tested → Performance metrics collected → Report generated
+- **Success criteria**: 50+ tests pass including background color verification, particle animation checks, navigation flows, theme validation, and FPS performance metrics
+
 ## Edge Case Handling
 
 - **No servers available**: Display "No servers found" message with refresh suggestion in multiplayer browser
