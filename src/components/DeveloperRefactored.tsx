@@ -1,25 +1,24 @@
-import { Card, CardContent, Stack, Grid, Box, Tabs, Tab, Typography, Chip, useMediaQuery, useTheme } from '@mui/material'
-import { Code, ChartLine, Lightning, Database, Bug, Gear, Terminal, Eye, Cube } from '@phosphor-icons/react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { Code } from '@phosphor-icons/react'
+import { AnimatePresence } from 'framer-motion'
 import { useKV } from '@github/spark/hooks'
 import { useState } from 'react'
 import { PageContainer } from './atoms/PageContainer'
 import { BackButton } from './atoms/BackButton'
 import { ContentCard } from './atoms/ContentCard'
 import { PageHeader } from './atoms/PageHeader'
-import { StatCard } from './atoms/StatCard'
-import { DebugToggle } from './molecules/DebugToggle'
-import { ConsolePanel } from './organisms/ConsolePanel'
-import { ProceduralGenPanel } from './organisms/ProceduralGenPanel'
+import { DeveloperTabs } from './organisms/DeveloperTabs'
+import { OverviewTab } from './organisms/OverviewTab'
+import { DebugOptionsTab } from './organisms/DebugOptionsTab'
+import { CheatCodesTab } from './organisms/CheatCodesTab'
+import { ConsoleTab } from './organisms/ConsoleTab'
+import { RenderStatsTab } from './organisms/RenderStatsTab'
+import { ProceduralGenTab } from './organisms/ProceduralGenTab'
 import { SystemStats } from '@/types'
 import { handleConsoleCommand } from '@/utils'
 import { DeveloperProps } from './props'
 import { INITIAL_CONSOLE_OUTPUT, CONSOLE_MAX_LINES } from '@/constants'
 
 export function Developer({ onBack }: DeveloperProps) {
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const isTablet = useMediaQuery(theme.breakpoints.down('md'))
   const [activeTab, setActiveTab] = useState(0)
   const [debugMode, setDebugMode] = useKV<boolean>('debug-mode', false)
   const [showFPS, setShowFPS] = useKV<boolean>('show-fps', false)
@@ -69,240 +68,45 @@ export function Developer({ onBack }: DeveloperProps) {
           icon={Code}
         />
 
-        <Box sx={{ borderBottom: 1, borderColor: 'rgba(74, 158, 255, 0.2)', mb: 4 }}>
-          <Tabs
-            value={activeTab}
-            onChange={(_, newValue) => setActiveTab(newValue)}
-            variant={isMobile ? 'scrollable' : 'standard'}
-            scrollButtons={isMobile ? 'auto' : false}
-            allowScrollButtonsMobile
-            sx={{
-              '& .MuiTab-root': {
-                textTransform: 'none',
-                fontSize: isMobile ? '0.875rem' : '1rem',
-                fontWeight: 600,
-                minHeight: isMobile ? '48px' : '56px',
-                minWidth: isMobile ? 'auto' : '90px',
-                px: isMobile ? 2 : 3,
-              },
-              '& .MuiTabs-scrollButtons': {
-                color: 'oklch(0.75 0.20 220)',
-                '&.Mui-disabled': {
-                  opacity: 0.3,
-                },
-              },
-            }}
-          >
-            <Tab 
-              icon={<ChartLine size={isMobile ? 20 : 24} />} 
-              label={isTablet ? undefined : "Overview"}
-              iconPosition="start"
-            />
-            <Tab 
-              icon={<Gear size={isMobile ? 20 : 24} />} 
-              label={isTablet ? undefined : "Debug Options"}
-              iconPosition="start"
-            />
-            <Tab 
-              icon={<Lightning size={isMobile ? 20 : 24} />} 
-              label={isTablet ? undefined : "Cheat Codes"}
-              iconPosition="start"
-            />
-            <Tab 
-              icon={<Terminal size={isMobile ? 20 : 24} />} 
-              label={isTablet ? undefined : "Console"}
-              iconPosition="start"
-            />
-            <Tab 
-              icon={<Eye size={isMobile ? 20 : 24} />} 
-              label={isTablet ? undefined : "Render Stats"}
-              iconPosition="start"
-            />
-            <Tab 
-              icon={<Cube size={isMobile ? 20 : 24} />} 
-              label={isTablet ? undefined : "Proc Gen"}
-              iconPosition="start"
-            />
-          </Tabs>
-        </Box>
+        <DeveloperTabs activeTab={activeTab} onTabChange={setActiveTab} />
 
         <AnimatePresence mode="wait">
-          {activeTab === 0 && (
-            <motion.div
-              key="overview"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <Grid container spacing={3}>
-                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-                  <StatCard icon={ChartLine} iconColor="oklch(0.75 0.20 220)" label="FPS" value={systemStats.fps} />
-                </Grid>
-                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-                  <StatCard icon={Lightning} iconColor="#4ade80" label="Ping" value={`${systemStats.ping}ms`} />
-                </Grid>
-                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-                  <StatCard icon={Database} iconColor="#fbbf24" label="Memory" value={systemStats.memoryUsage} />
-                </Grid>
-                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-                  <StatCard icon={Bug} iconColor="#8b5cf6" label="Draw Calls" value={systemStats.drawCalls} />
-                </Grid>
-              </Grid>
-            </motion.div>
-          )}
+          {activeTab === 0 && <OverviewTab systemStats={systemStats} />}
 
           {activeTab === 1 && (
-            <motion.div
-              key="debug"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <Card>
-                <CardContent sx={{ p: 4 }}>
-                  <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 4 }}>
-                    <Gear size={32} weight="duotone" color="oklch(0.75 0.20 220)" />
-                    <Typography variant="h4">Debug Options</Typography>
-                  </Stack>
-                  <Stack spacing={3}>
-                    <DebugToggle
-                      title="Debug Mode"
-                      description="Enable advanced debugging features"
-                      checked={debugMode ?? false}
-                      onChange={setDebugMode}
-                    />
-                    <DebugToggle
-                      title="Show FPS Counter"
-                      description="Display real-time frame rate information"
-                      checked={showFPS ?? false}
-                      onChange={setShowFPS}
-                    />
-                    <DebugToggle
-                      title="Show Hitboxes"
-                      description="Render collision boundaries for all entities"
-                      checked={showHitboxes ?? false}
-                      onChange={setShowHitboxes}
-                    />
-                  </Stack>
-                </CardContent>
-              </Card>
-            </motion.div>
+            <DebugOptionsTab
+              debugMode={debugMode ?? false}
+              showFPS={showFPS ?? false}
+              showHitboxes={showHitboxes ?? false}
+              onDebugModeChange={setDebugMode}
+              onShowFPSChange={setShowFPS}
+              onShowHitboxesChange={setShowHitboxes}
+            />
           )}
 
           {activeTab === 2 && (
-            <motion.div
-              key="cheats"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <Card>
-                <CardContent sx={{ p: 4 }}>
-                  <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 4 }}>
-                    <Lightning size={32} weight="duotone" color="#fbbf24" />
-                    <Typography variant="h4">Cheat Codes</Typography>
-                  </Stack>
-                  <Stack spacing={3}>
-                    <DebugToggle
-                      title="God Mode"
-                      description="Become invincible to all damage"
-                      checked={godMode ?? false}
-                      onChange={setGodMode}
-                    />
-                    <DebugToggle
-                      title="Unlimited Ammo"
-                      description="Never run out of ammunition"
-                      checked={unlimitedAmmo ?? false}
-                      onChange={setUnlimitedAmmo}
-                    />
-                    <DebugToggle
-                      title="No Clip"
-                      description="Fly through walls and terrain"
-                      checked={noclip ?? false}
-                      onChange={setNoclip}
-                    />
-                  </Stack>
-                </CardContent>
-              </Card>
-            </motion.div>
+            <CheatCodesTab
+              godMode={godMode ?? false}
+              unlimitedAmmo={unlimitedAmmo ?? false}
+              noclip={noclip ?? false}
+              onGodModeChange={setGodMode}
+              onUnlimitedAmmoChange={setUnlimitedAmmo}
+              onNoclipChange={setNoclip}
+            />
           )}
 
           {activeTab === 3 && (
-            <motion.div
-              key="console"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <Card>
-                <CardContent sx={{ p: 4 }}>
-                  <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 4 }}>
-                    <Terminal size={32} weight="duotone" color="oklch(0.75 0.20 220)" />
-                    <Typography variant="h4">Console</Typography>
-                  </Stack>
-                  <ConsolePanel
-                    output={consoleOutput}
-                    input={consoleInput}
-                    onInputChange={setConsoleInput}
-                    onSubmit={handleConsoleSubmit}
-                  />
-                </CardContent>
-              </Card>
-            </motion.div>
+            <ConsoleTab
+              output={consoleOutput}
+              input={consoleInput}
+              onInputChange={setConsoleInput}
+              onSubmit={handleConsoleSubmit}
+            />
           )}
 
-          {activeTab === 4 && (
-            <motion.div
-              key="render"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <Card>
-                <CardContent sx={{ p: 4 }}>
-                  <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 4 }}>
-                    <Eye size={32} weight="duotone" color="#4ade80" />
-                    <Typography variant="h4">Render Stats</Typography>
-                  </Stack>
-                  <Stack spacing={3}>
-                    <Stack direction="row" justifyContent="space-between" alignItems="center">
-                      <Typography color="text.secondary">Triangles</Typography>
-                      <Chip label={systemStats.triangles} color="primary" />
-                    </Stack>
-                    <Stack direction="row" justifyContent="space-between" alignItems="center">
-                      <Typography color="text.secondary">Active Shaders</Typography>
-                      <Chip label={systemStats.shaders} color="primary" />
-                    </Stack>
-                    <Stack direction="row" justifyContent="space-between" alignItems="center">
-                      <Typography color="text.secondary">Loaded Textures</Typography>
-                      <Chip label={systemStats.textures} color="primary" />
-                    </Stack>
-                    <Stack direction="row" justifyContent="space-between" alignItems="center">
-                      <Typography color="text.secondary">Session Uptime</Typography>
-                      <Chip label={systemStats.uptime} color="primary" />
-                    </Stack>
-                  </Stack>
-                </CardContent>
-              </Card>
-            </motion.div>
-          )}
+          {activeTab === 4 && <RenderStatsTab systemStats={systemStats} />}
 
-          {activeTab === 5 && (
-            <motion.div
-              key="procgen"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <ProceduralGenPanel />
-            </motion.div>
-          )}
+          {activeTab === 5 && <ProceduralGenTab />}
         </AnimatePresence>
       </ContentCard>
     </PageContainer>
