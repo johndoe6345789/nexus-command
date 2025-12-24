@@ -16,8 +16,8 @@ export function DeveloperTabs({ activeTab, onTabChange }: DeveloperTabsProps) {
       <Tabs
         value={activeTab}
         onChange={(_, newValue) => onTabChange(newValue)}
-        variant={isMobile ? 'scrollable' : 'standard'}
-        scrollButtons={isMobile ? 'auto' : false}
+        variant="scrollable"
+        scrollButtons="auto"
         allowScrollButtonsMobile
         sx={{
           '& .MuiTab-root': {
