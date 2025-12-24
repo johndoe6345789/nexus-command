@@ -1,4 +1,4 @@
-import { Card, CardContent, Stack, Grid, Box, Tabs, Tab, Typography, Chip } from '@mui/material'
+import { Card, CardContent, Stack, Grid, Box, Tabs, Tab, Typography, Chip, useMediaQuery, useTheme } from '@mui/material'
 import { Code, ChartLine, Lightning, Database, Bug, Gear, Terminal, Eye } from '@phosphor-icons/react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useKV } from '@github/spark/hooks'
@@ -16,6 +16,9 @@ import { DeveloperProps } from './props'
 import { INITIAL_CONSOLE_OUTPUT, CONSOLE_MAX_LINES } from '@/constants'
 
 export function Developer({ onBack }: DeveloperProps) {
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const isTablet = useMediaQuery(theme.breakpoints.down('md'))
   const [activeTab, setActiveTab] = useState(0)
   const [debugMode, setDebugMode] = useKV<boolean>('debug-mode', false)
   const [showFPS, setShowFPS] = useKV<boolean>('show-fps', false)
@@ -69,20 +72,51 @@ export function Developer({ onBack }: DeveloperProps) {
           <Tabs
             value={activeTab}
             onChange={(_, newValue) => setActiveTab(newValue)}
+            variant={isMobile ? 'scrollable' : 'standard'}
+            scrollButtons={isMobile ? 'auto' : false}
+            allowScrollButtonsMobile
             sx={{
               '& .MuiTab-root': {
                 textTransform: 'none',
-                fontSize: '1rem',
+                fontSize: isMobile ? '0.875rem' : '1rem',
                 fontWeight: 600,
-                minHeight: '56px',
+                minHeight: isMobile ? '48px' : '56px',
+                minWidth: isMobile ? 'auto' : '90px',
+                px: isMobile ? 2 : 3,
+              },
+              '& .MuiTabs-scrollButtons': {
+                color: 'oklch(0.75 0.20 220)',
+                '&.Mui-disabled': {
+                  opacity: 0.3,
+                },
               },
             }}
           >
-            <Tab label="Overview" />
-            <Tab label="Debug Options" />
-            <Tab label="Cheat Codes" />
-            <Tab label="Console" />
-            <Tab label="Render Stats" />
+            <Tab 
+              icon={<ChartLine size={isMobile ? 20 : 24} />} 
+              label={isTablet ? undefined : "Overview"}
+              iconPosition="start"
+            />
+            <Tab 
+              icon={<Gear size={isMobile ? 20 : 24} />} 
+              label={isTablet ? undefined : "Debug Options"}
+              iconPosition="start"
+            />
+            <Tab 
+              icon={<Lightning size={isMobile ? 20 : 24} />} 
+              label={isTablet ? undefined : "Cheat Codes"}
+              iconPosition="start"
+            />
+            <Tab 
+              icon={<Terminal size={isMobile ? 20 : 24} />} 
+              label={isTablet ? undefined : "Console"}
+              iconPosition="start"
+            />
+            <Tab 
+              icon={<Eye size={isMobile ? 20 : 24} />} 
+              label={isTablet ? undefined : "Render Stats"}
+              iconPosition="start"
+            />
           </Tabs>
         </Box>
 
