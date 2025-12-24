@@ -24,7 +24,7 @@ import {
 } from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
 import { useKV } from '@github/spark/hooks'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
 interface DeveloperProps {
   onBack: () => void
@@ -43,6 +43,11 @@ export function Developer({ onBack }: DeveloperProps) {
     '> Nexus Command v2.0.1 - Developer Console',
     '> Type "help" for available commands',
   ])
+  const consoleEndRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    consoleEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [consoleOutput])
 
   const systemStats = {
     fps: 144,
@@ -456,6 +461,7 @@ export function Developer({ onBack }: DeveloperProps) {
                         {line}
                       </Typography>
                     ))}
+                    <div ref={consoleEndRef} />
                   </Box>
 
                   <form onSubmit={handleConsoleSubmit}>
