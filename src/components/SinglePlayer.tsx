@@ -47,38 +47,38 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
   }
 
   return (
-    <div className="min-h-screen p-4 md:p-8">
+    <div className="relative w-full min-h-screen p-4 md:p-8 overflow-y-auto">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-7xl mx-auto"
+        className="max-w-7xl mx-auto w-full"
       >
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-4xl md:text-5xl font-black glow-text mb-2">SINGLE PLAYER</h1>
-            <p className="text-muted-foreground font-body tracking-wider">TRAIN AGAINST AI OPPONENTS</p>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 sm:mb-8">
+          <div className="w-full sm:w-auto">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black glow-text mb-2">SINGLE PLAYER</h1>
+            <p className="text-muted-foreground font-body tracking-wider text-sm sm:text-base">TRAIN AGAINST AI OPPONENTS</p>
           </div>
           <Button
             onClick={onBack}
             variant="outline"
-            className="glow-border"
+            className="glow-border w-full sm:w-auto"
           >
             <ArrowLeft size={20} weight="bold" className="mr-2" />
             BACK
           </Button>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6 mb-8">
-          <Card className="p-6 glow-border col-span-full md:col-span-3">
-            <h2 className="text-xl font-bold mb-4 text-primary">SELECT DIFFICULTY</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 gap-4 sm:gap-6 mb-6 sm:mb-8">
+          <Card className="p-4 sm:p-6 glow-border w-full">
+            <h2 className="text-lg sm:text-xl font-bold mb-4 text-primary">SELECT DIFFICULTY</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3">
               {difficulties.map((diff) => (
                 <Button
                   key={diff.id}
                   onClick={() => setSelectedDifficulty(diff.id)}
                   variant={selectedDifficulty === diff.id ? 'default' : 'outline'}
                   className={`
-                    h-12 font-bold tracking-wider
+                    h-10 sm:h-12 font-bold tracking-wider text-xs sm:text-base
                     ${selectedDifficulty === diff.id ? 'glow-accent' : 'glow-border'}
                     ${diff.color}
                   `}
@@ -91,8 +91,8 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
         </div>
 
         <div className="mb-6">
-          <h2 className="text-2xl font-bold mb-4 text-primary">SELECT MAP</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <h2 className="text-xl sm:text-2xl font-bold mb-4 text-primary">SELECT MAP</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             {maps.map((map, index) => (
               <motion.div
                 key={map.id}
@@ -113,10 +113,10 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
                         backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 10px, oklch(0.65 0.25 250 / 0.2) 10px, oklch(0.65 0.25 250 / 0.2) 11px)',
                       }}
                     />
-                    <span className="text-4xl font-black text-primary/30">{map.id.toUpperCase()}</span>
+                    <span className="text-2xl sm:text-4xl font-black text-primary/30">{map.id.toUpperCase()}</span>
                   </div>
-                  <h3 className="font-bold text-lg mb-2">{map.name}</h3>
-                  <div className="flex gap-2">
+                  <h3 className="font-bold text-base sm:text-lg mb-2">{map.name}</h3>
+                  <div className="flex gap-2 flex-wrap">
                     <Badge variant="secondary" className="text-xs">{map.type}</Badge>
                     <Badge variant="outline" className="text-xs">{map.size}</Badge>
                   </div>
@@ -135,11 +135,11 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
           </div>
         </div>
 
-        <div className="flex justify-center">
+        <div className="flex justify-center pb-8">
           <Button
             onClick={handleStartMatch}
             disabled={!selectedMap || isLoading}
-            className="w-full md:w-auto px-12 h-14 text-lg font-bold glow-accent"
+            className="w-full sm:w-auto px-8 sm:px-12 h-12 sm:h-14 text-base sm:text-lg font-bold glow-accent"
             size="lg"
           >
             <Play size={24} weight="bold" className="mr-2" />

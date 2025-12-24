@@ -37,40 +37,40 @@ export function Settings({ onBack }: SettingsProps) {
   }
 
   return (
-    <div className="min-h-screen p-4 md:p-8">
+    <div className="relative w-full min-h-screen p-4 md:p-8 overflow-y-auto">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-5xl mx-auto"
+        className="max-w-5xl mx-auto w-full"
       >
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-4xl md:text-5xl font-black glow-text mb-2">SETTINGS</h1>
-            <p className="text-muted-foreground font-body tracking-wider">CONFIGURE SYSTEM PARAMETERS</p>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 sm:mb-8">
+          <div className="w-full sm:w-auto">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black glow-text mb-2">SETTINGS</h1>
+            <p className="text-muted-foreground font-body tracking-wider text-sm sm:text-base">CONFIGURE SYSTEM PARAMETERS</p>
           </div>
           <Button
             onClick={onBack}
             variant="outline"
-            className="glow-border"
+            className="glow-border w-full sm:w-auto"
           >
             <ArrowLeft size={20} weight="bold" className="mr-2" />
             BACK
           </Button>
         </div>
 
-        <Card className="p-6 glow-border">
+        <Card className="p-4 sm:p-6 glow-border">
           <Tabs defaultValue="profile" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 mb-6">
-              <TabsTrigger value="profile">PROFILE</TabsTrigger>
-              <TabsTrigger value="graphics">GRAPHICS</TabsTrigger>
-              <TabsTrigger value="audio">AUDIO</TabsTrigger>
-              <TabsTrigger value="controls">CONTROLS</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 mb-6 h-auto">
+              <TabsTrigger value="profile" className="text-xs sm:text-sm">PROFILE</TabsTrigger>
+              <TabsTrigger value="graphics" className="text-xs sm:text-sm">GRAPHICS</TabsTrigger>
+              <TabsTrigger value="audio" className="text-xs sm:text-sm">AUDIO</TabsTrigger>
+              <TabsTrigger value="controls" className="text-xs sm:text-sm">CONTROLS</TabsTrigger>
             </TabsList>
 
             <TabsContent value="profile" className="space-y-6">
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="player-name" className="text-primary font-bold">PLAYER NAME</Label>
+                  <Label htmlFor="player-name" className="text-primary font-bold text-sm sm:text-base">PLAYER NAME</Label>
                   <Input
                     id="player-name"
                     value={playerName}
@@ -82,8 +82,8 @@ export function Settings({ onBack }: SettingsProps) {
                 </div>
 
                 <div className="p-4 bg-card rounded glow-border">
-                  <h3 className="font-bold text-primary mb-2">PLAYER IDENTITY</h3>
-                  <div className="text-sm text-muted-foreground space-y-1">
+                  <h3 className="font-bold text-primary mb-2 text-sm sm:text-base">PLAYER IDENTITY</h3>
+                  <div className="text-xs sm:text-sm text-muted-foreground space-y-1">
                     <p>CALLSIGN: {playerName}</p>
                     <p>RANK: SERGEANT</p>
                     <p>COMBAT RATING: 1250</p>
@@ -95,14 +95,14 @@ export function Settings({ onBack }: SettingsProps) {
             <TabsContent value="graphics" className="space-y-6">
               <div className="space-y-6">
                 <div className="space-y-2">
-                  <Label className="text-primary font-bold">GRAPHICS QUALITY</Label>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <Label className="text-primary font-bold text-sm sm:text-base">GRAPHICS QUALITY</Label>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3">
                     {['low', 'medium', 'high', 'ultra'].map((quality) => (
                       <Button
                         key={quality}
                         onClick={() => setGraphicsQuality(quality)}
                         variant={graphicsQuality === quality ? 'default' : 'outline'}
-                        className={graphicsQuality === quality ? 'glow-accent' : 'glow-border'}
+                        className={`text-xs sm:text-sm ${graphicsQuality === quality ? 'glow-accent' : 'glow-border'}`}
                       >
                         {quality.toUpperCase()}
                       </Button>
@@ -112,7 +112,7 @@ export function Settings({ onBack }: SettingsProps) {
 
                 <div className="flex items-center justify-between p-4 bg-card rounded glow-border">
                   <div>
-                    <Label htmlFor="show-fps" className="font-bold">SHOW FPS COUNTER</Label>
+                    <Label htmlFor="show-fps" className="font-bold text-sm sm:text-base">SHOW FPS COUNTER</Label>
                     <p className="text-xs text-muted-foreground">Display frame rate on screen</p>
                   </div>
                   <Switch
@@ -124,7 +124,7 @@ export function Settings({ onBack }: SettingsProps) {
 
                 <div className="flex items-center justify-between p-4 bg-card rounded glow-border">
                   <div>
-                    <Label htmlFor="vsync" className="font-bold">V-SYNC</Label>
+                    <Label htmlFor="vsync" className="font-bold text-sm sm:text-base">V-SYNC</Label>
                     <p className="text-xs text-muted-foreground">Synchronize with monitor refresh rate</p>
                   </div>
                   <Switch
@@ -139,7 +139,7 @@ export function Settings({ onBack }: SettingsProps) {
             <TabsContent value="audio" className="space-y-6">
               <div className="space-y-6">
                 <div className="space-y-3">
-                  <Label className="text-primary font-bold">MASTER VOLUME</Label>
+                  <Label className="text-primary font-bold text-sm sm:text-base">MASTER VOLUME</Label>
                   <div className="flex items-center gap-4">
                     <Slider
                       value={masterVolume}
@@ -148,12 +148,12 @@ export function Settings({ onBack }: SettingsProps) {
                       step={1}
                       className="flex-1"
                     />
-                    <span className="font-bold text-primary w-12 text-right tabular-nums">{masterVolume?.[0] ?? 75}%</span>
+                    <span className="font-bold text-primary w-12 text-right tabular-nums text-sm sm:text-base">{masterVolume?.[0] ?? 75}%</span>
                   </div>
                 </div>
 
                 <div className="space-y-3">
-                  <Label className="text-primary font-bold">MUSIC VOLUME</Label>
+                  <Label className="text-primary font-bold text-sm sm:text-base">MUSIC VOLUME</Label>
                   <div className="flex items-center gap-4">
                     <Slider
                       value={musicVolume}
@@ -162,12 +162,12 @@ export function Settings({ onBack }: SettingsProps) {
                       step={1}
                       className="flex-1"
                     />
-                    <span className="font-bold text-primary w-12 text-right tabular-nums">{musicVolume?.[0] ?? 60}%</span>
+                    <span className="font-bold text-primary w-12 text-right tabular-nums text-sm sm:text-base">{musicVolume?.[0] ?? 60}%</span>
                   </div>
                 </div>
 
                 <div className="space-y-3">
-                  <Label className="text-primary font-bold">EFFECTS VOLUME</Label>
+                  <Label className="text-primary font-bold text-sm sm:text-base">EFFECTS VOLUME</Label>
                   <div className="flex items-center gap-4">
                     <Slider
                       value={sfxVolume}
@@ -176,7 +176,7 @@ export function Settings({ onBack }: SettingsProps) {
                       step={1}
                       className="flex-1"
                     />
-                    <span className="font-bold text-primary w-12 text-right tabular-nums">{sfxVolume?.[0] ?? 80}%</span>
+                    <span className="font-bold text-primary w-12 text-right tabular-nums text-sm sm:text-base">{sfxVolume?.[0] ?? 80}%</span>
                   </div>
                 </div>
               </div>
@@ -185,7 +185,7 @@ export function Settings({ onBack }: SettingsProps) {
             <TabsContent value="controls" className="space-y-6">
               <div className="space-y-6">
                 <div className="space-y-3">
-                  <Label className="text-primary font-bold">MOUSE SENSITIVITY</Label>
+                  <Label className="text-primary font-bold text-sm sm:text-base">MOUSE SENSITIVITY</Label>
                   <div className="flex items-center gap-4">
                     <Slider
                       value={mouseSensitivity}
@@ -194,13 +194,13 @@ export function Settings({ onBack }: SettingsProps) {
                       step={1}
                       className="flex-1"
                     />
-                    <span className="font-bold text-primary w-12 text-right tabular-nums">{mouseSensitivity?.[0] ?? 50}%</span>
+                    <span className="font-bold text-primary w-12 text-right tabular-nums text-sm sm:text-base">{mouseSensitivity?.[0] ?? 50}%</span>
                   </div>
                 </div>
 
                 <div className="p-4 bg-card rounded glow-border">
-                  <h3 className="font-bold text-primary mb-4">KEY BINDINGS</h3>
-                  <div className="space-y-3 text-sm">
+                  <h3 className="font-bold text-primary mb-4 text-sm sm:text-base">KEY BINDINGS</h3>
+                  <div className="space-y-3 text-xs sm:text-sm">
                     <div className="flex justify-between">
                       <span className="text-muted-foreground">MOVE FORWARD</span>
                       <span className="font-bold">W</span>
@@ -235,7 +235,7 @@ export function Settings({ onBack }: SettingsProps) {
             <Button
               onClick={handleRestoreDefaults}
               variant="outline"
-              className="glow-border"
+              className="glow-border w-full sm:w-auto"
             >
               RESTORE DEFAULTS
             </Button>

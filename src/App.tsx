@@ -28,24 +28,27 @@ function App() {
   }
 
   return (
-    <div className="relative min-h-screen text-foreground">
+    <div className="relative w-full min-h-screen overflow-hidden text-foreground">
       <AnimatedBackground />
       
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={currentScreen}
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -20 }}
-          transition={{ duration: 0.3 }}
-        >
-          {currentScreen === 'main' && <MainMenu onNavigate={handleNavigate} />}
-          {currentScreen === 'singleplayer' && <SinglePlayer onBack={handleBack} />}
-          {currentScreen === 'multiplayer' && <Multiplayer onBack={handleBack} />}
-          {currentScreen === 'settings' && <Settings onBack={handleBack} />}
-          {currentScreen === 'stats' && <PlayerStats onBack={handleBack} />}
-        </motion.div>
-      </AnimatePresence>
+      <div className="relative z-10 w-full h-full">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentScreen}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.3 }}
+            className="w-full"
+          >
+            {currentScreen === 'main' && <MainMenu onNavigate={handleNavigate} />}
+            {currentScreen === 'singleplayer' && <SinglePlayer onBack={handleBack} />}
+            {currentScreen === 'multiplayer' && <Multiplayer onBack={handleBack} />}
+            {currentScreen === 'settings' && <Settings onBack={handleBack} />}
+            {currentScreen === 'stats' && <PlayerStats onBack={handleBack} />}
+          </motion.div>
+        </AnimatePresence>
+      </div>
 
       <Toaster 
         position="top-center"

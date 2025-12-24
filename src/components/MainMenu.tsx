@@ -17,17 +17,17 @@ export function MainMenu({ onNavigate }: MainMenuProps) {
   ]
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-8">
+    <div className="relative flex flex-col items-center justify-center min-h-screen w-full p-4 sm:p-8">
       <motion.div
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="text-center mb-16"
+        className="text-center mb-8 sm:mb-16 w-full"
       >
-        <GlitchText className="text-6xl md:text-8xl font-black glow-text mb-4">
+        <GlitchText className="text-5xl sm:text-6xl md:text-8xl font-black glow-text mb-4">
           ARENA
         </GlitchText>
-        <div className="text-2xl md:text-3xl font-bold text-accent tracking-widest">
+        <div className="text-xl sm:text-2xl md:text-3xl font-bold text-accent tracking-widest">
           COMMAND SYSTEM
         </div>
         <div className="text-sm text-muted-foreground mt-2 font-body tracking-wider">
@@ -39,7 +39,7 @@ export function MainMenu({ onNavigate }: MainMenuProps) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3, duration: 0.6 }}
-        className="flex flex-col gap-4 w-full max-w-md"
+        className="flex flex-col gap-3 sm:gap-4 w-full max-w-md px-4"
       >
         {menuItems.map((item, index) => (
           <motion.div
@@ -51,7 +51,7 @@ export function MainMenu({ onNavigate }: MainMenuProps) {
             <Button
               onClick={() => onNavigate(item.screen)}
               className={`
-                w-full h-14 text-lg font-bold tracking-wider relative overflow-hidden
+                w-full h-12 sm:h-14 text-base sm:text-lg font-bold tracking-wider relative overflow-hidden
                 ${item.color === 'primary' ? 'bg-card hover:bg-primary/20 glow-border' : ''}
                 ${item.color === 'secondary' ? 'bg-card hover:bg-secondary glow-border' : ''}
                 ${item.color === 'destructive' ? 'bg-card hover:bg-destructive/20 border border-destructive' : ''}
@@ -73,7 +73,7 @@ export function MainMenu({ onNavigate }: MainMenuProps) {
                 {item.label}
               </span>
               <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent"
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent pointer-events-none"
                 initial={{ x: '-100%' }}
                 whileHover={{ x: '100%' }}
                 transition={{ duration: 0.6 }}
@@ -87,7 +87,7 @@ export function MainMenu({ onNavigate }: MainMenuProps) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1 }}
-        className="mt-12 text-xs text-muted-foreground text-center font-body tracking-widest"
+        className="mt-8 sm:mt-12 text-xs text-muted-foreground text-center font-body tracking-widest px-4"
       >
         &lt; PRESS ANY BUTTON TO ENGAGE &gt;
       </motion.div>

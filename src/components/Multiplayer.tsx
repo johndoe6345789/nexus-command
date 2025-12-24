@@ -84,35 +84,35 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
   }
 
   return (
-    <div className="min-h-screen p-4 md:p-8">
+    <div className="relative w-full min-h-screen p-4 md:p-8 overflow-y-auto">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-7xl mx-auto"
+        className="max-w-7xl mx-auto w-full"
       >
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-4xl md:text-5xl font-black glow-text mb-2">MULTIPLAYER</h1>
-            <p className="text-muted-foreground font-body tracking-wider">JOIN ONLINE COMBAT</p>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 sm:mb-8">
+          <div className="w-full sm:w-auto">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black glow-text mb-2">MULTIPLAYER</h1>
+            <p className="text-muted-foreground font-body tracking-wider text-sm sm:text-base">JOIN ONLINE COMBAT</p>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-3 w-full sm:w-auto">
             <Button
               onClick={handleRefresh}
               disabled={isRefreshing}
               variant="outline"
-              className="glow-border"
+              className="glow-border flex-1 sm:flex-none"
             >
               <ArrowsClockwise 
                 size={20} 
                 weight="bold" 
                 className={`mr-2 ${isRefreshing ? 'animate-spin' : ''}`}
               />
-              REFRESH
+              <span className="hidden sm:inline">REFRESH</span>
             </Button>
             <Button
               onClick={onBack}
               variant="outline"
-              className="glow-border"
+              className="glow-border flex-1 sm:flex-none"
             >
               <ArrowLeft size={20} weight="bold" className="mr-2" />
               BACK
@@ -120,17 +120,17 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
           </div>
         </div>
 
-        <Card className="p-6 glow-border mb-6">
-          <div className="grid grid-cols-12 gap-4 text-sm font-bold text-muted-foreground mb-3 px-4">
+        <Card className="p-3 sm:p-6 glow-border mb-6">
+          <div className="hidden md:grid grid-cols-12 gap-4 text-xs sm:text-sm font-bold text-muted-foreground mb-3 px-4">
             <div className="col-span-4">SERVER NAME</div>
-            <div className="col-span-2 hidden md:block">MAP</div>
-            <div className="col-span-1 hidden md:block">MODE</div>
+            <div className="col-span-2">MAP</div>
+            <div className="col-span-1">MODE</div>
             <div className="col-span-2">PLAYERS</div>
             <div className="col-span-1">PING</div>
           </div>
 
-          <ScrollArea className="h-[500px]">
-            <div className="space-y-2">
+          <ScrollArea className="h-[400px] sm:h-[500px] w-full">
+            <div className="space-y-2 pr-2">
               {servers.map((server, index) => (
                 <motion.div
                   key={server.id}
@@ -140,24 +140,24 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
                 >
                   <Card
                     className={`
-                      p-4 cursor-pointer transition-all duration-200
+                      p-3 sm:p-4 cursor-pointer transition-all duration-200
                       ${selectedServer === server.id ? 'glow-accent' : 'glow-border hover:bg-card/80'}
                     `}
                     onClick={() => setSelectedServer(server.id)}
                   >
-                    <div className="grid grid-cols-12 gap-4 items-center">
-                      <div className="col-span-4 font-bold">{server.name}</div>
-                      <div className="col-span-2 hidden md:block text-sm text-muted-foreground">{server.map}</div>
-                      <div className="col-span-1 hidden md:block">
+                    <div className="grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-4 items-center">
+                      <div className="col-span-1 md:col-span-4 font-bold text-sm sm:text-base">{server.name}</div>
+                      <div className="col-span-1 md:col-span-2 text-xs sm:text-sm text-muted-foreground">{server.map}</div>
+                      <div className="col-span-1 md:col-span-1">
                         <Badge variant="secondary" className="text-xs">{server.mode}</Badge>
                       </div>
-                      <div className={`col-span-2 font-bold ${getPlayerColor(server.players, server.maxPlayers)}`}>
+                      <div className={`col-span-1 md:col-span-2 font-bold text-sm sm:text-base ${getPlayerColor(server.players, server.maxPlayers)}`}>
                         {server.players}/{server.maxPlayers}
                       </div>
-                      <div className={`col-span-1 font-bold tabular-nums ${getPingColor(server.ping)}`}>
+                      <div className={`col-span-1 md:col-span-1 font-bold tabular-nums text-sm sm:text-base ${getPingColor(server.ping)}`}>
                         {server.ping}
                       </div>
-                      <div className="col-span-2 flex justify-end">
+                      <div className="col-span-1 md:col-span-2 flex justify-end">
                         {selectedServer === server.id && (
                           <motion.div
                             initial={{ scale: 0 }}
@@ -174,11 +174,11 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
           </ScrollArea>
         </Card>
 
-        <div className="flex justify-center">
+        <div className="flex justify-center pb-8">
           <Button
             onClick={handleJoinServer}
             disabled={!selectedServer || isConnecting}
-            className="w-full md:w-auto px-12 h-14 text-lg font-bold glow-accent"
+            className="w-full sm:w-auto px-8 sm:px-12 h-12 sm:h-14 text-base sm:text-lg font-bold glow-accent"
             size="lg"
           >
             <Play size={24} weight="bold" className="mr-2" />

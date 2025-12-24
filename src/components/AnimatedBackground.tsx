@@ -178,12 +178,13 @@ export function AnimatedBackground() {
   }, [])
 
   return (
-    <div className="fixed inset-0 -z-10 overflow-hidden">
+    <div className="fixed inset-0 w-full h-full overflow-hidden pointer-events-none" style={{ zIndex: 0 }}>
       <div className="absolute inset-0 bg-gradient-to-br from-background via-card to-background" />
       
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 opacity-70"
+        className="absolute inset-0 w-full h-full opacity-70"
+        style={{ display: 'block' }}
       />
 
       <div 
@@ -200,7 +201,7 @@ export function AnimatedBackground() {
       {[...Array(5)].map((_, i) => (
         <motion.div
           key={`corner-${i}`}
-          className="absolute border-2 border-primary/20"
+          className="absolute border-2 border-primary/20 pointer-events-none"
           style={{
             width: 100 + i * 40,
             height: 100 + i * 40,

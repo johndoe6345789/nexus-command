@@ -19,7 +19,7 @@ interface StatCardProps {
 
 function StatCard({ icon: Icon, label, value, color, delay }: StatCardProps) {
   const [displayValue, setDisplayValue] = useState(0)
-  const numericValue = typeof value === 'number' ? value : parseInt(value) || 0
+  const numericValue = typeof value === 'number' ? value : parseInt(value.toString().replace(/[^0-9]/g, '')) || 0
 
   useEffect(() => {
     const duration = 1000
@@ -40,24 +40,32 @@ function StatCard({ icon: Icon, label, value, color, delay }: StatCardProps) {
     return () => clearInterval(timer)
   }, [numericValue])
 
+  const formattedValue = typeof value === 'string' && value.includes('%') 
+    ? `${displayValue}%` 
+    : typeof value === 'string' && value.includes('.')
+    ? (displayValue / 100).toFixed(2)
+    : typeof value === 'number' 
+    ? displayValue 
+    : value
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay }}
     >
-      <Card className={`p-6 glow-border ${color} relative overflow-hidden`}>
+      <Card className={`p-4 sm:p-6 glow-border ${color} relative overflow-hidden`}>
         <div className="relative z-10">
-          <div className="flex items-center gap-3 mb-2">
-            <Icon size={28} weight="bold" className={color} />
-            <h3 className="font-bold text-sm text-muted-foreground">{label}</h3>
+          <div className="flex items-center gap-2 sm:gap-3 mb-2">
+            <Icon size={20} weight="bold" className={`${color} sm:w-7 sm:h-7`} />
+            <h3 className="font-bold text-xs sm:text-sm text-muted-foreground">{label}</h3>
           </div>
-          <div className="text-4xl font-black tabular-nums">
-            {typeof value === 'number' ? displayValue : value}
+          <div className="text-2xl sm:text-4xl font-black tabular-nums">
+            {formattedValue}
           </div>
         </div>
         <div className="absolute top-0 right-0 opacity-5">
-          <Icon size={120} weight="bold" />
+          <Icon size={80} weight="bold" className="sm:w-[120px] sm:h-[120px]" />
         </div>
       </Card>
     </motion.div>
@@ -98,30 +106,30 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
   ]
 
   return (
-    <div className="min-h-screen p-4 md:p-8">
+    <div className="relative w-full min-h-screen p-4 md:p-8 overflow-y-auto">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-7xl mx-auto"
+        className="max-w-7xl mx-auto w-full"
       >
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-4xl md:text-5xl font-black glow-text mb-2">PLAYER STATS</h1>
-            <p className="text-muted-foreground font-body tracking-wider">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 sm:mb-8">
+          <div className="w-full sm:w-auto">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black glow-text mb-2">PLAYER STATS</h1>
+            <p className="text-muted-foreground font-body tracking-wider text-sm sm:text-base">
               CALLSIGN: {playerName}
             </p>
           </div>
           <Button
             onClick={onBack}
             variant="outline"
-            className="glow-border"
+            className="glow-border w-full sm:w-auto"
           >
             <ArrowLeft size={20} weight="bold" className="mr-2" />
             BACK
           </Button>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
           <StatCard
             icon={Crosshair}
             label="TOTAL KILLS"
@@ -152,14 +160,14 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
           />
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 pb-8">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.5 }}
           >
-            <Card className="p-6 glow-border">
-              <h2 className="text-xl font-bold mb-4 text-primary">RECENT MATCHES</h2>
+            <Card className="p-4 sm:p-6 glow-border">
+              <h2 className="text-lg sm:text-xl font-bold mb-4 text-primary">RECENT MATCHES</h2>
               <div className="space-y-3">
                 {recentMatches.map((match, index) => (
                   <div
@@ -168,7 +176,7 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
                   >
                     <div className="flex justify-between items-start mb-2">
                       <div>
-                        <div className="font-bold text-sm">{match.map}</div>
+                        <div className="font-bold text-xs sm:text-sm">{match.map}</div>
                         <div className="text-xs text-muted-foreground">{match.mode}</div>
                       </div>
                       <div
@@ -196,13 +204,13 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.6 }}
           >
-            <Card className="p-6 glow-border">
-              <h2 className="text-xl font-bold mb-4 text-primary">WEAPON STATISTICS</h2>
+            <Card className="p-4 sm:p-6 glow-border">
+              <h2 className="text-lg sm:text-xl font-bold mb-4 text-primary">WEAPON STATISTICS</h2>
               <div className="space-y-4">
                 {weaponStats.map((weapon, index) => (
                   <div key={index}>
                     <div className="flex justify-between mb-2">
-                      <span className="font-bold text-sm">{weapon.name}</span>
+                      <span className="font-bold text-xs sm:text-sm">{weapon.name}</span>
                       <span className="text-xs text-muted-foreground">{weapon.kills} kills</span>
                     </div>
                     <div className="flex items-center gap-3">
