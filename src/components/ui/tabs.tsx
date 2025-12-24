@@ -20,13 +20,15 @@ function Tabs({
 
 function TabsList({
   className,
+  wrap = false,
   ...props
-}: ComponentProps<typeof TabsPrimitive.List>) {
+}: ComponentProps<typeof TabsPrimitive.List> & { wrap?: boolean }) {
   return (
     <TabsPrimitive.List
       data-slot="tabs-list"
       className={cn(
-        "bg-muted text-muted-foreground inline-flex h-9 w-fit items-center justify-center rounded-lg p-[3px]",
+        "bg-muted text-muted-foreground inline-flex w-fit items-center justify-center rounded-lg p-[3px]",
+        wrap ? "flex-wrap h-auto" : "h-9",
         className
       )}
       {...props}
