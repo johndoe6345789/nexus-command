@@ -1,0 +1,36 @@
+@import './variables';
+
+.glass-panel {
+  background: #{$color-card};
+  backdrop-filter: blur(40px) saturate(180%);
+  border: 1px solid #{$color-border};
+  box-shadow: 0 8px 32px oklch(0 0 0 / 0.4);
+}
+
+.glow-border {
+  position: relative;
+  border: 1px solid oklch(0.75 0.20 220 / 0.5);
+  box-shadow: 
+    0 0 20px oklch(0.75 0.20 220 / 0.3),
+    inset 0 0 20px oklch(0.75 0.20 220 / 0.1);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      135deg, 
+      oklch(0.75 0.20 220 / 0.5), 
+      transparent 50%, 
+      oklch(0.70 0.18 35 / 0.5)
+    );
+    -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+}

@@ -1,0 +1,24 @@
+$color-background: oklch(0.08 0.01 250);
+$color-foreground: oklch(0.98 0.01 0);
+$color-card: oklch(0.12 0.02 250 / 0.4);
+$color-card-foreground: oklch(0.96 0.02 0);
+$color-popover: oklch(0.10 0.02 250);
+$color-popover-foreground: oklch(0.96 0.02 0);
+$color-primary: oklch(0.75 0.20 220);
+$color-primary-foreground: oklch(0.98 0.01 0);
+$color-secondary: oklch(0.18 0.04 250);
+$color-secondary-foreground: oklch(0.88 0.03 0);
+$color-muted: oklch(0.15 0.02 250);
+$color-muted-foreground: oklch(0.55 0.05 250);
+$color-accent: oklch(0.70 0.18 35);
+$color-accent-foreground: oklch(0.98 0.01 0);
+$color-destructive: oklch(0.55 0.25 25);
+$color-destructive-foreground: oklch(0.98 0.01 0);
+$color-border: oklch(0.25 0.05 250 / 0.3);
+$color-input: oklch(0.20 0.04 250);
+$color-ring: oklch(0.75 0.20 220);
+
+$radius: 8px;
+
+$font-heading: 'Orbitron', system-ui, sans-serif;
+$font-body: 'Space Grotesk', system-ui, sans-serif;

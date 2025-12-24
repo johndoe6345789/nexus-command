@@ -1,0 +1,33 @@
+@import './variables';
+
+:root {
+  --background: #{$color-background};
+  --foreground: #{$color-foreground};
+
+  --card: #{$color-card};
+  --card-foreground: #{$color-card-foreground};
+
+  --popover: #{$color-popover};
+  --popover-foreground: #{$color-popover-foreground};
+
+  --primary: #{$color-primary};
+  --primary-foreground: #{$color-primary-foreground};
+
+  --secondary: #{$color-secondary};
+  --secondary-foreground: #{$color-secondary-foreground};
+
+  --muted: #{$color-muted};
+  --muted-foreground: #{$color-muted-foreground};
+
+  --accent: #{$color-accent};
+  --accent-foreground: #{$color-accent-foreground};
+
+  --destructive: #{$color-destructive};
+  --destructive-foreground: #{$color-destructive-foreground};
+
+  --border: #{$color-border};
+  --input: #{$color-input};
+  --ring: #{$color-ring};
+
+  --radius: #{$radius};
+}
