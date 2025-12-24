@@ -63,7 +63,7 @@ function App() {
               background: 'oklch(0.12 0.02 250 / 0.9)',
               backdropFilter: 'blur(20px)',
               color: 'oklch(0.98 0.01 0)',
-              border: '1px solid oklch(0.75 0.20 220 / 0.3)',
+              border: '1px solid oklch(0.55 0.12 230 / 0.25)',
               fontFamily: 'Inter, sans-serif',
               fontWeight: '600',
               fontSize: '14px',

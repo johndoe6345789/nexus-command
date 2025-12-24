@@ -46,7 +46,7 @@ export function Logo({ size = 80, showText = true, animate = true }: LogoProps) 
             position: 'absolute',
             inset: 0,
             borderRadius: '50%',
-            background: 'radial-gradient(circle, oklch(0.75 0.20 220 / 0.3), transparent 70%)',
+            background: 'radial-gradient(circle, oklch(0.55 0.12 230 / 0.2), transparent 70%)',
             filter: 'blur(20px)',
           }}
         />
@@ -61,9 +61,9 @@ export function Logo({ size = 80, showText = true, animate = true }: LogoProps) 
         >
           <defs>
             <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="oklch(0.75 0.20 220)" />
-              <stop offset="50%" stopColor="oklch(0.70 0.18 35)" />
-              <stop offset="100%" stopColor="oklch(0.75 0.20 220)" />
+              <stop offset="0%" stopColor="oklch(0.65 0.12 230)" />
+              <stop offset="50%" stopColor="oklch(0.58 0.10 40)" />
+              <stop offset="100%" stopColor="oklch(0.65 0.12 230)" />
             </linearGradient>
             <filter id="glow">
               <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
@@ -175,7 +175,7 @@ export function Logo({ size = 80, showText = true, animate = true }: LogoProps) 
               fontSize: size * 0.4,
               fontWeight: 800,
               letterSpacing: '-0.02em',
-              background: 'linear-gradient(90deg, oklch(0.75 0.20 220), oklch(0.70 0.18 35), oklch(0.75 0.20 220))',
+              background: 'linear-gradient(90deg, oklch(0.65 0.12 230), oklch(0.58 0.10 40), oklch(0.65 0.12 230))',
               backgroundClip: 'text',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',

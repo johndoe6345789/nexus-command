@@ -51,7 +51,7 @@ export function Settings({ onBack }: SettingsProps) {
           p: 4, 
           bgcolor: 'rgba(10, 15, 30, 0.6)',
           backdropFilter: 'blur(20px)',
-          border: '1px solid rgba(74, 158, 255, 0.2)',
+          border: '1px solid rgba(91, 143, 199, 0.2)',
         }}>
           <CardContent sx={{ p: 0 }}>
             <motion.div

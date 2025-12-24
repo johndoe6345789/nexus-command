@@ -39,8 +39,8 @@ export function AnimatedBackground() {
         className="fixed inset-0 z-0"
         style={{ mixBlendMode: 'screen' }}
       />
-      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_oklch(0.15_0.08_220_/_0.3),transparent_50%)]" />
-      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_oklch(0.12_0.06_35_/_0.2),transparent_50%)]" />
+      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_oklch(0.12_0.05_230_/_0.2),transparent_50%)]" />
+      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_oklch(0.10_0.04_40_/_0.15),transparent_50%)]" />
     </>
   )
 }

@@ -7,15 +7,15 @@ export const inputStyles = {
           backdropFilter: 'blur(20px)',
           borderRadius: '8px',
           '& fieldset': {
-            borderColor: 'rgba(74, 158, 255, 0.5)',
+            borderColor: 'rgba(91, 143, 199, 0.4)',
             transition: 'all 0.3s',
           },
           '&:hover fieldset': {
-            borderColor: 'rgba(74, 158, 255, 0.7)',
+            borderColor: 'rgba(91, 143, 199, 0.6)',
           },
           '&.Mui-focused fieldset': {
-            borderColor: '#4A9EFF',
-            boxShadow: '0 0 20px rgba(74, 158, 255, 0.3)',
+            borderColor: '#5B8FC7',
+            boxShadow: '0 0 16px rgba(91, 143, 199, 0.25)',
           },
         },
       },

@@ -28,9 +28,9 @@ export class CanvasRenderer {
       particleCount: config.particleCount ?? 80,
       hexagonCount: config.hexagonCount ?? 8,
       particleColors: config.particleColors ?? [
-        'rgba(125, 185, 255, 0.6)',
-        'rgba(255, 165, 100, 0.4)',
-        'rgba(180, 220, 255, 0.5)',
+        'rgba(91, 143, 199, 0.4)',
+        'rgba(201, 151, 88, 0.3)',
+        'rgba(136, 179, 217, 0.35)',
       ],
       connectionDistance: config.connectionDistance ?? 150,
     }
