@@ -163,7 +163,7 @@ export function Developer({ onBack }: DeveloperProps) {
                   <Stack spacing={3}>
                     <DebugToggle
                       title="Debug Mode"
-                      description="Enable verbose logging and debug overlays"
+                      description="Enable advanced debugging features"
                       checked={debugMode ?? false}
                       onChange={setDebugMode}
                     />
