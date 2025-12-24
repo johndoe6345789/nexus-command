@@ -1,8 +1,16 @@
 import { useState, useEffect } from 'react'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Input } from '@/components/ui/input'
+import {
+  Button,
+  Card,
+  CardContent,
+  Chip,
+  TextField,
+  Box,
+  Typography,
+  Stack,
+  IconButton,
+  LinearProgress,
+} from '@mui/material'
 import { ArrowLeft, ArrowsClockwise, Plug, Users, WifiHigh } from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
 import { toast } from 'sonner'
@@ -86,57 +94,63 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
   )
 
   return (
-    <div className="min-h-screen p-8">
-      <div className="max-w-7xl mx-auto">
+    <Box sx={{ minHeight: '100vh', p: 4 }}>
+      <Box sx={{ maxWidth: '1400px', mx: 'auto' }}>
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="mb-12"
         >
           <Button
-            variant="ghost"
+            variant="outlined"
+            startIcon={<ArrowLeft size={20} weight="bold" />}
             onClick={onBack}
-            className="mb-6 hover:bg-secondary/50"
+            sx={{ mb: 4 }}
           >
-            <ArrowLeft className="mr-2" size={20} weight="bold" />
             Back to Menu
           </Button>
 
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-6xl font-black tracking-tight mb-4">Multiplayer</h1>
-              <p className="text-muted-foreground text-lg">
+          <Stack direction="row" justifyContent="space-between" alignItems="flex-start" sx={{ mb: 6 }}>
+            <Box>
+              <Typography variant="h2" sx={{ mb: 2 }}>
+                Multiplayer
+              </Typography>
+              <Typography variant="body1" color="text.secondary">
                 Join active battles worldwide
-              </p>
-            </div>
-            <Button
-              size="lg"
-              variant="outline"
+              </Typography>
+            </Box>
+            <IconButton
+              size="large"
               onClick={handleRefresh}
               disabled={loading}
-              className="h-14 px-8"
+              sx={{
+                border: 1,
+                borderColor: 'divider',
+                width: 56,
+                height: 56,
+              }}
             >
               <ArrowsClockwise
-                size={24}
+                size={28}
                 weight="bold"
                 className={loading ? 'animate-spin' : ''}
               />
-            </Button>
-          </div>
+            </IconButton>
+          </Stack>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 space-y-6">
+        <Stack direction={{ xs: 'column', lg: 'row' }} spacing={4}>
+          <Box sx={{ flex: 2, minWidth: 0 }}>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
             >
-              <Input
+              <TextField
                 placeholder="Search servers or maps..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="h-14 text-lg glass-panel"
+                fullWidth
+                sx={{ mb: 3 }}
               />
             </motion.div>
 
@@ -144,125 +158,139 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="space-y-3 max-h-[600px] overflow-y-auto pr-2"
             >
-              {filteredServers.map((server, index) => (
-                <motion.div
-                  key={server.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.3 + index * 0.05 }}
-                >
-                  <Card
-                    className={`p-5 cursor-pointer transition-all duration-300 hover:scale-[1.01] ${
-                      selectedServer === server.id
-                        ? 'glow-border bg-primary/10'
-                        : 'glass-panel hover:border-primary/50'
-                    }`}
-                    onClick={() => setSelectedServer(server.id)}
+              <Stack spacing={2} sx={{ maxHeight: '600px', overflowY: 'auto', pr: 1 }}>
+                {filteredServers.map((server, index) => (
+                  <motion.div
+                    key={server.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.3 + index * 0.05 }}
                   >
-                    <div className="flex items-center justify-between">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-2">
-                          <h3 className="text-xl font-bold">{server.name}</h3>
-                          <Badge
-                            variant={server.ping < 50 ? 'default' : 'secondary'}
-                            className="flex items-center gap-1"
-                          >
-                            <WifiHigh size={14} weight="bold" />
-                            {server.ping}ms
-                          </Badge>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                          <span>{server.map}</span>
-                          <span>•</span>
-                          <span>{server.mode}</span>
-                          <span>•</span>
-                          <Badge variant="outline" className="text-xs">
-                            {server.region}
-                          </Badge>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2 text-muted-foreground">
-                        <Users size={20} weight="bold" />
-                        <span className="text-lg font-bold">
-                          {server.players}/{server.maxPlayers}
-                        </span>
-                      </div>
-                    </div>
-                  </Card>
-                </motion.div>
-              ))}
+                    <Card
+                      sx={{
+                        cursor: 'pointer',
+                        border: selectedServer === server.id ? '2px solid' : '1px solid',
+                        borderColor: selectedServer === server.id ? 'primary.main' : 'divider',
+                        bgcolor: selectedServer === server.id ? 'primary.main' : 'background.paper',
+                        backgroundImage: selectedServer === server.id 
+                          ? 'linear-gradient(135deg, oklch(0.75 0.20 220 / 0.1), oklch(0.70 0.18 35 / 0.1))'
+                          : 'none',
+                      }}
+                      onClick={() => setSelectedServer(server.id)}
+                    >
+                      <CardContent>
+                        <Stack direction="row" justifyContent="space-between" alignItems="center">
+                          <Box sx={{ flex: 1 }}>
+                            <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 1 }}>
+                              <Typography variant="h6">{server.name}</Typography>
+                              <Chip
+                                icon={<WifiHigh size={14} weight="bold" />}
+                                label={`${server.ping}ms`}
+                                size="small"
+                                color={server.ping < 50 ? 'primary' : 'default'}
+                              />
+                            </Stack>
+                            <Stack direction="row" spacing={1} alignItems="center" sx={{ color: 'text.secondary', fontSize: '0.875rem' }}>
+                              <Typography variant="body2">{server.map}</Typography>
+                              <Typography variant="body2">•</Typography>
+                              <Typography variant="body2">{server.mode}</Typography>
+                              <Typography variant="body2">•</Typography>
+                              <Chip label={server.region} size="small" variant="outlined" />
+                            </Stack>
+                          </Box>
+                          <Stack direction="row" alignItems="center" spacing={1} sx={{ color: 'text.secondary' }}>
+                            <Users size={24} weight="bold" />
+                            <Typography variant="h6">
+                              {server.players}/{server.maxPlayers}
+                            </Typography>
+                          </Stack>
+                        </Stack>
+                        <LinearProgress
+                          variant="determinate"
+                          value={(server.players / server.maxPlayers) * 100}
+                          sx={{ mt: 2, height: 6, borderRadius: 1 }}
+                        />
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                ))}
+              </Stack>
             </motion.div>
-          </div>
+          </Box>
 
-          <div className="space-y-6">
+          <Box sx={{ flex: 1, minWidth: 300 }}>
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
-              className="glass-panel p-6 rounded-xl space-y-6 sticky top-8"
             >
-              <div>
-                <h2 className="text-2xl font-bold mb-4">Server Info</h2>
-                {selectedServer ? (
-                  <div className="space-y-3 text-sm">
-                    {(() => {
-                      const server = servers.find((s) => s.id === selectedServer)
-                      return server ? (
-                        <>
-                          <div className="flex justify-between">
-                            <span className="text-muted-foreground">Name:</span>
-                            <span className="font-bold">{server.name}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-muted-foreground">Map:</span>
-                            <span className="font-bold">{server.map}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-muted-foreground">Mode:</span>
-                            <span className="font-bold">{server.mode}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-muted-foreground">Region:</span>
-                            <span className="font-bold">{server.region}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-muted-foreground">Players:</span>
-                            <span className="font-bold">
-                              {server.players}/{server.maxPlayers}
-                            </span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-muted-foreground">Ping:</span>
-                            <span className="font-bold">{server.ping}ms</span>
-                          </div>
-                        </>
-                      ) : null
-                    })()}
-                  </div>
-                ) : (
-                  <p className="text-muted-foreground text-sm">
-                    Select a server to view details
-                  </p>
-                )}
-              </div>
+              <Card sx={{ position: 'sticky', top: 32 }}>
+                <CardContent sx={{ p: 4 }}>
+                  <Typography variant="h4" sx={{ mb: 3 }}>
+                    Server Info
+                  </Typography>
+                  {selectedServer ? (
+                    <Stack spacing={2} sx={{ mb: 4 }}>
+                      {(() => {
+                        const server = servers.find((s) => s.id === selectedServer)
+                        return server ? (
+                          <>
+                            <Stack direction="row" justifyContent="space-between">
+                              <Typography color="text.secondary">Name:</Typography>
+                              <Typography fontWeight="bold">{server.name}</Typography>
+                            </Stack>
+                            <Stack direction="row" justifyContent="space-between">
+                              <Typography color="text.secondary">Map:</Typography>
+                              <Typography fontWeight="bold">{server.map}</Typography>
+                            </Stack>
+                            <Stack direction="row" justifyContent="space-between">
+                              <Typography color="text.secondary">Mode:</Typography>
+                              <Typography fontWeight="bold">{server.mode}</Typography>
+                            </Stack>
+                            <Stack direction="row" justifyContent="space-between">
+                              <Typography color="text.secondary">Region:</Typography>
+                              <Typography fontWeight="bold">{server.region}</Typography>
+                            </Stack>
+                            <Stack direction="row" justifyContent="space-between">
+                              <Typography color="text.secondary">Players:</Typography>
+                              <Typography fontWeight="bold">
+                                {server.players}/{server.maxPlayers}
+                              </Typography>
+                            </Stack>
+                            <Stack direction="row" justifyContent="space-between">
+                              <Typography color="text.secondary">Ping:</Typography>
+                              <Typography fontWeight="bold">{server.ping}ms</Typography>
+                            </Stack>
+                          </>
+                        ) : null
+                      })()}
+                    </Stack>
+                  ) : (
+                    <Typography color="text.secondary" sx={{ mb: 4 }}>
+                      Select a server to view details
+                    </Typography>
+                  )}
 
-              <div className="pt-6 border-t border-border">
-                <Button
-                  size="lg"
-                  className="w-full h-16 text-xl font-bold"
-                  onClick={handleJoin}
-                  disabled={!selectedServer}
-                >
-                  <Plug className="mr-2" size={24} weight="bold" />
-                  Join Server
-                </Button>
-              </div>
+                  <Box sx={{ pt: 3, borderTop: 1, borderColor: 'divider' }}>
+                    <Button
+                      variant="contained"
+                      size="large"
+                      fullWidth
+                      onClick={handleJoin}
+                      disabled={!selectedServer}
+                      startIcon={<Plug size={24} weight="bold" />}
+                      sx={{ height: '64px', fontSize: '1.25rem' }}
+                    >
+                      Join Server
+                    </Button>
+                  </Box>
+                </CardContent>
+              </Card>
             </motion.div>
-          </div>
-        </div>
-      </div>
-    </div>
+          </Box>
+        </Stack>
+      </Box>
+    </Box>
   )
 }

@@ -1,7 +1,15 @@
 import { useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
+import {
+  Button,
+  Card,
+  CardContent,
+  Chip,
+  Box,
+  Typography,
+  Stack,
+  Grid,
+  CircularProgress,
+} from '@mui/material'
 import { ArrowLeft, Play, MapTrifold } from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
 import { toast } from 'sonner'
@@ -20,10 +28,10 @@ const maps = [
 ]
 
 const difficulties = [
-  { id: 'recruit' as Difficulty, label: 'Recruit', color: 'text-green-400' },
-  { id: 'veteran' as Difficulty, label: 'Veteran', color: 'text-blue-400' },
-  { id: 'elite' as Difficulty, label: 'Elite', color: 'text-orange-400' },
-  { id: 'legendary' as Difficulty, label: 'Legendary', color: 'text-red-400' },
+  { id: 'recruit' as Difficulty, label: 'Recruit', color: '#4ade80' },
+  { id: 'veteran' as Difficulty, label: 'Veteran', color: '#60a5fa' },
+  { id: 'elite' as Difficulty, label: 'Elite', color: '#fb923c' },
+  { id: 'legendary' as Difficulty, label: 'Legendary', color: '#f87171' },
 ]
 
 export function SinglePlayer({ onBack }: SinglePlayerProps) {
@@ -45,128 +53,164 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
   }
 
   return (
-    <div className="min-h-screen p-8">
-      <div className="max-w-7xl mx-auto">
+    <Box sx={{ minHeight: '100vh', p: 4 }}>
+      <Box sx={{ maxWidth: '1400px', mx: 'auto' }}>
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="mb-12"
         >
           <Button
-            variant="ghost"
+            variant="outlined"
+            startIcon={<ArrowLeft size={20} weight="bold" />}
             onClick={onBack}
-            className="mb-6 hover:bg-secondary/50"
+            sx={{ mb: 4 }}
           >
-            <ArrowLeft className="mr-2" size={20} weight="bold" />
             Back to Menu
           </Button>
 
-          <h1 className="text-6xl font-black tracking-tight mb-4">Campaign</h1>
-          <p className="text-muted-foreground text-lg">
+          <Typography variant="h2" sx={{ mb: 2 }}>
+            Campaign
+          </Typography>
+          <Typography variant="body1" color="text.secondary" sx={{ mb: 6 }}>
             Select your battlefield and difficulty
-          </p>
+          </Typography>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 space-y-6">
+        <Grid container spacing={4}>
+          <Grid size={{ xs: 12, lg: 8 }}>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
             >
-              <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
-                <MapTrifold size={28} weight="bold" className="text-primary" />
-                Select Mission
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 3 }}>
+                <MapTrifold size={32} weight="bold" color="oklch(0.75 0.20 220)" />
+                <Typography variant="h4">Select Mission</Typography>
+              </Stack>
+              <Grid container spacing={3}>
                 {maps.map((map, index) => (
-                  <motion.div
-                    key={map.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 + index * 0.1 }}
-                  >
-                    <Card
-                      className={`p-6 cursor-pointer transition-all duration-300 hover:scale-[1.02] ${
-                        selectedMap === map.id
-                          ? 'glow-border bg-primary/10'
-                          : 'glass-panel hover:border-primary/50'
-                      }`}
-                      onClick={() => setSelectedMap(map.id)}
+                  <Grid size={{ xs: 12, sm: 6 }} key={map.id}>
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 + index * 0.1 }}
                     >
-                      <div className="aspect-video bg-gradient-to-br from-primary/20 to-accent/20 rounded-lg mb-4 flex items-center justify-center">
-                        <MapTrifold size={48} weight="duotone" className="text-primary/60" />
-                      </div>
-                      <h3 className="text-xl font-bold mb-2">{map.name}</h3>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <Badge variant="secondary">{map.terrain}</Badge>
-                        <Badge variant="outline">{map.players}</Badge>
-                      </div>
-                    </Card>
-                  </motion.div>
+                      <Card
+                        sx={{
+                          cursor: 'pointer',
+                          border: selectedMap === map.id ? '2px solid' : '1px solid',
+                          borderColor: selectedMap === map.id ? 'primary.main' : 'divider',
+                          bgcolor: selectedMap === map.id ? 'primary.main' : 'background.paper',
+                          backgroundImage: selectedMap === map.id 
+                            ? 'linear-gradient(135deg, oklch(0.75 0.20 220 / 0.1), oklch(0.70 0.18 35 / 0.1))'
+                            : 'none',
+                        }}
+                        onClick={() => setSelectedMap(map.id)}
+                      >
+                        <CardContent>
+                          <Box
+                            sx={{
+                              aspectRatio: '16/9',
+                              background: 'linear-gradient(135deg, oklch(0.75 0.20 220 / 0.2), oklch(0.70 0.18 35 / 0.2))',
+                              borderRadius: 2,
+                              mb: 2,
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                            }}
+                          >
+                            <MapTrifold size={64} weight="duotone" style={{ opacity: 0.6 }} />
+                          </Box>
+                          <Typography variant="h5" sx={{ mb: 1 }}>
+                            {map.name}
+                          </Typography>
+                          <Stack direction="row" spacing={1}>
+                            <Chip label={map.terrain} size="small" />
+                            <Chip label={map.players} size="small" variant="outlined" />
+                          </Stack>
+                        </CardContent>
+                      </Card>
+                    </motion.div>
+                  </Grid>
                 ))}
-              </div>
+              </Grid>
             </motion.div>
-          </div>
+          </Grid>
 
-          <div className="space-y-6">
+          <Grid size={{ xs: 12, lg: 4 }}>
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
-              className="glass-panel p-6 rounded-xl space-y-6"
             >
-              <div>
-                <h2 className="text-2xl font-bold mb-4">Difficulty</h2>
-                <div className="space-y-3">
-                  {difficulties.map((diff) => (
-                    <Button
-                      key={diff.id}
-                      variant={difficulty === diff.id ? 'default' : 'outline'}
-                      className="w-full justify-start text-lg h-14"
-                      onClick={() => setDifficulty(diff.id)}
-                    >
-                      <span className={difficulty === diff.id ? '' : diff.color}>
+              <Card>
+                <CardContent sx={{ p: 4 }}>
+                  <Typography variant="h4" sx={{ mb: 3 }}>
+                    Difficulty
+                  </Typography>
+                  <Stack spacing={2} sx={{ mb: 4 }}>
+                    {difficulties.map((diff) => (
+                      <Button
+                        key={diff.id}
+                        variant={difficulty === diff.id ? 'contained' : 'outlined'}
+                        onClick={() => setDifficulty(diff.id)}
+                        sx={{
+                          height: '56px',
+                          justifyContent: 'flex-start',
+                          fontSize: '1.125rem',
+                          ...(difficulty !== diff.id && {
+                            color: diff.color,
+                            borderColor: diff.color,
+                            '&:hover': {
+                              borderColor: diff.color,
+                              bgcolor: `${diff.color}15`,
+                            },
+                          }),
+                        }}
+                      >
                         {diff.label}
-                      </span>
+                      </Button>
+                    ))}
+                  </Stack>
+
+                  <Box sx={{ pt: 3, mb: 4, borderTop: 1, borderColor: 'divider' }}>
+                    <Button
+                      variant="contained"
+                      size="large"
+                      fullWidth
+                      onClick={handleStart}
+                      disabled={!selectedMap || loading}
+                      startIcon={loading ? <CircularProgress size={20} /> : <Play size={24} weight="fill" />}
+                      sx={{ height: '64px', fontSize: '1.25rem' }}
+                    >
+                      {loading ? 'Loading...' : 'Start Mission'}
                     </Button>
-                  ))}
-                </div>
-              </div>
+                  </Box>
 
-              <div className="pt-6 border-t border-border">
-                <Button
-                  size="lg"
-                  className="w-full h-16 text-xl font-bold"
-                  onClick={handleStart}
-                  disabled={!selectedMap || loading}
-                >
-                  {loading ? (
-                    'Loading...'
-                  ) : (
-                    <>
-                      <Play className="mr-2" size={24} weight="fill" />
-                      Start Mission
-                    </>
+                  {selectedMap && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                    >
+                      <Stack spacing={1} sx={{ fontSize: '0.875rem', color: 'text.secondary' }}>
+                        <Typography variant="body2">
+                          <strong>Map:</strong> {maps.find(m => m.id === selectedMap)?.name}
+                        </Typography>
+                        <Typography variant="body2">
+                          <strong>Difficulty:</strong> {difficulties.find(d => d.id === difficulty)?.label}
+                        </Typography>
+                        <Typography variant="body2">
+                          <strong>AI Bots:</strong> Enabled
+                        </Typography>
+                      </Stack>
+                    </motion.div>
                   )}
-                </Button>
-              </div>
-
-              {selectedMap && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="text-sm text-muted-foreground space-y-2"
-                >
-                  <p><strong>Map:</strong> {maps.find(m => m.id === selectedMap)?.name}</p>
-                  <p><strong>Difficulty:</strong> {difficulties.find(d => d.id === difficulty)?.label}</p>
-                  <p><strong>AI Bots:</strong> Enabled</p>
-                </motion.div>
-              )}
+                </CardContent>
+              </Card>
             </motion.div>
-          </div>
-        </div>
-      </div>
-    </div>
+          </Grid>
+        </Grid>
+      </Box>
+    </Box>
   )
 }

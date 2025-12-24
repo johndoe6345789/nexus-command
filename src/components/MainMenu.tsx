@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button'
+import { Button, Card, CardContent, Typography, Box, Stack } from '@mui/material'
 import { Play, Users, Gear, ChartBar, SignOut } from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
 
@@ -16,23 +16,58 @@ export function MainMenu({ onNavigate }: MainMenuProps) {
   ]
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-8">
-      <div className="w-full max-w-6xl">
+    <Box
+      sx={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 4,
+      }}
+    >
+      <Box sx={{ width: '100%', maxWidth: '1200px' }}>
         <motion.div
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="text-center mb-20"
         >
-          <h1 className="text-8xl font-black tracking-tight mb-4 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-[glow-pulse_3s_ease-in-out_infinite]">
+          <Typography
+            variant="h1"
+            align="center"
+            sx={{
+              mb: 2,
+              background: 'linear-gradient(90deg, oklch(0.75 0.20 220), oklch(0.70 0.18 35), oklch(0.75 0.20 220))',
+              backgroundClip: 'text',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              animation: 'glow-pulse 3s ease-in-out infinite',
+            }}
+          >
             APEX ARENA
-          </h1>
-          <p className="text-muted-foreground text-lg tracking-wider uppercase">
+          </Typography>
+          <Typography
+            variant="body1"
+            align="center"
+            sx={{
+              color: 'text.secondary',
+              letterSpacing: '0.15em',
+              textTransform: 'uppercase',
+              mb: 12,
+            }}
+          >
             Next Generation Combat
-          </p>
+          </Typography>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)' },
+            gap: 3,
+            maxWidth: '900px',
+            mx: 'auto',
+          }}
+        >
           {menuItems.map((item, index) => (
             <motion.div
               key={item.id}
@@ -44,40 +79,82 @@ export function MainMenu({ onNavigate }: MainMenuProps) {
                 ease: [0.22, 1, 0.36, 1],
               }}
             >
-              <Button
-                variant="outline"
-                className="w-full h-32 glass-panel hover:glow-border group relative overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-primary/20"
+              <Card
+                sx={{
+                  height: '160px',
+                  cursor: 'pointer',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  '&::before': {
+                    content: '""',
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'linear-gradient(90deg, transparent, oklch(0.75 0.20 220 / 0.1), transparent)',
+                    transform: 'translateX(-100%)',
+                    transition: 'transform 0.7s',
+                  },
+                  '&:hover::before': {
+                    transform: 'translateX(100%)',
+                  },
+                }}
                 onClick={() => onNavigate(item.id)}
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-                
-                <div className="flex flex-col items-center gap-3 relative z-10">
-                  <div className="p-4 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                    <item.icon size={32} weight="bold" className="text-primary" />
-                  </div>
-                  <div className="text-center">
-                    <div className="text-xl font-bold tracking-wide uppercase">
+                <CardContent
+                  sx={{
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 2,
+                  }}
+                >
+                  <Box
+                    sx={{
+                      p: 2,
+                      borderRadius: '12px',
+                      bgcolor: 'primary.main',
+                      opacity: 0.15,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      transition: 'opacity 0.3s',
+                      '.MuiCard-root:hover &': {
+                        opacity: 0.25,
+                      },
+                    }}
+                  >
+                    <item.icon size={40} weight="bold" color="oklch(0.75 0.20 220)" />
+                  </Box>
+                  <Stack alignItems="center" spacing={0.5}>
+                    <Typography variant="h5">
                       {item.label}
-                    </div>
-                    <div className="text-sm text-muted-foreground">
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
                       {item.description}
-                    </div>
-                  </div>
-                </div>
-              </Button>
+                    </Typography>
+                  </Stack>
+                </CardContent>
+              </Card>
             </motion.div>
           ))}
-        </div>
+        </Box>
 
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 0.5 }}
-          className="mt-16 text-center text-muted-foreground text-sm"
         >
-          <p>v2.0.1 • Press any key to continue</p>
+          <Typography
+            variant="body2"
+            align="center"
+            color="text.secondary"
+            sx={{ mt: 10 }}
+          >
+            v2.0.1 • Press any key to continue
+          </Typography>
         </motion.div>
-      </div>
-    </div>
+      </Box>
+    </Box>
   )
 }

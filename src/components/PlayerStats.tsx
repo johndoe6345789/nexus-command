@@ -1,6 +1,13 @@
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
+import {
+  Button,
+  Card,
+  CardContent,
+  Chip,
+  Box,
+  Typography,
+  Stack,
+  Grid,
+} from '@mui/material'
 import { ArrowLeft, Trophy, Crosshair, Target, Skull } from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
 import { useKV } from '@github/spark/hooks'
@@ -34,182 +41,281 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
   ]
 
   return (
-    <div className="min-h-screen p-8">
-      <div className="max-w-7xl mx-auto">
+    <Box sx={{ minHeight: '100vh', p: 4 }}>
+      <Box sx={{ maxWidth: '1400px', mx: 'auto' }}>
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="mb-12"
         >
           <Button
-            variant="ghost"
+            variant="outlined"
+            startIcon={<ArrowLeft size={20} weight="bold" />}
             onClick={onBack}
-            className="mb-6 hover:bg-secondary/50"
+            sx={{ mb: 4 }}
           >
-            <ArrowLeft className="mr-2" size={20} weight="bold" />
             Back to Menu
           </Button>
 
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-6xl font-black tracking-tight mb-4">Profile</h1>
-              <p className="text-muted-foreground text-lg">
+          <Stack direction="row" justifyContent="space-between" alignItems="flex-start" sx={{ mb: 6 }}>
+            <Box>
+              <Typography variant="h2" sx={{ mb: 2 }}>
+                Profile
+              </Typography>
+              <Typography variant="body1" color="text.secondary">
                 {playerName} • Level 42 • Elite Rank
-              </p>
-            </div>
-            <Trophy size={64} weight="duotone" className="text-accent" />
-          </div>
+              </Typography>
+            </Box>
+            <Trophy size={80} weight="duotone" color="oklch(0.70 0.18 35)" />
+          </Stack>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-          >
-            <Card className="p-6 glass-panel hover:glow-border transition-all duration-300">
-              <div className="flex items-center gap-4">
-                <div className="p-3 rounded-lg bg-primary/20">
-                  <Crosshair size={32} weight="bold" className="text-primary" />
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">K/D Ratio</p>
-                  <p className="text-3xl font-black">{kd}</p>
-                </div>
-              </div>
-            </Card>
-          </motion.div>
+        <Grid container spacing={3} sx={{ mb: 4 }}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+            >
+              <Card>
+                <CardContent>
+                  <Stack direction="row" alignItems="center" spacing={2}>
+                    <Box
+                      sx={{
+                        p: 2,
+                        borderRadius: 2,
+                        bgcolor: 'primary.main',
+                        opacity: 0.2,
+                      }}
+                    >
+                      <Crosshair size={40} weight="bold" color="oklch(0.75 0.20 220)" />
+                    </Box>
+                    <Box>
+                      <Typography variant="body2" color="text.secondary">
+                        K/D Ratio
+                      </Typography>
+                      <Typography variant="h3" fontWeight="black">
+                        {kd}
+                      </Typography>
+                    </Box>
+                  </Stack>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </Grid>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
-            <Card className="p-6 glass-panel hover:glow-border transition-all duration-300">
-              <div className="flex items-center gap-4">
-                <div className="p-3 rounded-lg bg-accent/20">
-                  <Trophy size={32} weight="bold" className="text-accent" />
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Win Rate</p>
-                  <p className="text-3xl font-black">{winRate}%</p>
-                </div>
-              </div>
-            </Card>
-          </motion.div>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              <Card>
+                <CardContent>
+                  <Stack direction="row" alignItems="center" spacing={2}>
+                    <Box
+                      sx={{
+                        p: 2,
+                        borderRadius: 2,
+                        bgcolor: 'secondary.main',
+                        opacity: 0.2,
+                      }}
+                    >
+                      <Trophy size={40} weight="bold" color="oklch(0.70 0.18 35)" />
+                    </Box>
+                    <Box>
+                      <Typography variant="body2" color="text.secondary">
+                        Win Rate
+                      </Typography>
+                      <Typography variant="h3" fontWeight="black">
+                        {winRate}%
+                      </Typography>
+                    </Box>
+                  </Stack>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </Grid>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-          >
-            <Card className="p-6 glass-panel hover:glow-border transition-all duration-300">
-              <div className="flex items-center gap-4">
-                <div className="p-3 rounded-lg bg-green-500/20">
-                  <Target size={32} weight="bold" className="text-green-400" />
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Accuracy</p>
-                  <p className="text-3xl font-black">{stats.accuracy}%</p>
-                </div>
-              </div>
-            </Card>
-          </motion.div>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              <Card>
+                <CardContent>
+                  <Stack direction="row" alignItems="center" spacing={2}>
+                    <Box
+                      sx={{
+                        p: 2,
+                        borderRadius: 2,
+                        bgcolor: '#4ade80',
+                        opacity: 0.2,
+                      }}
+                    >
+                      <Target size={40} weight="bold" color="#4ade80" />
+                    </Box>
+                    <Box>
+                      <Typography variant="body2" color="text.secondary">
+                        Accuracy
+                      </Typography>
+                      <Typography variant="h3" fontWeight="black">
+                        {stats.accuracy}%
+                      </Typography>
+                    </Box>
+                  </Stack>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </Grid>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-          >
-            <Card className="p-6 glass-panel hover:glow-border transition-all duration-300">
-              <div className="flex items-center gap-4">
-                <div className="p-3 rounded-lg bg-red-500/20">
-                  <Skull size={32} weight="bold" className="text-red-400" />
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Headshots</p>
-                  <p className="text-3xl font-black">{stats.headshots}</p>
-                </div>
-              </div>
-            </Card>
-          </motion.div>
-        </div>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+            >
+              <Card>
+                <CardContent>
+                  <Stack direction="row" alignItems="center" spacing={2}>
+                    <Box
+                      sx={{
+                        p: 2,
+                        borderRadius: 2,
+                        bgcolor: '#f87171',
+                        opacity: 0.2,
+                      }}
+                    >
+                      <Skull size={40} weight="bold" color="#f87171" />
+                    </Box>
+                    <Box>
+                      <Typography variant="body2" color="text.secondary">
+                        Headshots
+                      </Typography>
+                      <Typography variant="h3" fontWeight="black">
+                        {stats.headshots}
+                      </Typography>
+                    </Box>
+                  </Stack>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </Grid>
+        </Grid>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-          >
-            <Card className="p-8 glass-panel">
-              <h2 className="text-2xl font-bold mb-6">Combat Stats</h2>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground">Total Kills</span>
-                  <span className="text-2xl font-bold">{stats.kills}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground">Total Deaths</span>
-                  <span className="text-2xl font-bold">{stats.deaths}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground">Victories</span>
-                  <span className="text-2xl font-bold">{stats.wins}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground">Defeats</span>
-                  <span className="text-2xl font-bold">{stats.losses}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground">Best Kill Streak</span>
-                  <span className="text-2xl font-bold">{stats.longestKillStreak}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground">Total Playtime</span>
-                  <span className="text-2xl font-bold">{stats.playtime}</span>
-                </div>
-              </div>
-            </Card>
-          </motion.div>
+        <Grid container spacing={4}>
+          <Grid size={{ xs: 12, lg: 6 }}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+            >
+              <Card>
+                <CardContent sx={{ p: 4 }}>
+                  <Typography variant="h4" sx={{ mb: 4 }}>
+                    Combat Stats
+                  </Typography>
+                  <Stack spacing={3}>
+                    <Stack direction="row" justifyContent="space-between" alignItems="center">
+                      <Typography color="text.secondary">Total Kills</Typography>
+                      <Typography variant="h5" fontWeight="bold">
+                        {stats.kills}
+                      </Typography>
+                    </Stack>
+                    <Stack direction="row" justifyContent="space-between" alignItems="center">
+                      <Typography color="text.secondary">Total Deaths</Typography>
+                      <Typography variant="h5" fontWeight="bold">
+                        {stats.deaths}
+                      </Typography>
+                    </Stack>
+                    <Stack direction="row" justifyContent="space-between" alignItems="center">
+                      <Typography color="text.secondary">Victories</Typography>
+                      <Typography variant="h5" fontWeight="bold">
+                        {stats.wins}
+                      </Typography>
+                    </Stack>
+                    <Stack direction="row" justifyContent="space-between" alignItems="center">
+                      <Typography color="text.secondary">Defeats</Typography>
+                      <Typography variant="h5" fontWeight="bold">
+                        {stats.losses}
+                      </Typography>
+                    </Stack>
+                    <Stack direction="row" justifyContent="space-between" alignItems="center">
+                      <Typography color="text.secondary">Best Kill Streak</Typography>
+                      <Typography variant="h5" fontWeight="bold">
+                        {stats.longestKillStreak}
+                      </Typography>
+                    </Stack>
+                    <Stack direction="row" justifyContent="space-between" alignItems="center">
+                      <Typography color="text.secondary">Total Playtime</Typography>
+                      <Typography variant="h5" fontWeight="bold">
+                        {stats.playtime}
+                      </Typography>
+                    </Stack>
+                  </Stack>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </Grid>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
-          >
-            <Card className="p-8 glass-panel">
-              <h2 className="text-2xl font-bold mb-6">Recent Matches</h2>
-              <div className="space-y-4">
-                {recentMatches.map((match, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center justify-between p-4 rounded-lg bg-secondary/50 hover:bg-secondary/70 transition-colors"
-                  >
-                    <div>
-                      <div className="font-bold">{match.map}</div>
-                      <div className="text-sm text-muted-foreground flex items-center gap-2 mt-1">
-                        <Badge variant="outline" className="text-xs">
-                          {match.mode}
-                        </Badge>
-                        <span>{match.date}</span>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <Badge
-                        variant={match.result === 'Victory' ? 'default' : 'destructive'}
-                        className="mb-2"
+          <Grid size={{ xs: 12, lg: 6 }}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+            >
+              <Card>
+                <CardContent sx={{ p: 4 }}>
+                  <Typography variant="h4" sx={{ mb: 4 }}>
+                    Recent Matches
+                  </Typography>
+                  <Stack spacing={2}>
+                    {recentMatches.map((match, index) => (
+                      <Box
+                        key={index}
+                        sx={{
+                          p: 2,
+                          borderRadius: 2,
+                          bgcolor: 'secondary.main',
+                          opacity: 0.5,
+                          '&:hover': {
+                            opacity: 0.7,
+                          },
+                          transition: 'opacity 0.3s',
+                        }}
                       >
-                        {match.result}
-                      </Badge>
-                      <div className="text-sm text-muted-foreground">{match.score}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </Card>
-          </motion.div>
-        </div>
-      </div>
-    </div>
+                        <Stack direction="row" justifyContent="space-between" alignItems="center">
+                          <Box>
+                            <Typography variant="h6" fontWeight="bold">
+                              {match.map}
+                            </Typography>
+                            <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 0.5 }}>
+                              <Chip label={match.mode} size="small" variant="outlined" />
+                              <Typography variant="body2" color="text.secondary">
+                                {match.date}
+                              </Typography>
+                            </Stack>
+                          </Box>
+                          <Box sx={{ textAlign: 'right' }}>
+                            <Chip
+                              label={match.result}
+                              color={match.result === 'Victory' ? 'primary' : 'error'}
+                              sx={{ mb: 1 }}
+                            />
+                            <Typography variant="body2" color="text.secondary">
+                              {match.score}
+                            </Typography>
+                          </Box>
+                        </Stack>
+                      </Box>
+                    ))}
+                  </Stack>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </Grid>
+        </Grid>
+      </Box>
+    </Box>
   )
 }

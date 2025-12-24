@@ -1,13 +1,22 @@
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Slider } from '@/components/ui/slider'
-import { Switch } from '@/components/ui/switch'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import {
+  Button,
+  Card,
+  CardContent,
+  TextField,
+  Slider,
+  Switch,
+  Tabs,
+  Tab,
+  Box,
+  Typography,
+  Stack,
+  FormControlLabel,
+  Chip,
+} from '@mui/material'
 import { ArrowLeft, Monitor, SpeakerHigh, GameController, User } from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
 import { useKV } from '@github/spark/hooks'
+import { useState } from 'react'
 
 interface SettingsProps {
   onBack: () => void
@@ -21,28 +30,33 @@ export function Settings({ onBack }: SettingsProps) {
   const [mouseSensitivity, setMouseSensitivity] = useKV<number>('mouse-sensitivity', 50)
   const [invertY, setInvertY] = useKV<boolean>('invert-y', false)
   const [playerName, setPlayerName] = useKV<string>('player-name', 'Operator')
+  const [vsync, setVsync] = useKV<boolean>('vsync', false)
+  const [antiAliasing, setAntiAliasing] = useKV<boolean>('anti-aliasing', true)
+  const [motionBlur, setMotionBlur] = useKV<boolean>('motion-blur', false)
+  const [activeTab, setActiveTab] = useState(0)
 
   return (
-    <div className="min-h-screen p-8">
-      <div className="max-w-5xl mx-auto">
+    <Box sx={{ minHeight: '100vh', p: 4 }}>
+      <Box sx={{ maxWidth: '1200px', mx: 'auto' }}>
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="mb-12"
         >
           <Button
-            variant="ghost"
+            variant="outlined"
+            startIcon={<ArrowLeft size={20} weight="bold" />}
             onClick={onBack}
-            className="mb-6 hover:bg-secondary/50"
+            sx={{ mb: 4 }}
           >
-            <ArrowLeft className="mr-2" size={20} weight="bold" />
             Back to Menu
           </Button>
 
-          <h1 className="text-6xl font-black tracking-tight mb-4">Settings</h1>
-          <p className="text-muted-foreground text-lg">
+          <Typography variant="h2" sx={{ mb: 2 }}>
+            Settings
+          </Typography>
+          <Typography variant="body1" color="text.secondary" sx={{ mb: 6 }}>
             Configure your experience
-          </p>
+          </Typography>
         </motion.div>
 
         <motion.div
@@ -50,179 +64,221 @@ export function Settings({ onBack }: SettingsProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <Tabs defaultValue="graphics" className="w-full">
-            <TabsList className="grid w-full grid-cols-4 h-16 mb-8 glass-panel">
-              <TabsTrigger value="graphics" className="text-lg">
-                <Monitor className="mr-2" size={20} weight="bold" />
-                Graphics
-              </TabsTrigger>
-              <TabsTrigger value="audio" className="text-lg">
-                <SpeakerHigh className="mr-2" size={20} weight="bold" />
-                Audio
-              </TabsTrigger>
-              <TabsTrigger value="controls" className="text-lg">
-                <GameController className="mr-2" size={20} weight="bold" />
-                Controls
-              </TabsTrigger>
-              <TabsTrigger value="profile" className="text-lg">
-                <User className="mr-2" size={20} weight="bold" />
-                Profile
-              </TabsTrigger>
-            </TabsList>
+          <Tabs
+            value={activeTab}
+            onChange={(_, newValue) => setActiveTab(newValue)}
+            sx={{ mb: 4 }}
+          >
+            <Tab
+              icon={<Monitor size={20} weight="bold" />}
+              iconPosition="start"
+              label="Graphics"
+            />
+            <Tab
+              icon={<SpeakerHigh size={20} weight="bold" />}
+              iconPosition="start"
+              label="Audio"
+            />
+            <Tab
+              icon={<GameController size={20} weight="bold" />}
+              iconPosition="start"
+              label="Controls"
+            />
+            <Tab
+              icon={<User size={20} weight="bold" />}
+              iconPosition="start"
+              label="Profile"
+            />
+          </Tabs>
 
-            <TabsContent value="graphics" className="space-y-6">
-              <Card className="p-8 glass-panel">
-                <h2 className="text-2xl font-bold mb-6">Visual Settings</h2>
-                <div className="space-y-8">
-                  <div>
-                    <Label className="text-lg mb-4 block">Graphics Quality</Label>
-                    <div className="grid grid-cols-4 gap-3">
+          {activeTab === 0 && (
+            <Card>
+              <CardContent sx={{ p: 4 }}>
+                <Typography variant="h4" sx={{ mb: 4 }}>
+                  Visual Settings
+                </Typography>
+                <Stack spacing={4}>
+                  <Box>
+                    <Typography variant="h6" sx={{ mb: 2 }}>
+                      Graphics Quality
+                    </Typography>
+                    <Stack direction="row" spacing={2}>
                       {['low', 'medium', 'high', 'ultra'].map((quality) => (
                         <Button
                           key={quality}
-                          variant={graphicsQuality === quality ? 'default' : 'outline'}
-                          className="h-14 text-base"
+                          variant={graphicsQuality === quality ? 'contained' : 'outlined'}
                           onClick={() => setGraphicsQuality(quality)}
+                          sx={{ flex: 1, height: '56px' }}
                         >
                           {quality.charAt(0).toUpperCase() + quality.slice(1)}
                         </Button>
                       ))}
-                    </div>
-                  </div>
+                    </Stack>
+                  </Box>
 
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <Label className="text-lg">V-Sync</Label>
-                      <Switch />
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <Label className="text-lg">Anti-Aliasing</Label>
-                      <Switch defaultChecked />
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <Label className="text-lg">Motion Blur</Label>
-                      <Switch />
-                    </div>
-                  </div>
-                </div>
-              </Card>
-            </TabsContent>
+                  <Stack spacing={2}>
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          checked={vsync}
+                          onChange={(e) => setVsync(e.target.checked)}
+                        />
+                      }
+                      label={<Typography variant="h6">V-Sync</Typography>}
+                      labelPlacement="start"
+                      sx={{ justifyContent: 'space-between', ml: 0 }}
+                    />
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          checked={antiAliasing}
+                          onChange={(e) => setAntiAliasing(e.target.checked)}
+                        />
+                      }
+                      label={<Typography variant="h6">Anti-Aliasing</Typography>}
+                      labelPlacement="start"
+                      sx={{ justifyContent: 'space-between', ml: 0 }}
+                    />
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          checked={motionBlur}
+                          onChange={(e) => setMotionBlur(e.target.checked)}
+                        />
+                      }
+                      label={<Typography variant="h6">Motion Blur</Typography>}
+                      labelPlacement="start"
+                      sx={{ justifyContent: 'space-between', ml: 0 }}
+                    />
+                  </Stack>
+                </Stack>
+              </CardContent>
+            </Card>
+          )}
 
-            <TabsContent value="audio" className="space-y-6">
-              <Card className="p-8 glass-panel">
-                <h2 className="text-2xl font-bold mb-6">Audio Settings</h2>
-                <div className="space-y-8">
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <Label className="text-lg">Master Volume</Label>
-                      <span className="text-muted-foreground">{masterVolume}%</span>
-                    </div>
+          {activeTab === 1 && (
+            <Card>
+              <CardContent sx={{ p: 4 }}>
+                <Typography variant="h4" sx={{ mb: 4 }}>
+                  Audio Settings
+                </Typography>
+                <Stack spacing={4}>
+                  <Box>
+                    <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
+                      <Typography variant="h6">Master Volume</Typography>
+                      <Chip label={`${masterVolume}%`} />
+                    </Stack>
                     <Slider
-                      value={[masterVolume ?? 80]}
-                      onValueChange={(value) => setMasterVolume(value[0])}
+                      value={masterVolume ?? 80}
+                      onChange={(_, value) => setMasterVolume(value as number)}
                       max={100}
-                      step={1}
-                      className="w-full"
+                      valueLabelDisplay="auto"
                     />
-                  </div>
+                  </Box>
 
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <Label className="text-lg">Music Volume</Label>
-                      <span className="text-muted-foreground">{musicVolume}%</span>
-                    </div>
+                  <Box>
+                    <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
+                      <Typography variant="h6">Music Volume</Typography>
+                      <Chip label={`${musicVolume}%`} />
+                    </Stack>
                     <Slider
-                      value={[musicVolume ?? 60]}
-                      onValueChange={(value) => setMusicVolume(value[0])}
+                      value={musicVolume ?? 60}
+                      onChange={(_, value) => setMusicVolume(value as number)}
                       max={100}
-                      step={1}
-                      className="w-full"
+                      valueLabelDisplay="auto"
                     />
-                  </div>
+                  </Box>
 
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <Label className="text-lg">SFX Volume</Label>
-                      <span className="text-muted-foreground">{sfxVolume}%</span>
-                    </div>
+                  <Box>
+                    <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
+                      <Typography variant="h6">SFX Volume</Typography>
+                      <Chip label={`${sfxVolume}%`} />
+                    </Stack>
                     <Slider
-                      value={[sfxVolume ?? 90]}
-                      onValueChange={(value) => setSfxVolume(value[0])}
+                      value={sfxVolume ?? 90}
+                      onChange={(_, value) => setSfxVolume(value as number)}
                       max={100}
-                      step={1}
-                      className="w-full"
+                      valueLabelDisplay="auto"
                     />
-                  </div>
-                </div>
-              </Card>
-            </TabsContent>
+                  </Box>
+                </Stack>
+              </CardContent>
+            </Card>
+          )}
 
-            <TabsContent value="controls" className="space-y-6">
-              <Card className="p-8 glass-panel">
-                <h2 className="text-2xl font-bold mb-6">Control Settings</h2>
-                <div className="space-y-8">
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <Label className="text-lg">Mouse Sensitivity</Label>
-                      <span className="text-muted-foreground">{mouseSensitivity}%</span>
-                    </div>
+          {activeTab === 2 && (
+            <Card>
+              <CardContent sx={{ p: 4 }}>
+                <Typography variant="h4" sx={{ mb: 4 }}>
+                  Control Settings
+                </Typography>
+                <Stack spacing={4}>
+                  <Box>
+                    <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
+                      <Typography variant="h6">Mouse Sensitivity</Typography>
+                      <Chip label={`${mouseSensitivity}%`} />
+                    </Stack>
                     <Slider
-                      value={[mouseSensitivity ?? 50]}
-                      onValueChange={(value) => setMouseSensitivity(value[0])}
+                      value={mouseSensitivity ?? 50}
+                      onChange={(_, value) => setMouseSensitivity(value as number)}
                       max={100}
-                      step={1}
-                      className="w-full"
+                      valueLabelDisplay="auto"
                     />
-                  </div>
+                  </Box>
 
-                  <div className="flex items-center justify-between">
-                    <Label className="text-lg">Invert Y-Axis</Label>
-                    <Switch
-                      checked={invertY}
-                      onCheckedChange={setInvertY}
-                    />
-                  </div>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={invertY}
+                        onChange={(e) => setInvertY(e.target.checked)}
+                      />
+                    }
+                    label={<Typography variant="h6">Invert Y-Axis</Typography>}
+                    labelPlacement="start"
+                    sx={{ justifyContent: 'space-between', ml: 0 }}
+                  />
 
-                  <div className="pt-6 border-t border-border">
-                    <Button variant="outline" size="lg" className="w-full">
+                  <Box sx={{ pt: 3, borderTop: 1, borderColor: 'divider' }}>
+                    <Button variant="outlined" size="large" fullWidth>
                       Customize Key Bindings
                     </Button>
-                  </div>
-                </div>
-              </Card>
-            </TabsContent>
+                  </Box>
+                </Stack>
+              </CardContent>
+            </Card>
+          )}
 
-            <TabsContent value="profile" className="space-y-6">
-              <Card className="p-8 glass-panel">
-                <h2 className="text-2xl font-bold mb-6">Player Profile</h2>
-                <div className="space-y-6">
-                  <div>
-                    <Label htmlFor="player-name" className="text-lg mb-3 block">
-                      Display Name
-                    </Label>
-                    <Input
-                      id="player-name"
-                      value={playerName}
-                      onChange={(e) => setPlayerName(e.target.value)}
-                      className="h-14 text-lg glass-panel"
-                      placeholder="Enter your name"
-                    />
-                  </div>
+          {activeTab === 3 && (
+            <Card>
+              <CardContent sx={{ p: 4 }}>
+                <Typography variant="h4" sx={{ mb: 4 }}>
+                  Player Profile
+                </Typography>
+                <Stack spacing={4}>
+                  <TextField
+                    label="Display Name"
+                    value={playerName}
+                    onChange={(e) => setPlayerName(e.target.value)}
+                    fullWidth
+                    variant="outlined"
+                  />
 
-                  <div className="pt-6 border-t border-border space-y-4">
-                    <Button variant="outline" size="lg" className="w-full">
-                      Change Avatar
-                    </Button>
-                    <Button variant="outline" size="lg" className="w-full">
-                      Manage Account
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-            </TabsContent>
-          </Tabs>
+                  <Box sx={{ pt: 3, borderTop: 1, borderColor: 'divider' }}>
+                    <Stack spacing={2}>
+                      <Button variant="outlined" size="large" fullWidth>
+                        Change Avatar
+                      </Button>
+                      <Button variant="outlined" size="large" fullWidth>
+                        Manage Account
+                      </Button>
+                    </Stack>
+                  </Box>
+                </Stack>
+              </CardContent>
+            </Card>
+          )}
         </motion.div>
-      </div>
-    </div>
+      </Box>
+    </Box>
   )
 }
