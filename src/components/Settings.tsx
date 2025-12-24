@@ -37,29 +37,29 @@ export function Settings({ onBack }: SettingsProps) {
   }
 
   return (
-    <div className="relative w-full min-h-screen p-4 md:p-8 overflow-y-auto">
+    <div className="relative w-full min-h-screen p-4 sm:p-6 md:p-8 overflow-y-auto">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-5xl mx-auto w-full pb-12"
+        className="max-w-5xl mx-auto w-full pb-16 sm:pb-20"
       >
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.1 }}
-          className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 sm:mb-12"
+          className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6 mb-10 sm:mb-14"
         >
           <div className="w-full sm:w-auto">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black glow-text mb-2 tracking-tight">SETTINGS</h1>
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black glow-text mb-3 tracking-tight">SETTINGS</h1>
             <p className="text-muted-foreground font-body tracking-widest text-sm sm:text-base flex items-center gap-2">
-              <GameController size={16} weight="bold" className="text-accent" />
+              <GameController size={18} weight="bold" className="text-accent" />
               CONFIGURE SYSTEM PARAMETERS
             </p>
           </div>
           <Button
             onClick={onBack}
             variant="outline"
-            className="glow-border w-full sm:w-auto h-11 px-6"
+            className="glow-border w-full sm:w-auto h-12 px-8 font-bold hover:scale-105 transition-transform"
           >
             <ArrowLeft size={20} weight="bold" className="mr-2" />
             BACK
@@ -71,87 +71,87 @@ export function Settings({ onBack }: SettingsProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <Card className="p-4 sm:p-8 glow-border bg-card/40 backdrop-blur-sm">
+          <Card className="p-5 sm:p-10 glow-border bg-card/50 backdrop-blur-md">
             <Tabs defaultValue="profile" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 mb-8 h-auto bg-background/50">
-                <TabsTrigger value="profile" className="text-xs sm:text-sm font-bold py-3 data-[state=active]:glow-accent gap-2">
-                  <User size={16} weight="bold" className="hidden sm:inline" />
+              <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 mb-10 h-auto bg-background/50 p-2">
+                <TabsTrigger value="profile" className="text-xs sm:text-sm font-bold py-4 data-[state=active]:glow-accent data-[state=active]:bg-accent/10 gap-2">
+                  <User size={18} weight="bold" className="hidden sm:inline" />
                   PROFILE
                 </TabsTrigger>
-                <TabsTrigger value="graphics" className="text-xs sm:text-sm font-bold py-3 data-[state=active]:glow-accent gap-2">
-                  <Monitor size={16} weight="bold" className="hidden sm:inline" />
+                <TabsTrigger value="graphics" className="text-xs sm:text-sm font-bold py-4 data-[state=active]:glow-accent data-[state=active]:bg-accent/10 gap-2">
+                  <Monitor size={18} weight="bold" className="hidden sm:inline" />
                   GRAPHICS
                 </TabsTrigger>
-                <TabsTrigger value="audio" className="text-xs sm:text-sm font-bold py-3 data-[state=active]:glow-accent gap-2">
-                  <SpeakerHigh size={16} weight="bold" className="hidden sm:inline" />
+                <TabsTrigger value="audio" className="text-xs sm:text-sm font-bold py-4 data-[state=active]:glow-accent data-[state=active]:bg-accent/10 gap-2">
+                  <SpeakerHigh size={18} weight="bold" className="hidden sm:inline" />
                   AUDIO
                 </TabsTrigger>
-                <TabsTrigger value="controls" className="text-xs sm:text-sm font-bold py-3 data-[state=active]:glow-accent gap-2">
-                  <GameController size={16} weight="bold" className="hidden sm:inline" />
+                <TabsTrigger value="controls" className="text-xs sm:text-sm font-bold py-4 data-[state=active]:glow-accent data-[state=active]:bg-accent/10 gap-2">
+                  <GameController size={18} weight="bold" className="hidden sm:inline" />
                   CONTROLS
                 </TabsTrigger>
               </TabsList>
 
-              <TabsContent value="profile" className="space-y-6 mt-6">
+              <TabsContent value="profile" className="space-y-8 mt-8">
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
-                  className="space-y-6"
+                  className="space-y-8"
                 >
-                  <div className="space-y-3">
-                    <Label htmlFor="player-name" className="text-primary font-black text-base tracking-wide">PLAYER NAME</Label>
+                  <div className="space-y-4">
+                    <Label htmlFor="player-name" className="text-primary font-black text-lg tracking-wide">PLAYER NAME</Label>
                     <Input
                       id="player-name"
                       value={playerName}
                       onChange={(e) => setPlayerName(e.target.value.toUpperCase())}
-                      className="glow-border font-black text-lg h-12 tracking-wider bg-background/50"
+                      className="glow-border font-black text-xl h-14 tracking-wider bg-background/50"
                       maxLength={16}
                       placeholder="ENTER CALLSIGN"
                     />
-                    <p className="text-xs text-muted-foreground tracking-wide">3-16 CHARACTERS • UPPERCASE</p>
+                    <p className="text-sm text-muted-foreground tracking-wide">3-16 CHARACTERS • UPPERCASE</p>
                   </div>
 
-                  <div className="p-6 bg-card/60 rounded-lg glow-border">
-                    <h3 className="font-black text-primary mb-4 text-lg tracking-wide flex items-center gap-2">
-                      <span className="w-1 h-6 bg-accent"></span>
+                  <div className="p-8 bg-card/60 rounded-lg glow-border">
+                    <h3 className="font-black text-primary mb-6 text-xl tracking-wide flex items-center gap-3">
+                      <span className="w-2 h-8 bg-accent rounded"></span>
                       PLAYER IDENTITY
                     </h3>
-                    <div className="space-y-3 text-sm">
-                      <div className="flex justify-between items-center p-3 bg-background/40 rounded">
+                    <div className="space-y-4 text-base">
+                      <div className="flex justify-between items-center p-4 bg-background/40 rounded-md">
                         <span className="text-muted-foreground font-bold">CALLSIGN</span>
-                        <span className="font-black text-accent">{playerName}</span>
+                        <span className="font-black text-accent text-lg">{playerName}</span>
                       </div>
-                      <div className="flex justify-between items-center p-3 bg-background/40 rounded">
+                      <div className="flex justify-between items-center p-4 bg-background/40 rounded-md">
                         <span className="text-muted-foreground font-bold">RANK</span>
-                        <span className="font-black text-primary">SERGEANT</span>
+                        <span className="font-black text-primary text-lg">SERGEANT</span>
                       </div>
-                      <div className="flex justify-between items-center p-3 bg-background/40 rounded">
+                      <div className="flex justify-between items-center p-4 bg-background/40 rounded-md">
                         <span className="text-muted-foreground font-bold">COMBAT RATING</span>
-                        <span className="font-black text-foreground">1250</span>
+                        <span className="font-black text-foreground text-lg">1250</span>
                       </div>
                     </div>
                   </div>
                 </motion.div>
               </TabsContent>
 
-              <TabsContent value="graphics" className="space-y-6 mt-6">
+              <TabsContent value="graphics" className="space-y-8 mt-8">
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
-                  className="space-y-6"
+                  className="space-y-8"
                 >
-                  <div className="space-y-4">
-                    <Label className="text-primary font-black text-base tracking-wide">GRAPHICS QUALITY</Label>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <div className="space-y-5">
+                    <Label className="text-primary font-black text-lg tracking-wide">GRAPHICS QUALITY</Label>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                       {['low', 'medium', 'high', 'ultra'].map((quality) => (
                         <Button
                           key={quality}
                           onClick={() => setGraphicsQuality(quality)}
                           variant={graphicsQuality === quality ? 'default' : 'outline'}
                           className={`
-                            text-sm font-black h-14 
+                            text-sm font-black h-16 
                             ${graphicsQuality === quality ? 'glow-accent bg-accent/20 border-accent' : 'glow-border bg-card/60'}
                             hover:scale-105 transition-all duration-200
                           `}
@@ -162,10 +162,10 @@ export function Settings({ onBack }: SettingsProps) {
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between p-5 bg-card/60 rounded-lg glow-border hover:bg-card/80 transition-colors">
+                  <div className="flex items-center justify-between p-6 bg-card/60 rounded-lg glow-border hover:bg-card/80 transition-colors">
                     <div>
-                      <Label htmlFor="show-fps" className="font-black text-base tracking-wide cursor-pointer">SHOW FPS COUNTER</Label>
-                      <p className="text-xs text-muted-foreground mt-1">Display frame rate on screen</p>
+                      <Label htmlFor="show-fps" className="font-black text-lg tracking-wide cursor-pointer">SHOW FPS COUNTER</Label>
+                      <p className="text-sm text-muted-foreground mt-2">Display frame rate on screen</p>
                     </div>
                     <Switch
                       id="show-fps"
@@ -175,10 +175,10 @@ export function Settings({ onBack }: SettingsProps) {
                     />
                   </div>
 
-                  <div className="flex items-center justify-between p-5 bg-card/60 rounded-lg glow-border hover:bg-card/80 transition-colors">
+                  <div className="flex items-center justify-between p-6 bg-card/60 rounded-lg glow-border hover:bg-card/80 transition-colors">
                     <div>
-                      <Label htmlFor="vsync" className="font-black text-base tracking-wide cursor-pointer">V-SYNC</Label>
-                      <p className="text-xs text-muted-foreground mt-1">Synchronize with monitor refresh rate</p>
+                      <Label htmlFor="vsync" className="font-black text-lg tracking-wide cursor-pointer">V-SYNC</Label>
+                      <p className="text-sm text-muted-foreground mt-2">Synchronize with monitor refresh rate</p>
                     </div>
                     <Switch
                       id="vsync"
@@ -190,15 +190,15 @@ export function Settings({ onBack }: SettingsProps) {
                 </motion.div>
               </TabsContent>
 
-              <TabsContent value="audio" className="space-y-6 mt-6">
+              <TabsContent value="audio" className="space-y-8 mt-8">
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
-                  className="space-y-6"
+                  className="space-y-8"
                 >
-                  <div className="space-y-4 p-6 bg-card/60 rounded-lg glow-border">
-                    <Label className="text-primary font-black text-base tracking-wide">MASTER VOLUME</Label>
+                  <div className="space-y-5 p-8 bg-card/60 rounded-lg glow-border">
+                    <Label className="text-primary font-black text-lg tracking-wide">MASTER VOLUME</Label>
                     <div className="flex items-center gap-6">
                       <Slider
                         value={masterVolume}
@@ -207,15 +207,15 @@ export function Settings({ onBack }: SettingsProps) {
                         step={1}
                         className="flex-1"
                       />
-                      <div className="flex items-center gap-2 min-w-[80px] justify-end">
-                        <span className="font-black text-accent text-2xl tabular-nums">{masterVolume?.[0] ?? 75}</span>
-                        <span className="text-muted-foreground text-sm">%</span>
+                      <div className="flex items-center gap-2 min-w-[90px] justify-end">
+                        <span className="font-black text-accent text-3xl tabular-nums">{masterVolume?.[0] ?? 75}</span>
+                        <span className="text-muted-foreground text-base">%</span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="space-y-4 p-6 bg-card/60 rounded-lg glow-border">
-                    <Label className="text-primary font-black text-base tracking-wide">MUSIC VOLUME</Label>
+                  <div className="space-y-5 p-8 bg-card/60 rounded-lg glow-border">
+                    <Label className="text-primary font-black text-lg tracking-wide">MUSIC VOLUME</Label>
                     <div className="flex items-center gap-6">
                       <Slider
                         value={musicVolume}
@@ -224,15 +224,15 @@ export function Settings({ onBack }: SettingsProps) {
                         step={1}
                         className="flex-1"
                       />
-                      <div className="flex items-center gap-2 min-w-[80px] justify-end">
-                        <span className="font-black text-accent text-2xl tabular-nums">{musicVolume?.[0] ?? 60}</span>
-                        <span className="text-muted-foreground text-sm">%</span>
+                      <div className="flex items-center gap-2 min-w-[90px] justify-end">
+                        <span className="font-black text-accent text-3xl tabular-nums">{musicVolume?.[0] ?? 60}</span>
+                        <span className="text-muted-foreground text-base">%</span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="space-y-4 p-6 bg-card/60 rounded-lg glow-border">
-                    <Label className="text-primary font-black text-base tracking-wide">EFFECTS VOLUME</Label>
+                  <div className="space-y-5 p-8 bg-card/60 rounded-lg glow-border">
+                    <Label className="text-primary font-black text-lg tracking-wide">EFFECTS VOLUME</Label>
                     <div className="flex items-center gap-6">
                       <Slider
                         value={sfxVolume}
@@ -241,24 +241,24 @@ export function Settings({ onBack }: SettingsProps) {
                         step={1}
                         className="flex-1"
                       />
-                      <div className="flex items-center gap-2 min-w-[80px] justify-end">
-                        <span className="font-black text-accent text-2xl tabular-nums">{sfxVolume?.[0] ?? 80}</span>
-                        <span className="text-muted-foreground text-sm">%</span>
+                      <div className="flex items-center gap-2 min-w-[90px] justify-end">
+                        <span className="font-black text-accent text-3xl tabular-nums">{sfxVolume?.[0] ?? 80}</span>
+                        <span className="text-muted-foreground text-base">%</span>
                       </div>
                     </div>
                   </div>
                 </motion.div>
               </TabsContent>
 
-              <TabsContent value="controls" className="space-y-6 mt-6">
+              <TabsContent value="controls" className="space-y-8 mt-8">
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
-                  className="space-y-6"
+                  className="space-y-8"
                 >
-                  <div className="space-y-4 p-6 bg-card/60 rounded-lg glow-border">
-                    <Label className="text-primary font-black text-base tracking-wide">MOUSE SENSITIVITY</Label>
+                  <div className="space-y-5 p-8 bg-card/60 rounded-lg glow-border">
+                    <Label className="text-primary font-black text-lg tracking-wide">MOUSE SENSITIVITY</Label>
                     <div className="flex items-center gap-6">
                       <Slider
                         value={mouseSensitivity}
@@ -267,19 +267,19 @@ export function Settings({ onBack }: SettingsProps) {
                         step={1}
                         className="flex-1"
                       />
-                      <div className="flex items-center gap-2 min-w-[80px] justify-end">
-                        <span className="font-black text-accent text-2xl tabular-nums">{mouseSensitivity?.[0] ?? 50}</span>
-                        <span className="text-muted-foreground text-sm">%</span>
+                      <div className="flex items-center gap-2 min-w-[90px] justify-end">
+                        <span className="font-black text-accent text-3xl tabular-nums">{mouseSensitivity?.[0] ?? 50}</span>
+                        <span className="text-muted-foreground text-base">%</span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="p-6 bg-card/60 rounded-lg glow-border">
-                    <h3 className="font-black text-primary mb-5 text-lg tracking-wide flex items-center gap-2">
-                      <span className="w-1 h-6 bg-accent"></span>
+                  <div className="p-8 bg-card/60 rounded-lg glow-border">
+                    <h3 className="font-black text-primary mb-6 text-xl tracking-wide flex items-center gap-3">
+                      <span className="w-2 h-8 bg-accent rounded"></span>
                       KEY BINDINGS
                     </h3>
-                    <div className="space-y-2">
+                    <div className="space-y-3">
                       {[
                         { action: 'MOVE FORWARD', key: 'W' },
                         { action: 'MOVE BACKWARD', key: 'S' },
@@ -288,9 +288,9 @@ export function Settings({ onBack }: SettingsProps) {
                         { action: 'JUMP', key: 'SPACE' },
                         { action: 'FIRE', key: 'MOUSE 1' },
                       ].map((bind, i) => (
-                        <div key={i} className="flex justify-between items-center p-3 bg-background/40 rounded hover:bg-background/60 transition-colors">
-                          <span className="text-muted-foreground font-bold text-sm">{bind.action}</span>
-                          <span className="font-black bg-primary/20 text-primary px-4 py-1.5 rounded text-sm border border-primary/30">
+                        <div key={i} className="flex justify-between items-center p-4 bg-background/40 rounded-md hover:bg-background/60 transition-colors">
+                          <span className="text-muted-foreground font-bold text-base">{bind.action}</span>
+                          <span className="font-black bg-primary/20 text-primary px-5 py-2 rounded-md text-base border border-primary/30">
                             {bind.key}
                           </span>
                         </div>
@@ -305,14 +305,14 @@ export function Settings({ onBack }: SettingsProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
-              className="mt-8 pt-8 border-t border-border/50 flex justify-end"
+              className="mt-10 pt-10 border-t border-border/50 flex justify-end"
             >
               <Button
                 onClick={handleRestoreDefaults}
                 variant="outline"
-                className="glow-border w-full sm:w-auto h-12 px-8 font-black hover:scale-105 transition-transform"
+                className="glow-border w-full sm:w-auto h-14 px-10 font-black text-base hover:scale-105 transition-transform"
               >
-                <ArrowCounterClockwise size={20} weight="bold" className="mr-2" />
+                <ArrowCounterClockwise size={22} weight="bold" className="mr-2" />
                 RESTORE DEFAULTS
               </Button>
             </motion.div>

@@ -54,25 +54,25 @@ function StatCard({ icon: Icon, label, value, color, delay }: StatCardProps) {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, type: "spring", stiffness: 100 }}
-      whileHover={{ y: -4, scale: 1.02 }}
+      whileHover={{ y: -6, scale: 1.03, transition: { duration: 0.2 } }}
     >
-      <Card className={`p-5 sm:p-7 glow-border ${color} relative overflow-hidden group bg-card/40 backdrop-blur-sm hover:bg-card/60 transition-all duration-300`}>
+      <Card className={`p-6 sm:p-8 glow-border ${color} relative overflow-hidden group bg-card/50 backdrop-blur-md hover:bg-card/70 transition-all duration-300`}>
         <div className="relative z-10">
-          <div className="flex items-center gap-2 sm:gap-3 mb-3">
-            <div className={`p-2 rounded ${color.replace('text-', 'bg-')}/20 border border-current`}>
-              <Icon size={24} weight="bold" className={`${color}`} />
+          <div className="flex items-center gap-3 mb-4">
+            <div className={`p-3 rounded-md ${color.replace('text-', 'bg-')}/20 border-2 border-current`}>
+              <Icon size={28} weight="bold" className={`${color}`} />
             </div>
-            <h3 className="font-black text-xs sm:text-sm text-muted-foreground tracking-widest">{label}</h3>
+            <h3 className="font-black text-sm sm:text-base text-muted-foreground tracking-widest">{label}</h3>
           </div>
-          <div className="text-3xl sm:text-5xl font-black tabular-nums tracking-tight">
+          <div className="text-4xl sm:text-6xl font-black tabular-nums tracking-tight">
             {formattedValue}
           </div>
         </div>
-        <div className="absolute -bottom-2 -right-2 opacity-5 group-hover:opacity-10 transition-opacity">
-          <Icon size={120} weight="bold" className="sm:w-[160px] sm:h-[160px]" />
+        <div className="absolute -bottom-4 -right-4 opacity-5 group-hover:opacity-10 transition-opacity">
+          <Icon size={140} weight="bold" className="sm:w-[180px] sm:h-[180px]" />
         </div>
         <motion.div
-          className={`absolute bottom-0 left-0 right-0 h-1 ${color.replace('text-', 'bg-')}`}
+          className={`absolute bottom-0 left-0 right-0 h-1.5 ${color.replace('text-', 'bg-')} shadow-lg`}
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ delay: delay + 0.3, duration: 0.5 }}
@@ -116,36 +116,36 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
   ]
 
   return (
-    <div className="relative w-full min-h-screen p-4 md:p-8 overflow-y-auto">
+    <div className="relative w-full min-h-screen p-4 sm:p-6 md:p-8 overflow-y-auto">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-7xl mx-auto w-full pb-12"
+        className="max-w-7xl mx-auto w-full pb-16 sm:pb-20"
       >
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.1 }}
-          className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 sm:mb-12"
+          className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6 mb-10 sm:mb-14"
         >
           <div className="w-full sm:w-auto">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black glow-text mb-2 tracking-tight">PLAYER STATS</h1>
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black glow-text mb-3 tracking-tight">PLAYER STATS</h1>
             <p className="text-muted-foreground font-body tracking-widest text-sm sm:text-base flex items-center gap-2">
-              <Sword size={16} weight="bold" className="text-accent" />
+              <Sword size={18} weight="bold" className="text-accent" />
               CALLSIGN: <span className="text-accent font-black">{playerName}</span>
             </p>
           </div>
           <Button
             onClick={onBack}
             variant="outline"
-            className="glow-border w-full sm:w-auto h-11 px-6"
+            className="glow-border w-full sm:w-auto h-12 px-8 font-bold hover:scale-105 transition-transform"
           >
             <ArrowLeft size={20} weight="bold" className="mr-2" />
             BACK
           </Button>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-7 mb-10 sm:mb-14">
           <StatCard
             icon={Crosshair}
             label="TOTAL KILLS"
@@ -176,18 +176,18 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
           />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-7 sm:gap-9">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.6 }}
           >
-            <Card className="p-6 sm:p-8 glow-border bg-card/40 backdrop-blur-sm">
-              <h2 className="text-xl sm:text-2xl font-black mb-6 text-primary tracking-wide flex items-center gap-3">
-                <span className="w-1 h-8 bg-accent"></span>
+            <Card className="p-7 sm:p-10 glow-border bg-card/50 backdrop-blur-md">
+              <h2 className="text-2xl sm:text-3xl font-black mb-8 text-primary tracking-wide flex items-center gap-4">
+                <span className="w-2 h-10 bg-accent rounded"></span>
                 RECENT MATCHES
               </h2>
-              <div className="space-y-3">
+              <div className="space-y-4">
                 {recentMatches.map((match, index) => (
                   <motion.div
                     key={index}
@@ -195,30 +195,30 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.7 + index * 0.08 }}
                   >
-                    <div className="p-4 bg-card/60 rounded-lg glow-border hover:bg-card/80 transition-all duration-200 group">
-                      <div className="flex justify-between items-start mb-3">
+                    <div className="p-5 bg-card/60 rounded-lg glow-border hover:bg-card/80 transition-all duration-200 group">
+                      <div className="flex justify-between items-start mb-4">
                         <div>
-                          <div className="font-black text-sm sm:text-base flex items-center gap-2">
-                            <Lightning size={14} weight="fill" className="text-accent" />
+                          <div className="font-black text-base sm:text-lg flex items-center gap-2">
+                            <Lightning size={16} weight="fill" className="text-accent" />
                             {match.map}
                           </div>
-                          <div className="text-xs text-muted-foreground mt-1">
-                            <Badge variant="outline" className="text-xs font-bold border-primary/30">{match.mode}</Badge>
+                          <div className="text-sm text-muted-foreground mt-2">
+                            <Badge variant="outline" className="text-xs font-bold border-primary/30 px-3 py-1">{match.mode}</Badge>
                           </div>
                         </div>
                         <div
-                          className={`text-xs font-black px-3 py-1.5 rounded-md ${
+                          className={`text-xs font-black px-4 py-2 rounded-md ${
                             match.result === 'Victory'
-                              ? 'bg-primary/20 text-primary border border-primary/40'
-                              : 'bg-destructive/20 text-destructive border border-destructive/40'
+                              ? 'bg-primary/20 text-primary border-2 border-primary/40'
+                              : 'bg-destructive/20 text-destructive border-2 border-destructive/40'
                           }`}
                         >
                           {match.result.toUpperCase()}
                         </div>
                       </div>
-                      <div className="flex justify-between text-xs">
-                        <span className="text-muted-foreground">SCORE: <span className="text-foreground font-black ml-1">{match.score}</span></span>
-                        <span className="text-muted-foreground">K/D: <span className="text-accent font-black ml-1">{match.kd}</span></span>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-muted-foreground">SCORE: <span className="text-foreground font-black ml-1 text-base">{match.score}</span></span>
+                        <span className="text-muted-foreground">K/D: <span className="text-accent font-black ml-1 text-base">{match.kd}</span></span>
                       </div>
                     </div>
                   </motion.div>
@@ -232,12 +232,12 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.6 }}
           >
-            <Card className="p-6 sm:p-8 glow-border bg-card/40 backdrop-blur-sm">
-              <h2 className="text-xl sm:text-2xl font-black mb-6 text-primary tracking-wide flex items-center gap-3">
-                <span className="w-1 h-8 bg-accent"></span>
+            <Card className="p-7 sm:p-10 glow-border bg-card/50 backdrop-blur-md">
+              <h2 className="text-2xl sm:text-3xl font-black mb-8 text-primary tracking-wide flex items-center gap-4">
+                <span className="w-2 h-10 bg-accent rounded"></span>
                 WEAPON STATISTICS
               </h2>
-              <div className="space-y-5">
+              <div className="space-y-6">
                 {weaponStats.map((weapon, index) => (
                   <motion.div
                     key={index}
@@ -245,15 +245,15 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.7 + index * 0.08 }}
                   >
-                    <div className="space-y-2">
+                    <div className="space-y-3">
                       <div className="flex justify-between items-center">
-                        <span className="font-black text-sm sm:text-base tracking-wide">{weapon.name}</span>
-                        <span className="text-xs text-muted-foreground bg-background/50 px-2 py-1 rounded">
+                        <span className="font-black text-base sm:text-lg tracking-wide">{weapon.name}</span>
+                        <span className="text-sm text-muted-foreground bg-background/50 px-3 py-1.5 rounded-md font-bold">
                           {weapon.kills} kills
                         </span>
                       </div>
-                      <div className="flex items-center gap-3">
-                        <div className="flex-1 h-2.5 bg-secondary/30 rounded-full overflow-hidden border border-border/30">
+                      <div className="flex items-center gap-4">
+                        <div className="flex-1 h-3 bg-secondary/30 rounded-full overflow-hidden border border-border/30">
                           <motion.div
                             className="h-full bg-gradient-to-r from-primary to-accent"
                             initial={{ width: 0 }}
@@ -261,7 +261,7 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
                             transition={{ delay: 0.8 + index * 0.1, duration: 0.8, ease: "easeOut" }}
                           />
                         </div>
-                        <span className="text-sm font-black text-accent w-14 text-right tabular-nums">
+                        <span className="text-base font-black text-accent w-16 text-right tabular-nums">
                           {weapon.accuracy}%
                         </span>
                       </div>

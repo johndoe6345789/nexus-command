@@ -91,22 +91,22 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
   }
 
   return (
-    <div className="relative w-full min-h-screen p-4 md:p-8 overflow-y-auto">
+    <div className="relative w-full min-h-screen p-4 sm:p-6 md:p-8 overflow-y-auto">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-7xl mx-auto w-full pb-12"
+        className="max-w-7xl mx-auto w-full pb-16 sm:pb-20"
       >
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.1 }}
-          className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 sm:mb-12"
+          className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6 mb-10 sm:mb-14"
         >
           <div className="w-full sm:w-auto">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black glow-text mb-2 tracking-tight">MULTIPLAYER</h1>
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black glow-text mb-3 tracking-tight">MULTIPLAYER</h1>
             <p className="text-muted-foreground font-body tracking-widest text-sm sm:text-base flex items-center gap-2">
-              <Globe size={16} weight="bold" className="text-accent" />
+              <Globe size={18} weight="bold" className="text-accent" />
               JOIN ONLINE COMBAT - {servers.length} SERVERS ACTIVE
             </p>
           </div>
@@ -115,7 +115,7 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
               onClick={handleRefresh}
               disabled={isRefreshing}
               variant="outline"
-              className="glow-border flex-1 sm:flex-none h-11 px-6"
+              className="glow-border flex-1 sm:flex-none h-12 px-6 sm:px-8 font-bold hover:scale-105 transition-transform"
             >
               <ArrowsClockwise 
                 size={20} 
@@ -127,7 +127,7 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
             <Button
               onClick={onBack}
               variant="outline"
-              className="glow-border flex-1 sm:flex-none h-11 px-6"
+              className="glow-border flex-1 sm:flex-none h-12 px-6 sm:px-8 font-bold hover:scale-105 transition-transform"
             >
               <ArrowLeft size={20} weight="bold" className="mr-2" />
               BACK
@@ -140,8 +140,8 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <Card className="p-4 sm:p-6 glow-border mb-8 bg-card/40 backdrop-blur-sm">
-            <div className="hidden lg:grid grid-cols-12 gap-4 text-xs font-black text-muted-foreground/70 mb-4 px-4 pb-3 border-b border-border/50">
+          <Card className="p-5 sm:p-8 glow-border mb-10 bg-card/50 backdrop-blur-md">
+            <div className="hidden lg:grid grid-cols-12 gap-4 text-xs font-black text-muted-foreground/70 mb-6 px-4 pb-4 border-b border-border/50">
               <div className="col-span-4">SERVER NAME</div>
               <div className="col-span-2">MAP</div>
               <div className="col-span-2">MODE</div>
@@ -149,54 +149,54 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
               <div className="col-span-2 text-right">CONNECTION</div>
             </div>
 
-            <ScrollArea className="h-[450px] sm:h-[550px] w-full">
-              <div className="space-y-3 pr-3">
+            <ScrollArea className="h-[500px] sm:h-[600px] w-full">
+              <div className="space-y-4 pr-4">
                 {servers.map((server, index) => (
                   <motion.div
                     key={server.id}
                     initial={{ opacity: 0, x: -30 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.3 + index * 0.05 }}
-                    whileHover={{ x: 4 }}
+                    whileHover={{ x: 6, transition: { duration: 0.2 } }}
                   >
                     <Card
                       className={`
-                        p-4 sm:p-5 cursor-pointer transition-all duration-300 relative overflow-hidden group
+                        p-5 sm:p-6 cursor-pointer transition-all duration-300 relative overflow-hidden group
                         ${selectedServer === server.id 
-                          ? 'glow-accent bg-accent/10 border-accent' 
+                          ? 'glow-accent bg-accent/10 border-accent border-2' 
                           : 'glow-border hover:bg-card/80 hover:border-primary/50'}
                       `}
                       onClick={() => setSelectedServer(server.id)}
                     >
-                      <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 lg:gap-4 items-center">
+                      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-4 items-center">
                         <div className="col-span-1 lg:col-span-4">
                           <div className="flex items-center gap-3">
-                            <div className={`w-2 h-2 rounded-full ${selectedServer === server.id ? 'bg-accent' : 'bg-primary'} animate-pulse`} />
+                            <div className={`w-3 h-3 rounded-full ${selectedServer === server.id ? 'bg-accent' : 'bg-primary'} animate-pulse shadow-lg ${selectedServer === server.id ? 'shadow-accent/50' : 'shadow-primary/50'}`} />
                             <div>
                               <div className="font-black text-base sm:text-lg tracking-wide">{server.name}</div>
-                              <div className="text-xs text-muted-foreground lg:hidden">{server.map} • {server.mode}</div>
+                              <div className="text-xs text-muted-foreground lg:hidden mt-1">{server.map} • {server.mode}</div>
                             </div>
                           </div>
                         </div>
                         
-                        <div className="col-span-1 lg:col-span-2 text-sm text-muted-foreground hidden lg:block">
+                        <div className="col-span-1 lg:col-span-2 text-sm text-muted-foreground hidden lg:block font-bold">
                           {server.map}
                         </div>
                         
                         <div className="col-span-1 lg:col-span-2 hidden lg:block">
-                          <Badge variant="secondary" className="text-xs font-black px-3 py-1">
+                          <Badge variant="secondary" className="text-xs font-black px-3 py-1.5">
                             {server.mode}
                           </Badge>
                         </div>
                         
                         <div className="col-span-1 lg:col-span-2">
-                          <div className="flex items-center gap-2">
-                            <Users size={18} weight="bold" className={getPlayerColor(server.players, server.maxPlayers)} />
-                            <span className={`font-black text-base tabular-nums ${getPlayerColor(server.players, server.maxPlayers)}`}>
+                          <div className="flex items-center gap-3">
+                            <Users size={20} weight="bold" className={getPlayerColor(server.players, server.maxPlayers)} />
+                            <span className={`font-black text-lg tabular-nums ${getPlayerColor(server.players, server.maxPlayers)}`}>
                               {server.players}/{server.maxPlayers}
                             </span>
                           </div>
-                          <div className="h-1.5 bg-secondary/30 rounded-full overflow-hidden mt-2">
+                          <div className="h-2 bg-secondary/30 rounded-full overflow-hidden mt-3">
                             <motion.div
                               className={`h-full ${getPlayerColor(server.players, server.maxPlayers).replace('text-', 'bg-')}`}
                               initial={{ width: 0 }}
@@ -206,24 +206,24 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
                           </div>
                         </div>
                         
-                        <div className="col-span-1 lg:col-span-2 flex lg:justify-end items-center gap-3">
-                          <div className="flex gap-0.5">
+                        <div className="col-span-1 lg:col-span-2 flex lg:justify-end items-center gap-4">
+                          <div className="flex gap-1">
                             {[...Array(4)].map((_, i) => (
                               <div
                                 key={i}
-                                className={`w-1 ${i < getPingBars(server.ping) ? getPingColor(server.ping).replace('text-', 'bg-') : 'bg-muted'}`}
-                                style={{ height: `${(i + 1) * 4}px` }}
+                                className={`w-1.5 ${i < getPingBars(server.ping) ? getPingColor(server.ping).replace('text-', 'bg-') : 'bg-muted'} rounded-sm`}
+                                style={{ height: `${(i + 1) * 5}px` }}
                               />
                             ))}
                           </div>
-                          <span className={`font-black tabular-nums text-sm ${getPingColor(server.ping)}`}>
+                          <span className={`font-black tabular-nums text-base ${getPingColor(server.ping)}`}>
                             {server.ping}ms
                           </span>
                         </div>
                       </div>
                       
                       <motion.div
-                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-accent to-transparent"
+                        className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent to-transparent shadow-lg shadow-accent/50"
                         initial={{ scaleX: 0 }}
                         animate={{ scaleX: selectedServer === server.id ? 1 : 0 }}
                         transition={{ duration: 0.3 }}
@@ -231,7 +231,7 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
 
                       {selectedServer === server.id && (
                         <motion.div
-                          className="absolute top-3 right-3"
+                          className="absolute top-4 right-4"
                           initial={{ scale: 0, rotate: -180 }}
                           animate={{ scale: 1, rotate: 0 }}
                           transition={{ type: "spring", stiffness: 260, damping: 20 }}
@@ -257,7 +257,7 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
             onClick={handleJoinServer}
             disabled={!selectedServer || isConnecting}
             className={`
-              w-full sm:w-auto px-12 sm:px-16 h-14 sm:h-16 text-lg sm:text-xl font-black tracking-wider
+              w-full sm:w-auto px-16 sm:px-20 h-16 sm:h-20 text-xl sm:text-2xl font-black tracking-wider
               ${!selectedServer || isConnecting ? 'opacity-50' : 'glow-accent hover:scale-105'}
               transition-all duration-200 relative overflow-hidden
             `}
@@ -268,8 +268,8 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
               animate={{ x: ['-100%', '200%'] }}
               transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
             />
-            <span className="relative z-10 flex items-center gap-3">
-              <Play size={28} weight="fill" />
+            <span className="relative z-10 flex items-center gap-4">
+              <Play size={32} weight="fill" />
               {isConnecting ? 'CONNECTING...' : 'JOIN SERVER'}
             </span>
           </Button>

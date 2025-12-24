@@ -48,29 +48,29 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
   }
 
   return (
-    <div className="relative w-full min-h-screen p-4 md:p-8 overflow-y-auto">
+    <div className="relative w-full min-h-screen p-4 sm:p-6 md:p-8 overflow-y-auto">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-7xl mx-auto w-full pb-12"
+        className="max-w-7xl mx-auto w-full pb-16 sm:pb-20"
       >
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.1 }}
-          className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 sm:mb-12"
+          className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6 mb-10 sm:mb-14"
         >
           <div className="w-full sm:w-auto">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black glow-text mb-2 tracking-tight">SINGLE PLAYER</h1>
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black glow-text mb-3 tracking-tight">SINGLE PLAYER</h1>
             <p className="text-muted-foreground font-body tracking-widest text-sm sm:text-base flex items-center gap-2">
-              <Skull size={16} weight="bold" className="text-accent" />
+              <Skull size={18} weight="bold" className="text-accent" />
               TRAIN AGAINST AI OPPONENTS
             </p>
           </div>
           <Button
             onClick={onBack}
             variant="outline"
-            className="glow-border w-full sm:w-auto h-11 px-6"
+            className="glow-border w-full sm:w-auto h-12 px-8 font-bold hover:scale-105 transition-transform"
           >
             <ArrowLeft size={20} weight="bold" className="mr-2" />
             BACK
@@ -81,11 +81,11 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="mb-8"
+          className="mb-10"
         >
-          <Card className="p-6 sm:p-8 glow-border w-full bg-card/40 backdrop-blur-sm">
-            <h2 className="text-xl sm:text-2xl font-black mb-6 text-primary tracking-wide">DIFFICULTY SETTING</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+          <Card className="p-6 sm:p-10 glow-border w-full bg-card/50 backdrop-blur-md">
+            <h2 className="text-2xl sm:text-3xl font-black mb-8 text-primary tracking-wide">DIFFICULTY SETTING</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {difficulties.map((diff, index) => (
                 <motion.div
                   key={diff.id}
@@ -97,40 +97,40 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
                     onClick={() => setSelectedDifficulty(diff.id)}
                     variant={selectedDifficulty === diff.id ? 'default' : 'outline'}
                     className={`
-                      h-16 sm:h-20 font-black tracking-wider text-sm sm:text-base w-full
-                      flex flex-col gap-1
+                      h-20 sm:h-24 font-black tracking-wider text-sm sm:text-base w-full
+                      flex flex-col gap-2
                       ${selectedDifficulty === diff.id ? 'glow-accent bg-accent/20 border-accent' : 'glow-border bg-card/60'}
                       ${selectedDifficulty === diff.id ? diff.color : 'text-muted-foreground'}
                       hover:scale-105 transition-all duration-200
                     `}
                   >
-                    <span className="text-xs opacity-70">{diff.icon}</span>
+                    <span className="text-base opacity-70">{diff.icon}</span>
                     <span>{diff.label}</span>
                   </Button>
                 </motion.div>
               ))}
             </div>
             
-            <div className="mt-6 pt-6 border-t border-border/50">
-              <div className="flex items-center justify-between">
+            <div className="mt-8 pt-8 border-t border-border/50">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
                 <div>
-                  <h3 className="text-sm font-bold text-primary mb-1">BOT COUNT</h3>
-                  <p className="text-xs text-muted-foreground">Number of AI opponents</p>
+                  <h3 className="text-base sm:text-lg font-bold text-primary mb-2">BOT COUNT</h3>
+                  <p className="text-xs sm:text-sm text-muted-foreground">Number of AI opponents in match</p>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-4">
                   <Button
                     size="sm"
                     variant="outline"
-                    className="h-8 w-8 p-0 glow-border"
+                    className="h-10 w-10 p-0 glow-border font-black text-lg"
                     onClick={() => setBotCount(Math.max(1, botCount - 1))}
                   >
                     −
                   </Button>
-                  <span className="text-2xl font-black text-accent w-12 text-center tabular-nums">{botCount}</span>
+                  <span className="text-3xl sm:text-4xl font-black text-accent w-16 text-center tabular-nums">{botCount}</span>
                   <Button
                     size="sm"
                     variant="outline"
-                    className="h-8 w-8 p-0 glow-border"
+                    className="h-10 w-10 p-0 glow-border font-black text-lg"
                     onClick={() => setBotCount(Math.min(15, botCount + 1))}
                   >
                     +
@@ -145,29 +145,29 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="mb-8"
+          className="mb-10"
         >
-          <h2 className="text-2xl sm:text-3xl font-black mb-6 text-primary tracking-wide flex items-center gap-3">
-            <span className="w-1 h-8 bg-accent"></span>
+          <h2 className="text-2xl sm:text-3xl font-black mb-8 text-primary tracking-wide flex items-center gap-4">
+            <span className="w-2 h-10 bg-accent rounded"></span>
             MAP SELECTION
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-7">
             {maps.map((map, index) => (
               <motion.div
                 key={map.id}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 + index * 0.08 }}
-                whileHover={{ y: -4 }}
+                whileHover={{ y: -6, transition: { duration: 0.2 } }}
               >
                 <Card
                   className={`
-                    p-5 cursor-pointer transition-all duration-300 relative overflow-hidden group
-                    ${selectedMap === map.id ? 'glow-accent bg-accent/10 border-accent' : 'glow-border hover:bg-card/80 hover:border-primary/50'}
+                    p-6 cursor-pointer transition-all duration-300 relative overflow-hidden group
+                    ${selectedMap === map.id ? 'glow-accent bg-accent/10 border-accent border-2' : 'glow-border hover:bg-card/80 hover:border-primary/50'}
                   `}
                   onClick={() => setSelectedMap(map.id)}
                 >
-                  <div className={`aspect-video bg-gradient-to-br ${map.gradient} mb-4 rounded relative overflow-hidden border border-border/50`}>
+                  <div className={`aspect-video bg-gradient-to-br ${map.gradient} mb-5 rounded-md relative overflow-hidden border-2 border-border/50`}>
                     <div 
                       className="absolute inset-0 opacity-30" 
                       style={{
@@ -177,15 +177,15 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
                         `,
                       }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent" />
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-4xl sm:text-5xl font-black text-primary/20 group-hover:text-primary/40 transition-colors">
+                      <span className="text-4xl sm:text-5xl font-black text-primary/20 group-hover:text-primary/40 transition-colors duration-300">
                         {map.id.toUpperCase()}
                       </span>
                     </div>
                     {selectedMap === map.id && (
                       <motion.div
-                        className="absolute top-3 right-3 flex gap-1"
+                        className="absolute top-4 right-4 flex gap-1.5"
                         initial={{ scale: 0, rotate: -180 }}
                         animate={{ scale: 1, rotate: 0 }}
                         transition={{ type: "spring", stiffness: 260, damping: 20 }}
@@ -195,14 +195,14 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
                       </motion.div>
                     )}
                   </div>
-                  <h3 className="font-black text-lg sm:text-xl mb-3 tracking-wide">{map.name}</h3>
-                  <div className="flex gap-2 flex-wrap">
-                    <Badge variant="secondary" className="text-xs font-bold px-2 py-1">{map.type}</Badge>
-                    <Badge variant="outline" className="text-xs font-bold px-2 py-1 border-primary/30">{map.size}</Badge>
+                  <h3 className="font-black text-xl sm:text-2xl mb-4 tracking-wide">{map.name}</h3>
+                  <div className="flex gap-3 flex-wrap">
+                    <Badge variant="secondary" className="text-xs sm:text-sm font-bold px-3 py-1.5">{map.type}</Badge>
+                    <Badge variant="outline" className="text-xs sm:text-sm font-bold px-3 py-1.5 border-primary/30">{map.size}</Badge>
                   </div>
                   
                   <motion.div
-                    className="absolute bottom-0 left-0 right-0 h-1 bg-accent"
+                    className="absolute bottom-0 left-0 right-0 h-1.5 bg-accent shadow-lg shadow-accent/50"
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: selectedMap === map.id ? 1 : 0 }}
                     transition={{ duration: 0.3 }}
@@ -223,7 +223,7 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
             onClick={handleStartMatch}
             disabled={!selectedMap || isLoading}
             className={`
-              w-full sm:w-auto px-12 sm:px-16 h-14 sm:h-16 text-lg sm:text-xl font-black tracking-wider
+              w-full sm:w-auto px-16 sm:px-20 h-16 sm:h-20 text-xl sm:text-2xl font-black tracking-wider
               ${!selectedMap || isLoading ? 'opacity-50' : 'glow-accent hover:scale-105'}
               transition-all duration-200 relative overflow-hidden group
             `}
@@ -234,8 +234,8 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
               animate={{ x: ['-100%', '200%'] }}
               transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
             />
-            <span className="relative z-10 flex items-center gap-3">
-              <Play size={28} weight="fill" />
+            <span className="relative z-10 flex items-center gap-4">
+              <Play size={32} weight="fill" />
               {isLoading ? 'INITIALIZING...' : 'START MATCH'}
             </span>
           </Button>
