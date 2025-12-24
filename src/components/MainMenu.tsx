@@ -111,20 +111,39 @@ export function MainMenu({ onNavigate }: MainMenuProps) {
                 >
                   <Box
                     sx={{
-                      p: 2,
-                      borderRadius: '12px',
-                      bgcolor: 'primary.main',
-                      opacity: 0.15,
+                      position: 'relative',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      transition: 'opacity 0.3s',
-                      '.MuiCard-root:hover &': {
-                        opacity: 0.25,
-                      },
                     }}
                   >
-                    <item.icon size={40} weight="bold" color="oklch(0.75 0.20 220)" />
+                    <Box
+                      sx={{
+                        position: 'absolute',
+                        width: '60px',
+                        height: '60px',
+                        borderRadius: '50%',
+                        background: 'radial-gradient(circle, oklch(0.75 0.20 220 / 0.2), transparent 70%)',
+                        filter: 'blur(8px)',
+                        transition: 'all 0.3s ease',
+                        '.MuiCard-root:hover &': {
+                          width: '80px',
+                          height: '80px',
+                          background: 'radial-gradient(circle, oklch(0.75 0.20 220 / 0.4), transparent 70%)',
+                        },
+                      }}
+                    />
+                    <item.icon 
+                      size={48} 
+                      weight="duotone" 
+                      style={{
+                        position: 'relative',
+                        zIndex: 1,
+                        color: 'oklch(0.75 0.20 220)',
+                        filter: 'drop-shadow(0 0 8px oklch(0.75 0.20 220 / 0.5))',
+                        transition: 'all 0.3s ease',
+                      }}
+                    />
                   </Box>
                   <Stack alignItems="center" spacing={0.5}>
                     <Typography variant="h5">
