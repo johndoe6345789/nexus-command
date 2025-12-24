@@ -162,11 +162,24 @@ export function Settings({ onBack }: SettingsProps) {
                 <Typography variant="h4" sx={{ mb: 4 }}>
                   Audio Settings
                 </Typography>
-                <Stack spacing={4}>
-                  <Box>
-                    <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
-                      <Typography variant="h6">Master Volume</Typography>
-                      <Chip label={`${masterVolume}%`} />
+                <Stack spacing={6}>
+                  <Box sx={{ 
+                    p: 3, 
+                    borderRadius: '12px',
+                    background: 'rgba(74, 158, 255, 0.05)',
+                    border: '1px solid rgba(74, 158, 255, 0.2)',
+                  }}>
+                    <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 3 }}>
+                      <Typography variant="h5" sx={{ 
+                        color: '#7EC4FF',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 1,
+                      }}>
+                        <SpeakerHigh size={28} weight="bold" />
+                        Master Volume
+                      </Typography>
+                      <Chip label={`${masterVolume}%`} color="primary" />
                     </Stack>
                     <Slider
                       value={masterVolume ?? 80}
@@ -176,10 +189,23 @@ export function Settings({ onBack }: SettingsProps) {
                     />
                   </Box>
 
-                  <Box>
-                    <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
-                      <Typography variant="h6">Music Volume</Typography>
-                      <Chip label={`${musicVolume}%`} />
+                  <Box sx={{ 
+                    p: 3, 
+                    borderRadius: '12px',
+                    background: 'rgba(74, 158, 255, 0.05)',
+                    border: '1px solid rgba(74, 158, 255, 0.2)',
+                  }}>
+                    <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 3 }}>
+                      <Typography variant="h5" sx={{ 
+                        color: '#7EC4FF',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 1,
+                      }}>
+                        <SpeakerHigh size={28} weight="duotone" />
+                        Music Volume
+                      </Typography>
+                      <Chip label={`${musicVolume}%`} color="primary" />
                     </Stack>
                     <Slider
                       value={musicVolume ?? 60}
@@ -189,10 +215,23 @@ export function Settings({ onBack }: SettingsProps) {
                     />
                   </Box>
 
-                  <Box>
-                    <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
-                      <Typography variant="h6">SFX Volume</Typography>
-                      <Chip label={`${sfxVolume}%`} />
+                  <Box sx={{ 
+                    p: 3, 
+                    borderRadius: '12px',
+                    background: 'rgba(74, 158, 255, 0.05)',
+                    border: '1px solid rgba(74, 158, 255, 0.2)',
+                  }}>
+                    <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 3 }}>
+                      <Typography variant="h5" sx={{ 
+                        color: '#7EC4FF',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 1,
+                      }}>
+                        <SpeakerHigh size={28} weight="fill" />
+                        SFX Volume
+                      </Typography>
+                      <Chip label={`${sfxVolume}%`} color="primary" />
                     </Stack>
                     <Slider
                       value={sfxVolume ?? 90}
@@ -212,11 +251,24 @@ export function Settings({ onBack }: SettingsProps) {
                 <Typography variant="h4" sx={{ mb: 4 }}>
                   Control Settings
                 </Typography>
-                <Stack spacing={4}>
-                  <Box>
-                    <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
-                      <Typography variant="h6">Mouse Sensitivity</Typography>
-                      <Chip label={`${mouseSensitivity}%`} />
+                <Stack spacing={6}>
+                  <Box sx={{ 
+                    p: 3, 
+                    borderRadius: '12px',
+                    background: 'rgba(74, 158, 255, 0.05)',
+                    border: '1px solid rgba(74, 158, 255, 0.2)',
+                  }}>
+                    <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 3 }}>
+                      <Typography variant="h5" sx={{ 
+                        color: '#7EC4FF',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 1,
+                      }}>
+                        <GameController size={28} weight="bold" />
+                        Mouse Sensitivity
+                      </Typography>
+                      <Chip label={`${mouseSensitivity}%`} color="primary" />
                     </Stack>
                     <Slider
                       value={mouseSensitivity ?? 50}
