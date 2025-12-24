@@ -4,43 +4,43 @@ export const muiTheme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: 'oklch(0.75 0.20 220)',
-      light: 'oklch(0.85 0.18 220)',
-      dark: 'oklch(0.65 0.22 220)',
-      contrastText: 'oklch(0.98 0.01 0)',
+      main: '#4A9EFF',
+      light: '#7EC4FF',
+      dark: '#2678D9',
+      contrastText: '#FAFAFA',
     },
     secondary: {
-      main: 'oklch(0.70 0.18 35)',
-      light: 'oklch(0.80 0.16 35)',
-      dark: 'oklch(0.60 0.20 35)',
-      contrastText: 'oklch(0.98 0.01 0)',
+      main: '#FFB74D',
+      light: '#FFE082',
+      dark: '#FF9800',
+      contrastText: '#FAFAFA',
     },
     background: {
-      default: 'oklch(0.08 0.01 250)',
-      paper: 'oklch(0.12 0.02 250)',
+      default: '#0A0B14',
+      paper: '#12141F',
     },
     text: {
-      primary: 'oklch(0.98 0.01 0)',
-      secondary: 'oklch(0.88 0.03 0)',
-      disabled: 'oklch(0.55 0.05 250)',
+      primary: '#FAFAFA',
+      secondary: '#E0E0E0',
+      disabled: '#666B7D',
     },
     error: {
-      main: 'oklch(0.55 0.25 25)',
-      contrastText: 'oklch(0.98 0.01 0)',
+      main: '#D32F2F',
+      contrastText: '#FAFAFA',
     },
     warning: {
-      main: 'oklch(0.70 0.18 35)',
-      contrastText: 'oklch(0.98 0.01 0)',
+      main: '#FFB74D',
+      contrastText: '#FAFAFA',
     },
     info: {
-      main: 'oklch(0.75 0.20 220)',
-      contrastText: 'oklch(0.98 0.01 0)',
+      main: '#4A9EFF',
+      contrastText: '#FAFAFA',
     },
     success: {
-      main: 'oklch(0.70 0.18 150)',
-      contrastText: 'oklch(0.98 0.01 0)',
+      main: '#4CAF50',
+      contrastText: '#FAFAFA',
     },
-    divider: 'oklch(0.25 0.05 250 / 0.3)',
+    divider: 'rgba(74, 158, 255, 0.3)',
   },
   typography: {
     fontFamily: "'Inter', system-ui, sans-serif",
@@ -126,7 +126,7 @@ export const muiTheme = createTheme({
           position: 'relative',
           overflow: 'hidden',
           transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
-          boxShadow: '0 4px 16px oklch(0 0 0 / 0.3)',
+          boxShadow: '0 4px 16px rgba(0, 0, 0, 0.3)',
           backdropFilter: 'blur(20px)',
           '&::before': {
             content: '""',
@@ -135,7 +135,7 @@ export const muiTheme = createTheme({
             left: '-100%',
             width: '100%',
             height: '100%',
-            background: 'linear-gradient(90deg, transparent, oklch(1 0 0 / 0.2), transparent)',
+            background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent)',
             transition: 'left 0.5s',
           },
           '&:hover::before': {
@@ -143,37 +143,37 @@ export const muiTheme = createTheme({
           },
           '&:hover': {
             transform: 'translateY(-2px)',
-            boxShadow: '0 8px 24px oklch(0 0 0 / 0.4)',
+            boxShadow: '0 8px 24px rgba(0, 0, 0, 0.4)',
           },
           '&:active': {
             transform: 'translateY(0)',
           },
         },
         containedPrimary: {
-          background: 'linear-gradient(135deg, oklch(0.75 0.20 220), oklch(0.65 0.22 240))',
-          border: '1px solid oklch(0.75 0.20 220 / 0.5)',
-          boxShadow: '0 4px 16px oklch(0.75 0.20 220 / 0.3), inset 0 0 20px oklch(0.75 0.20 220 / 0.1)',
+          background: 'linear-gradient(135deg, #4A9EFF, #2678D9)',
+          border: '1px solid rgba(74, 158, 255, 0.5)',
+          boxShadow: '0 4px 16px rgba(74, 158, 255, 0.3), inset 0 0 20px rgba(74, 158, 255, 0.1)',
           '&:hover': {
-            background: 'linear-gradient(135deg, oklch(0.85 0.18 220), oklch(0.75 0.20 240))',
-            boxShadow: '0 8px 24px oklch(0.75 0.20 220 / 0.5), inset 0 0 20px oklch(0.75 0.20 220 / 0.2)',
+            background: 'linear-gradient(135deg, #7EC4FF, #4A9EFF)',
+            boxShadow: '0 8px 24px rgba(74, 158, 255, 0.5), inset 0 0 20px rgba(74, 158, 255, 0.2)',
           },
         },
         containedSecondary: {
-          background: 'linear-gradient(135deg, oklch(0.70 0.18 35), oklch(0.60 0.20 25))',
-          border: '1px solid oklch(0.70 0.18 35 / 0.5)',
-          boxShadow: '0 4px 16px oklch(0.70 0.18 35 / 0.3), inset 0 0 20px oklch(0.70 0.18 35 / 0.1)',
+          background: 'linear-gradient(135deg, #FFB74D, #FF9800)',
+          border: '1px solid rgba(255, 183, 77, 0.5)',
+          boxShadow: '0 4px 16px rgba(255, 183, 77, 0.3), inset 0 0 20px rgba(255, 183, 77, 0.1)',
           '&:hover': {
-            background: 'linear-gradient(135deg, oklch(0.80 0.16 35), oklch(0.70 0.18 25))',
-            boxShadow: '0 8px 24px oklch(0.70 0.18 35 / 0.5), inset 0 0 20px oklch(0.70 0.18 35 / 0.2)',
+            background: 'linear-gradient(135deg, #FFE082, #FFB74D)',
+            boxShadow: '0 8px 24px rgba(255, 183, 77, 0.5), inset 0 0 20px rgba(255, 183, 77, 0.2)',
           },
         },
         outlined: {
-          background: 'oklch(0.12 0.02 250 / 0.4)',
+          background: 'rgba(18, 20, 31, 0.4)',
           backdropFilter: 'blur(40px)',
-          border: '1px solid oklch(0.25 0.05 250 / 0.5)',
+          border: '1px solid rgba(74, 158, 255, 0.5)',
           '&:hover': {
-            background: 'oklch(0.15 0.02 250 / 0.6)',
-            border: '1px solid oklch(0.75 0.20 220 / 0.5)',
+            background: 'rgba(18, 20, 31, 0.6)',
+            border: '1px solid rgba(74, 158, 255, 0.7)',
           },
         },
       },
@@ -181,15 +181,15 @@ export const muiTheme = createTheme({
     MuiCard: {
       styleOverrides: {
         root: {
-          background: 'oklch(0.12 0.02 250 / 0.4)',
+          background: 'rgba(18, 20, 31, 0.4)',
           backdropFilter: 'blur(40px) saturate(180%)',
-          border: '1px solid oklch(0.25 0.05 250 / 0.3)',
-          boxShadow: '0 8px 32px oklch(0 0 0 / 0.4)',
+          border: '1px solid rgba(74, 158, 255, 0.3)',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
           borderRadius: '12px',
           transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
           '&:hover': {
-            border: '1px solid oklch(0.75 0.20 220 / 0.4)',
-            boxShadow: '0 12px 48px oklch(0 0 0 / 0.5), 0 0 40px oklch(0.75 0.20 220 / 0.15)',
+            border: '1px solid rgba(74, 158, 255, 0.4)',
+            boxShadow: '0 12px 48px rgba(0, 0, 0, 0.5), 0 0 40px rgba(74, 158, 255, 0.15)',
             transform: 'translateY(-4px)',
           },
         },
@@ -198,10 +198,10 @@ export const muiTheme = createTheme({
     MuiPaper: {
       styleOverrides: {
         root: {
-          background: 'oklch(0.12 0.02 250 / 0.4)',
+          background: 'rgba(18, 20, 31, 0.4)',
           backdropFilter: 'blur(40px) saturate(180%)',
-          border: '1px solid oklch(0.25 0.05 250 / 0.3)',
-          boxShadow: '0 8px 32px oklch(0 0 0 / 0.4)',
+          border: '1px solid rgba(74, 158, 255, 0.3)',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
         },
       },
     },
@@ -209,19 +209,19 @@ export const muiTheme = createTheme({
       styleOverrides: {
         root: {
           '& .MuiOutlinedInput-root': {
-            background: 'oklch(0.10 0.02 250 / 0.6)',
+            background: 'rgba(10, 11, 20, 0.6)',
             backdropFilter: 'blur(20px)',
             borderRadius: '8px',
             '& fieldset': {
-              borderColor: 'oklch(0.25 0.05 250 / 0.5)',
+              borderColor: 'rgba(74, 158, 255, 0.5)',
               transition: 'all 0.3s',
             },
             '&:hover fieldset': {
-              borderColor: 'oklch(0.75 0.20 220 / 0.5)',
+              borderColor: 'rgba(74, 158, 255, 0.7)',
             },
             '&.Mui-focused fieldset': {
-              borderColor: 'oklch(0.75 0.20 220)',
-              boxShadow: '0 0 20px oklch(0.75 0.20 220 / 0.3)',
+              borderColor: '#4A9EFF',
+              boxShadow: '0 0 20px rgba(74, 158, 255, 0.3)',
             },
           },
         },
@@ -231,20 +231,20 @@ export const muiTheme = createTheme({
       styleOverrides: {
         root: {
           '& .MuiSlider-thumb': {
-            background: 'linear-gradient(135deg, oklch(0.75 0.20 220), oklch(0.65 0.22 240))',
-            boxShadow: '0 0 20px oklch(0.75 0.20 220 / 0.5)',
-            border: '2px solid oklch(0.98 0.01 0)',
+            background: 'linear-gradient(135deg, #4A9EFF, #2678D9)',
+            boxShadow: '0 0 20px rgba(74, 158, 255, 0.5)',
+            border: '2px solid #FAFAFA',
             '&:hover': {
-              boxShadow: '0 0 30px oklch(0.75 0.20 220 / 0.7)',
+              boxShadow: '0 0 30px rgba(74, 158, 255, 0.7)',
             },
           },
           '& .MuiSlider-track': {
-            background: 'linear-gradient(90deg, oklch(0.75 0.20 220), oklch(0.70 0.18 35))',
+            background: 'linear-gradient(90deg, #4A9EFF, #FFB74D)',
             border: 'none',
-            boxShadow: '0 0 20px oklch(0.75 0.20 220 / 0.3)',
+            boxShadow: '0 0 20px rgba(74, 158, 255, 0.3)',
           },
           '& .MuiSlider-rail': {
-            background: 'oklch(0.15 0.02 250)',
+            background: '#1A1C2E',
             opacity: 1,
           },
         },
@@ -254,16 +254,16 @@ export const muiTheme = createTheme({
       styleOverrides: {
         root: {
           '& .MuiSwitch-track': {
-            background: 'oklch(0.15 0.02 250)',
+            background: '#1A1C2E',
             opacity: 1,
           },
           '& .Mui-checked + .MuiSwitch-track': {
-            background: 'linear-gradient(90deg, oklch(0.75 0.20 220), oklch(0.65 0.22 240))',
+            background: 'linear-gradient(90deg, #4A9EFF, #2678D9)',
             opacity: 1,
-            boxShadow: '0 0 20px oklch(0.75 0.20 220 / 0.4)',
+            boxShadow: '0 0 20px rgba(74, 158, 255, 0.4)',
           },
           '& .MuiSwitch-thumb': {
-            boxShadow: '0 2px 8px oklch(0 0 0 / 0.4)',
+            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.4)',
           },
         },
       },
@@ -271,63 +271,63 @@ export const muiTheme = createTheme({
     MuiChip: {
       styleOverrides: {
         root: {
-          background: 'oklch(0.15 0.02 250 / 0.8)',
+          background: 'rgba(26, 28, 46, 0.8)',
           backdropFilter: 'blur(20px)',
-          border: '1px solid oklch(0.25 0.05 250 / 0.5)',
+          border: '1px solid rgba(74, 158, 255, 0.5)',
           fontFamily: "'Inter', system-ui, sans-serif",
           fontWeight: 600,
         },
         filled: {
-          background: 'oklch(0.75 0.20 220 / 0.2)',
-          border: '1px solid oklch(0.75 0.20 220 / 0.5)',
-          color: 'oklch(0.85 0.18 220)',
+          background: 'rgba(74, 158, 255, 0.2)',
+          border: '1px solid rgba(74, 158, 255, 0.5)',
+          color: '#7EC4FF',
         },
       },
     },
     MuiAppBar: {
       styleOverrides: {
         root: {
-          background: 'oklch(0.12 0.02 250 / 0.6)',
+          background: 'rgba(18, 20, 31, 0.6)',
           backdropFilter: 'blur(40px) saturate(180%)',
-          boxShadow: '0 4px 24px oklch(0 0 0 / 0.3)',
-          borderBottom: '1px solid oklch(0.25 0.05 250 / 0.3)',
+          boxShadow: '0 4px 24px rgba(0, 0, 0, 0.3)',
+          borderBottom: '1px solid rgba(74, 158, 255, 0.3)',
         },
       },
     },
     MuiDialog: {
       styleOverrides: {
         paper: {
-          background: 'oklch(0.10 0.02 250 / 0.95)',
+          background: 'rgba(10, 11, 20, 0.95)',
           backdropFilter: 'blur(60px) saturate(180%)',
-          border: '1px solid oklch(0.75 0.20 220 / 0.3)',
-          boxShadow: '0 24px 80px oklch(0 0 0 / 0.6), 0 0 80px oklch(0.75 0.20 220 / 0.2)',
+          border: '1px solid rgba(74, 158, 255, 0.3)',
+          boxShadow: '0 24px 80px rgba(0, 0, 0, 0.6), 0 0 80px rgba(74, 158, 255, 0.2)',
         },
       },
     },
     MuiLinearProgress: {
       styleOverrides: {
         root: {
-          background: 'oklch(0.15 0.02 250)',
+          background: '#1A1C2E',
           borderRadius: '8px',
           height: '8px',
         },
         bar: {
-          background: 'linear-gradient(90deg, oklch(0.75 0.20 220), oklch(0.70 0.18 35))',
+          background: 'linear-gradient(90deg, #4A9EFF, #FFB74D)',
           borderRadius: '8px',
-          boxShadow: '0 0 20px oklch(0.75 0.20 220 / 0.5)',
+          boxShadow: '0 0 20px rgba(74, 158, 255, 0.5)',
         },
       },
     },
     MuiTooltip: {
       styleOverrides: {
         tooltip: {
-          background: 'oklch(0.10 0.02 250 / 0.95)',
+          background: 'rgba(10, 11, 20, 0.95)',
           backdropFilter: 'blur(20px)',
-          border: '1px solid oklch(0.75 0.20 220 / 0.3)',
+          border: '1px solid rgba(74, 158, 255, 0.3)',
           fontSize: '0.875rem',
           fontWeight: 600,
           padding: '12px 16px',
-          boxShadow: '0 8px 24px oklch(0 0 0 / 0.4)',
+          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.4)',
         },
       },
     },
