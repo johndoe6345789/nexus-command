@@ -1,5 +1,5 @@
 import { Card, CardContent, Stack, Grid, Box, Tabs, Tab, Typography, Chip, useMediaQuery, useTheme } from '@mui/material'
-import { Code, ChartLine, Lightning, Database, Bug, Gear, Terminal, Eye } from '@phosphor-icons/react'
+import { Code, ChartLine, Lightning, Database, Bug, Gear, Terminal, Eye, Cube } from '@phosphor-icons/react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useKV } from '@github/spark/hooks'
 import { useState } from 'react'
@@ -10,6 +10,7 @@ import { PageHeader } from './atoms/PageHeader'
 import { StatCard } from './atoms/StatCard'
 import { DebugToggle } from './molecules/DebugToggle'
 import { ConsolePanel } from './organisms/ConsolePanel'
+import { ProceduralGenPanel } from './organisms/ProceduralGenPanel'
 import { SystemStats } from '@/types'
 import { handleConsoleCommand } from '@/utils'
 import { DeveloperProps } from './props'
@@ -115,6 +116,11 @@ export function Developer({ onBack }: DeveloperProps) {
             <Tab 
               icon={<Eye size={isMobile ? 20 : 24} />} 
               label={isTablet ? undefined : "Render Stats"}
+              iconPosition="start"
+            />
+            <Tab 
+              icon={<Cube size={isMobile ? 20 : 24} />} 
+              label={isTablet ? undefined : "Proc Gen"}
               iconPosition="start"
             />
           </Tabs>
@@ -283,6 +289,18 @@ export function Developer({ onBack }: DeveloperProps) {
                   </Stack>
                 </CardContent>
               </Card>
+            </motion.div>
+          )}
+
+          {activeTab === 5 && (
+            <motion.div
+              key="procgen"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <ProceduralGenPanel />
             </motion.div>
           )}
         </AnimatePresence>
