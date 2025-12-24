@@ -8,10 +8,11 @@ import { SinglePlayer } from './components/SinglePlayer'
 import { Multiplayer } from './components/Multiplayer'
 import { Settings } from './components/Settings'
 import { PlayerStats } from './components/PlayerStats'
+import { Developer } from './components/Developer'
 import { Toaster } from '@/components/ui/sonner'
 import { motion, AnimatePresence } from 'framer-motion'
 
-type Screen = 'main' | 'singleplayer' | 'multiplayer' | 'settings' | 'stats' | 'exit'
+type Screen = 'main' | 'singleplayer' | 'multiplayer' | 'settings' | 'stats' | 'developer' | 'exit'
 
 function App() {
   const [currentScreen, setCurrentScreen] = useState<Screen>('main')
@@ -50,6 +51,7 @@ function App() {
               {currentScreen === 'multiplayer' && <Multiplayer onBack={handleBack} />}
               {currentScreen === 'settings' && <Settings onBack={handleBack} />}
               {currentScreen === 'stats' && <PlayerStats onBack={handleBack} />}
+              {currentScreen === 'developer' && <Developer onBack={handleBack} />}
             </motion.div>
           </AnimatePresence>
         </div>

@@ -1,5 +1,5 @@
 import { Button, Card, CardContent, Typography, Box, Stack } from '@mui/material'
-import { Play, Users, Gear, ChartBar, SignOut } from '@phosphor-icons/react'
+import { Play, Users, Gear, ChartBar, SignOut, Code } from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
 import { Logo } from './Logo'
 
@@ -13,6 +13,7 @@ export function MainMenu({ onNavigate }: MainMenuProps) {
     { id: 'multiplayer', label: 'Multiplayer', icon: Users, description: 'Join online battles' },
     { id: 'stats', label: 'Profile', icon: ChartBar, description: 'View your stats' },
     { id: 'settings', label: 'Settings', icon: Gear, description: 'Configure your game' },
+    { id: 'developer', label: 'Developer', icon: Code, description: 'Debug tools & cheats' },
     { id: 'exit', label: 'Exit', icon: SignOut, description: 'Close application' },
   ]
 
