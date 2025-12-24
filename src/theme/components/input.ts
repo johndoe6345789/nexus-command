@@ -11,11 +11,11 @@ export const inputStyles = {
             transition: 'all 0.3s',
           },
           '&:hover fieldset': {
-            borderColor: 'rgba(91, 143, 199, 0.6)',
+            borderColor: 'rgba(91, 143, 199, 0.5)',
           },
           '&.Mui-focused fieldset': {
             borderColor: '#5B8FC7',
-            boxShadow: '0 0 16px rgba(91, 143, 199, 0.25)',
+            boxShadow: '0 0 10px rgba(91, 143, 199, 0.15)',
           },
         },
       },

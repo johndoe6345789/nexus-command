@@ -88,7 +88,7 @@ export function MainMenu({ onNavigate }: MainMenuProps) {
                     content: '""',
                     position: 'absolute',
                     inset: 0,
-                    background: 'linear-gradient(90deg, transparent, oklch(0.55 0.12 230 / 0.08), transparent)',
+                    background: 'linear-gradient(90deg, transparent, oklch(0.55 0.12 230 / 0.04), transparent)',
                     transform: 'translateX(-100%)',
                     transition: 'transform 0.7s',
                   },
@@ -122,13 +122,13 @@ export function MainMenu({ onNavigate }: MainMenuProps) {
                         width: '60px',
                         height: '60px',
                         borderRadius: '50%',
-                        background: 'radial-gradient(circle, oklch(0.55 0.12 230 / 0.15), transparent 70%)',
+                        background: 'radial-gradient(circle, oklch(0.55 0.12 230 / 0.08), transparent 70%)',
                         filter: 'blur(8px)',
                         transition: 'all 0.3s ease',
                         '.MuiCard-root:hover &': {
-                          width: '80px',
-                          height: '80px',
-                          background: 'radial-gradient(circle, oklch(0.55 0.12 230 / 0.25), transparent 70%)',
+                          width: '70px',
+                          height: '70px',
+                          background: 'radial-gradient(circle, oklch(0.55 0.12 230 / 0.12), transparent 70%)',
                         },
                       }}
                     />
@@ -139,7 +139,7 @@ export function MainMenu({ onNavigate }: MainMenuProps) {
                         position: 'relative',
                         zIndex: 1,
                         color: 'oklch(0.65 0.12 230)',
-                        filter: 'drop-shadow(0 0 6px oklch(0.55 0.12 230 / 0.3))',
+                        filter: 'drop-shadow(0 0 4px oklch(0.55 0.12 230 / 0.2))',
                         transition: 'all 0.3s ease',
                       }}
                     />

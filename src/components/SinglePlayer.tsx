@@ -107,10 +107,11 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
                           cursor: 'pointer',
                           border: selectedMap === map.id ? '2px solid' : '1px solid',
                           borderColor: selectedMap === map.id ? 'primary.main' : 'divider',
-                          bgcolor: selectedMap === map.id ? 'primary.main' : 'background.paper',
+                          bgcolor: 'background.paper',
                           backgroundImage: selectedMap === map.id 
-                            ? 'linear-gradient(135deg, oklch(0.75 0.20 220 / 0.1), oklch(0.70 0.18 35 / 0.1))'
+                            ? 'linear-gradient(135deg, oklch(0.75 0.20 220 / 0.05), oklch(0.70 0.18 35 / 0.05))'
                             : 'none',
+                          transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
                         }}
                         onClick={() => setSelectedMap(map.id)}
                       >
