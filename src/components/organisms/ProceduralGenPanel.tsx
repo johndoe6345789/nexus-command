@@ -277,8 +277,6 @@ export function ProceduralGenPanel({
     
     onGenerationStart(selectedType)
     
-    toast.loading(`Generating ${selectedType}...`, { id: 'gen-toast' })
-    
     const steps = 5
     for (let i = 0; i <= steps; i++) {
       await new Promise(resolve => setTimeout(resolve, 180))
@@ -297,7 +295,7 @@ export function ProceduralGenPanel({
     
     setGenerationHistory((current) => [mapData, ...(current || [])].slice(0, 10))
     
-    toast.success(`Generated ${selectedType} with seed: ${actualSeed}`, { id: 'gen-toast' })
+    toast.success(`Generated ${selectedType} with seed: ${actualSeed}`)
     onGenerationEnd()
   }
 
