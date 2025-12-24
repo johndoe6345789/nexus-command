@@ -10,6 +10,8 @@ A premium AAA-quality game menu system for NEXUS COMMAND inspired by modern shoo
 **Complexity Level**: Light Application (multiple features with basic state)
 This is a menu system with navigation between different screens (main menu, campaign, multiplayer, settings, stats) and basic state management for user preferences and selections.
 
+**Architecture Update (Iteration 23)**: Implemented comprehensive atomic component framework following Brad Frost's Atomic Design principles. Components are now organized into five layers: Atoms (Icon, Text, GlowBox, Divider), Molecules (ActionButton, GlassCard, IconLabel, VolumeSlider, PageHeader), Organisms (MenuGrid, MapSelector, DifficultySelector, TabbedPanel, AudioControls), Templates (PageLayout, MainMenuLayout, TwoColumnLayout), and Pages (existing screen components). This architecture provides improved reusability, consistency, maintainability, and scalability across the entire application.
+
 ## Essential Features
 
 ### Main Menu Navigation
@@ -53,6 +55,13 @@ This is a menu system with navigation between different screens (main menu, camp
 - **Trigger**: Run via `npm test` or automatically in CI/CD pipeline
 - **Progression**: Tests start → Dev server launches → Browser automation runs → Canvas animations verified → Navigation flows tested → Performance metrics collected → Report generated
 - **Success criteria**: 50+ tests pass including background color verification, particle animation checks, navigation flows, theme validation, and FPS performance metrics
+
+### Atomic Component Framework
+- **Functionality**: Comprehensive design system organizing all UI components into atomic layers (atoms, molecules, organisms, templates, pages)
+- **Purpose**: Provide reusable, composable components that ensure consistency, improve maintainability, and accelerate development
+- **Trigger**: Components are imported and composed when building any UI screen
+- **Progression**: Developer selects appropriate components → Composes them into desired layout → Passes props for customization → Component renders with consistent styling
+- **Success criteria**: All components follow atomic principles, are fully typed, support theming, include animations, and can be composed to build any screen in the application
 
 ## Edge Case Handling
 
@@ -101,15 +110,16 @@ Animations feel premium and cinematic with sophisticated physics-based easing (c
 ## Component Selection
 
 - **Components**: 
-  - Button (Shadcn) - Clean, modern design with subtle hover states (scale 1.02x), premium glass panel styling, and smooth color transitions
-  - Card (Shadcn) - Glass morphism backgrounds (backdrop-filter: blur(40px)) with refined borders and elegant hover elevations
-  - Tabs (Shadcn) - Clean tab navigation with smooth active indicators
-  - Progress (Shadcn) - Elegant loading bars with smooth animations
-  - Slider (Shadcn) - Modern sliders with refined styling
-  - Badge (Shadcn) - Status indicators with clean, minimal design
-  - Dialog (Shadcn) - Modal overlays with glass morphism
-  - Input (Shadcn) - Clean input fields with focus states
-  - Switch (Shadcn) - Toggle switches with smooth transitions
+  - **Atomic Framework**:
+    - Atoms: Icon, Text, GlowBox, Divider - foundational UI elements
+    - Molecules: ActionButton, GlassCard, IconLabel, VolumeSlider, PageHeader - functional component groups
+    - Organisms: MenuGrid, MapSelector, DifficultySelector, TabbedPanel, AudioControls - complex UI sections
+    - Templates: PageLayout, MainMenuLayout, TwoColumnLayout - page-level layouts
+    - Pages: MainMenu, SinglePlayer, Multiplayer, Settings, PlayerStats - complete screen implementations
+  - **Material-UI Base**:
+    - Button, Card, Tabs, Progress, Slider, Chip, Dialog, Input, Switch - enhanced with custom theme
+  - **Shadcn Components** (available in ui/):
+    - 40+ pre-configured components available for use when needed
   
 - **Customizations**: 
   - AnimatedBackground component - Layered gradients with 80 particles, hexagonal geometric shapes, and connection lines creating sophisticated depth
