@@ -84,16 +84,16 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="mb-10"
+          className="mb-14"
         >
-          <Card className="p-6 sm:p-10 glow-border w-full glass-effect hover:shadow-[0_0_35px_rgba(99,102,241,0.25)] transition-all duration-400">
-            <h2 className="text-2xl sm:text-3xl font-black mb-8 text-primary tracking-wide flex items-center gap-4">
+          <Card className="p-8 sm:p-12 glow-border w-full glass-effect hover:shadow-[0_0_35px_rgba(99,102,241,0.25)] transition-all duration-400">
+            <h2 className="text-2xl sm:text-3xl font-black mb-10 text-primary tracking-wide flex items-center gap-4">
               <div className="p-3 bg-primary/20 rounded-md">
                 <Skull size={32} weight="bold" />
               </div>
               <span>DIFFICULTY PROTOCOL</span>
             </h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
               {difficulties.map((diff, index) => (
                 <motion.div
                   key={diff.id}
@@ -105,8 +105,8 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
                     onClick={() => setSelectedDifficulty(diff.id)}
                     variant={selectedDifficulty === diff.id ? 'default' : 'outline'}
                     className={`
-                      h-24 sm:h-28 font-black tracking-[0.1em] text-base sm:text-lg w-full
-                      flex flex-col gap-3 relative overflow-hidden group
+                      h-28 sm:h-32 font-black tracking-[0.1em] text-base sm:text-lg w-full
+                      flex flex-col gap-4 relative overflow-hidden group
                       ${selectedDifficulty === diff.id ? 'glow-accent glass-effect border-accent shadow-[0_0_35px_rgba(245,166,35,0.35)]' : 'glow-border glass-effect hover:bg-card/80'}
                       ${selectedDifficulty === diff.id ? diff.color : 'text-muted-foreground'}
                       hover:scale-[1.05] active:scale-95 transition-all duration-300
@@ -127,8 +127,8 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
               ))}
             </div>
             
-            <div className="mt-8 pt-8 border-t border-border/50">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+            <div className="mt-10 pt-10 border-t border-border/50">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
                 <div>
                   <h3 className="text-base sm:text-lg font-bold text-primary mb-2 flex items-center gap-2">
                     <Robot size={20} weight="bold" />
@@ -166,13 +166,13 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="mb-10"
+          className="mb-14"
         >
-          <div className="flex items-center gap-4 mb-8">
+          <div className="flex items-center gap-4 mb-10">
             <div className="w-1.5 h-12 bg-gradient-to-b from-accent via-primary to-accent rounded-full shadow-lg shadow-accent/50" />
             <h2 className="text-2xl sm:text-3xl font-black text-primary tracking-wide">ARENA SELECTION</h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-7">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7 sm:gap-9">
             {maps.map((map, index) => (
               <motion.div
                 key={map.id}
@@ -183,12 +183,12 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
               >
                 <Card
                   className={`
-                    p-6 sm:p-7 cursor-pointer transition-all duration-400 relative overflow-hidden group
+                    p-7 sm:p-8 cursor-pointer transition-all duration-400 relative overflow-hidden group
                     ${selectedMap === map.id ? 'glow-accent glass-effect border-accent border-[3px] shadow-[0_0_40px_rgba(245,166,35,0.4)]' : 'glow-border glass-effect hover:bg-card/90 hover:border-primary/60 hover:shadow-[0_0_25px_rgba(99,102,241,0.25)]'}
                   `}
                   onClick={() => setSelectedMap(map.id)}
                 >
-                  <div className={`aspect-video bg-gradient-to-br ${map.gradient} mb-5 rounded-lg relative overflow-hidden border-2 ${selectedMap === map.id ? 'border-accent/60' : 'border-border/40'} transition-all duration-300 shadow-lg`}>
+                  <div className={`aspect-video bg-gradient-to-br ${map.gradient} mb-6 rounded-lg relative overflow-hidden border-2 ${selectedMap === map.id ? 'border-accent/60' : 'border-border/40'} transition-all duration-300 shadow-lg`}>
                     <div 
                       className="absolute inset-0 opacity-20" 
                       style={{
@@ -224,8 +224,8 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
                       </>
                     )}
                   </div>
-                  <h3 className="font-black text-xl sm:text-2xl mb-4 tracking-[0.05em]">{map.name}</h3>
-                  <div className="flex gap-3 flex-wrap">
+                  <h3 className="font-black text-xl sm:text-2xl mb-5 tracking-[0.05em]">{map.name}</h3>
+                  <div className="flex gap-4 flex-wrap">
                     <Badge variant="secondary" className="text-xs sm:text-sm font-bold px-4 py-1.5">{map.type}</Badge>
                     <Badge variant="outline" className="text-xs sm:text-sm font-bold px-4 py-1.5 border-primary/40">{map.size}</Badge>
                   </div>

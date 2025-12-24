@@ -56,9 +56,9 @@ function StatCard({ icon: Icon, label, value, color, delay }: StatCardProps) {
       transition={{ delay, type: "spring", stiffness: 100 }}
       whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.2 } }}
     >
-      <Card className={`p-6 sm:p-8 glow-border ${color} relative overflow-hidden group glass-effect hover:bg-card/80 hover:shadow-[0_0_35px_rgba(99,102,241,0.3)] transition-all duration-400`}>
+      <Card className={`p-8 sm:p-10 glow-border ${color} relative overflow-hidden group glass-effect hover:bg-card/80 hover:shadow-[0_0_35px_rgba(99,102,241,0.3)] transition-all duration-400`}>
         <div className="relative z-10">
-          <div className="flex items-center gap-3 mb-4">
+          <div className="flex items-center gap-4 mb-6">
             <div className={`p-3 rounded-md ${color.replace('text-', 'bg-')}/20 border-2 border-current group-hover:scale-110 transition-transform duration-200`}>
               <Icon size={28} weight="bold" className={`${color}`} />
             </div>
@@ -148,7 +148,7 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
           </Button>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-7 mb-10 sm:mb-14">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7 sm:gap-9 mb-14 sm:mb-16">
           <StatCard
             icon={Crosshair}
             label="TOTAL KILLS"
@@ -179,18 +179,18 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
           />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-7 sm:gap-9">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-9 sm:gap-11">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.6 }}
           >
-            <Card className="p-7 sm:p-10 glow-border glass-effect hover:shadow-[0_0_35px_rgba(99,102,241,0.25)] transition-all duration-400">
-              <h2 className="text-2xl sm:text-3xl font-black mb-8 text-primary tracking-wide flex items-center gap-4">
+            <Card className="p-9 sm:p-12 glow-border glass-effect hover:shadow-[0_0_35px_rgba(99,102,241,0.25)] transition-all duration-400">
+              <h2 className="text-2xl sm:text-3xl font-black mb-10 text-primary tracking-wide flex items-center gap-4">
                 <span className="w-2 h-10 bg-accent rounded"></span>
                 RECENT MATCHES
               </h2>
-              <div className="space-y-4">
+              <div className="space-y-5">
                 {recentMatches.map((match, index) => (
                   <motion.div
                     key={index}
@@ -199,8 +199,8 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
                     transition={{ delay: 0.7 + index * 0.08 }}
                     whileHover={{ x: 6, transition: { duration: 0.2 } }}
                   >
-                    <div className="p-5 bg-card/60 rounded-lg glow-border hover:bg-card/80 hover:shadow-[0_0_15px_rgba(99,102,241,0.15)] transition-all duration-200 group">
-                      <div className="flex justify-between items-start mb-4">
+                    <div className="p-6 bg-card/60 rounded-lg glow-border hover:bg-card/80 hover:shadow-[0_0_15px_rgba(99,102,241,0.15)] transition-all duration-200 group">
+                      <div className="flex justify-between items-start mb-5">
                         <div>
                           <div className="font-black text-base sm:text-lg flex items-center gap-2">
                             <Lightning size={16} weight="fill" className="text-accent" />
@@ -236,12 +236,12 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.6 }}
           >
-            <Card className="p-7 sm:p-10 glow-border glass-effect hover:shadow-[0_0_35px_rgba(99,102,241,0.25)] transition-all duration-400">
-              <h2 className="text-2xl sm:text-3xl font-black mb-8 text-primary tracking-wide flex items-center gap-4">
+            <Card className="p-9 sm:p-12 glow-border glass-effect hover:shadow-[0_0_35px_rgba(99,102,241,0.25)] transition-all duration-400">
+              <h2 className="text-2xl sm:text-3xl font-black mb-10 text-primary tracking-wide flex items-center gap-4">
                 <span className="w-2 h-10 bg-accent rounded"></span>
                 WEAPON STATISTICS
               </h2>
-              <div className="space-y-6">
+              <div className="space-y-7">
                 {weaponStats.map((weapon, index) => (
                   <motion.div
                     key={index}
@@ -250,10 +250,10 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
                     transition={{ delay: 0.7 + index * 0.08 }}
                     whileHover={{ x: -6, transition: { duration: 0.2 } }}
                   >
-                    <div className="space-y-3">
+                    <div className="space-y-4">
                       <div className="flex justify-between items-center">
                         <span className="font-black text-base sm:text-lg tracking-wide">{weapon.name}</span>
-                        <span className="text-sm text-muted-foreground bg-background/50 px-3 py-1.5 rounded-md font-bold">
+                        <span className="text-sm text-muted-foreground bg-background/50 px-4 py-2 rounded-md font-bold">
                           {weapon.kills} kills
                         </span>
                       </div>

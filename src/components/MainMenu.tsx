@@ -57,7 +57,7 @@ export function MainMenu({ onNavigate }: MainMenuProps) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5, duration: 0.8 }}
-        className="flex flex-col gap-4 sm:gap-5 w-full max-w-2xl px-4"
+        className="flex flex-col gap-6 sm:gap-8 w-full max-w-3xl px-6"
       >
         {menuItems.map((item, index) => (
           <motion.div
@@ -71,7 +71,7 @@ export function MainMenu({ onNavigate }: MainMenuProps) {
             <Button
               onClick={() => onNavigate(item.screen)}
               className={`
-                w-full h-16 sm:h-20 text-lg sm:text-xl font-black tracking-[0.15em] relative overflow-hidden group
+                w-full h-20 sm:h-24 text-lg sm:text-xl font-black tracking-[0.15em] relative overflow-hidden group
                 ${item.color === 'primary' ? 'bg-card/40 hover:bg-primary/15 glow-border' : ''}
                 ${item.color === 'secondary' ? 'bg-card/40 hover:bg-secondary/20 glow-border' : ''}
                 ${item.color === 'destructive' ? 'bg-card/40 hover:bg-destructive/15 border-2 border-destructive/50' : ''}
@@ -81,16 +81,16 @@ export function MainMenu({ onNavigate }: MainMenuProps) {
               `}
               variant="outline"
             >
-              <span className="flex items-center justify-between w-full relative z-10 px-2">
-                <span className="flex items-center gap-4">
+              <span className="flex items-center justify-between w-full relative z-10 px-4">
+                <span className="flex items-center gap-6">
                   <div className={`
-                    p-2 rounded-md transition-all duration-300
+                    p-3 rounded-md transition-all duration-300
                     ${item.color === 'primary' ? 'bg-primary/20 group-hover:bg-primary/30' : ''}
                     ${item.color === 'secondary' ? 'bg-secondary/20 group-hover:bg-secondary/30' : ''}
                     ${item.color === 'destructive' ? 'bg-destructive/20 group-hover:bg-destructive/30' : ''}
                   `}>
                     <item.icon 
-                      size={28} 
+                      size={32} 
                       weight="bold"
                       className={`
                         ${item.color === 'primary' ? 'text-primary group-hover:text-accent' : ''}
@@ -101,8 +101,8 @@ export function MainMenu({ onNavigate }: MainMenuProps) {
                     />
                   </div>
                   <div className="text-left">
-                    <div className="text-base sm:text-lg">{item.label}</div>
-                    <div className="text-xs text-muted-foreground font-normal tracking-wider hidden sm:block">
+                    <div className="text-lg sm:text-xl">{item.label}</div>
+                    <div className="text-sm text-muted-foreground font-normal tracking-wider hidden sm:block mt-1">
                       {item.description}
                     </div>
                   </div>

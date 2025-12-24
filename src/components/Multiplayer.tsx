@@ -143,8 +143,8 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <Card className="p-5 sm:p-8 glow-border mb-10 glass-effect hover:shadow-[0_0_35px_rgba(99,102,241,0.25)] transition-all duration-400">
-            <div className="hidden lg:grid grid-cols-12 gap-4 text-xs font-black text-muted-foreground/70 mb-6 px-4 pb-4 border-b border-border/50">
+          <Card className="p-6 sm:p-10 glow-border mb-14 glass-effect hover:shadow-[0_0_35px_rgba(99,102,241,0.25)] transition-all duration-400">
+            <div className="hidden lg:grid grid-cols-12 gap-4 text-xs font-black text-muted-foreground/70 mb-8 px-6 pb-6 border-b border-border/50">
               <div className="col-span-4">SERVER NAME</div>
               <div className="col-span-2">MAP</div>
               <div className="col-span-2">MODE</div>
@@ -153,7 +153,7 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
             </div>
 
             <ScrollArea className="h-[500px] sm:h-[600px] w-full">
-              <div className="space-y-4 pr-4">
+              <div className="space-y-5 pr-6">
                 {servers.map((server, index) => (
                   <motion.div
                     key={server.id}
@@ -164,14 +164,14 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
                   >
                     <Card
                       className={`
-                        p-5 sm:p-6 cursor-pointer transition-all duration-400 relative overflow-hidden group
+                        p-6 sm:p-7 cursor-pointer transition-all duration-400 relative overflow-hidden group
                         ${selectedServer === server.id 
                           ? 'glow-accent glass-effect border-accent border-[3px] shadow-[0_0_40px_rgba(245,166,35,0.4)]' 
                           : 'glow-border glass-effect hover:bg-card/90 hover:border-primary/60 hover:shadow-[0_0_25px_rgba(99,102,241,0.25)]'}
                       `}
                       onClick={() => setSelectedServer(server.id)}
                     >
-                      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-4 items-center">
+                      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-5 items-center">
                         <div className="col-span-1 lg:col-span-4">
                           <div className="flex items-center gap-3">
                             <div className={`w-3 h-3 rounded-full ${selectedServer === server.id ? 'bg-accent' : 'bg-primary'} animate-pulse shadow-lg ${selectedServer === server.id ? 'shadow-accent/50' : 'shadow-primary/50'}`} />
