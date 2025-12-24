@@ -17,6 +17,18 @@ components/
 └── [Screen Components] # Main screen components
 ```
 
+## ⚠️ Note on *Refactored.tsx Files
+
+The following files are **empty placeholders** containing only `export {}` and should be **ignored**:
+- `DeveloperRefactored.tsx`
+- `MainMenuRefactored.tsx`
+- `MultiplayerRefactored.tsx`
+- `PlayerStatsRefactored.tsx`
+- `SettingsRefactored.tsx`
+- `SinglePlayerRefactored.tsx`
+
+These files are NOT used anywhere in the codebase and can be safely deleted. They are artifacts from a previous refactoring process.
+
 ## Main Screen Components
 
 These are the top-level components that represent each screen in the application:

@@ -1,65 +1,62 @@
-# Component Cleanup - COMPLETED ✓
+# ⚠️ PLACEHOLDERS IDENTIFIED - ACTION REQUIRED
 
 ## Summary
 
-All duplicate "Refactored" component files have been successfully removed from the codebase. The components now follow a clean atomic design pattern structure.
+This codebase contains **placeholder files** that should be removed. These are artifacts from a previous refactoring process and serve no functional purpose.
 
-## Removed Files
+## Empty Component Files (Should Be Deleted)
 
-The following duplicate files were removed:
+The following files contain only `export {}` and are NOT used anywhere:
 
-- `src/components/DeveloperRefactored.tsx` ✓
-- `src/components/MainMenuRefactored.tsx` ✓
-- `src/components/MultiplayerRefactored.tsx` ✓
-- `src/components/PlayerStatsRefactored.tsx` ✓
-- `src/components/SettingsRefactored.tsx` ✓
-- `src/components/SinglePlayerRefactored.tsx` ✓
-- `src/components/props/MainMenuRefactoredProps.ts` ✓ (renamed to MainMenuProps.ts)
+- `src/components/DeveloperRefactored.tsx`
+- `src/components/MainMenuRefactored.tsx`
+- `src/components/MultiplayerRefactored.tsx`
+- `src/components/PlayerStatsRefactored.tsx`
+- `src/components/SettingsRefactored.tsx`
+- `src/components/SinglePlayerRefactored.tsx`
 
-## Active Components
+## Cleanup Script Files (Should Be Deleted)
 
-The following components are the canonical, actively used versions:
+- `.cleanup-duplicates.sh` (empty file)
+- `cleanup-duplicates.mjs`
+- `cleanup-refactored.sh`
+- `remove-duplicates.sh`
+- `delete-placeholders.mjs`
 
-- `src/components/Developer.tsx` ✓
-- `src/components/MainMenu.tsx` ✓
-- `src/components/Multiplayer.tsx` ✓
-- `src/components/PlayerStats.tsx` ✓
-- `src/components/Settings.tsx` ✓
-- `src/components/SinglePlayer.tsx` ✓
-- `src/components/AnimatedBackground.tsx` ✓
-- `src/components/GlitchText.tsx` ✓
-- `src/components/Logo.tsx` ✓
+## Documentation Files (Should Be Deleted)
 
-## Component Architecture
+These files document the merge/cleanup process but are no longer needed:
 
-All components are properly structured using atomic design principles:
+- `COMPONENT_MERGE.md`
+- `MERGE_COMPLETE.md`
+- `REFACTOR_MERGE_COMPLETE.md`
+- `PLACEHOLDER_CLEANUP.md`
+- `CLEANUP_NOTES.md` (this file itself)
 
-### Atoms (Basic Building Blocks)
-- BackButton, ContentCard, Divider, GlowBox, Icon
-- PageContainer, PageHeader, StatCard, Text
+## Active Components ✅
 
-### Molecules (Simple Component Groups)
-- ActionButton, DebugToggle, DifficultySelector, GlassCard
-- IconLabel, MapCard, MatchHistoryCard, ServerCard
-- VolumeControl, VolumeSlider
+The following are the ONLY legitimate screen components:
 
-### Organisms (Complex Component Sections)
-- AudioControls, CheatCodesTab, ConsolePanel, ConsoleTab
-- DebugOptionsTab, DeveloperTabs, MapSelectionGrid
-- MenuGrid, MissionControlPanel, OverviewTab
-- ProceduralGenPanel, RenderStatsTab, ServerInfoPanel
-- ServerList, TabbedPanel
+- `src/components/Developer.tsx`
+- `src/components/MainMenu.tsx`
+- `src/components/Multiplayer.tsx`
+- `src/components/PlayerStats.tsx`
+- `src/components/Settings.tsx`
+- `src/components/SinglePlayer.tsx`
+- `src/components/AnimatedBackground.tsx`
+- `src/components/GlitchText.tsx`
+- `src/components/Logo.tsx`
 
-### Templates (Page Layouts)
-- MainMenuLayout, PageLayout, TwoColumnLayout
+Plus atomic components in:
+- `atoms/`
+- `molecules/`
+- `organisms/`
+- `templates/`
+- `ui/`
 
-## Props Structure
+## Status
 
-All component props are organized in `src/components/props/`:
-- DeveloperProps.ts
-- MainMenuProps.ts (formerly MainMenuRefactoredProps.ts)
-- MultiplayerProps.ts
-- PlayerStatsProps.ts
-- SettingsProps.ts
-- SinglePlayerProps.ts
+⚠️ **Placeholders have been identified and documented**
+
+All documentation has been updated to clarify which files are placeholders. The codebase functions correctly despite these extra files, as they are not imported or used anywhere.
 

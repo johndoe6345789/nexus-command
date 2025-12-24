@@ -50,11 +50,12 @@ Reusable page-level layout structures:
 
 ### 🔵 Pages (Complete Views)
 Full screen implementations:
-- `MainMenu` / `MainMenuRefactored` - Main navigation hub
-- `SinglePlayer` / `SinglePlayerRefactored` - Campaign selection
+- `MainMenu` - Main navigation hub
+- `SinglePlayer` - Campaign selection
 - `Multiplayer` - Server browser
-- `Settings` / `SettingsRefactored` - Configuration panel
+- `Settings` - Configuration panel
 - `PlayerStats` - Statistics dashboard
+- `Developer` - Developer tools and debugging console
 
 ## 📚 Documentation
 
@@ -123,20 +124,6 @@ export function MyPage({ onBack }) {
   )
 }
 ```
-
-### Refactored vs. Original Components
-
-The project includes both original and refactored versions of key components:
-
-- `MainMenu.tsx` → `MainMenuRefactored.tsx` (70% less code)
-- `SinglePlayer.tsx` → `SinglePlayerRefactored.tsx` (60% less code)
-- `Settings.tsx` → `SettingsRefactored.tsx` (50% less code)
-
-Refactored components demonstrate the power of the atomic framework with:
-- ✅ Dramatically reduced code duplication
-- ✅ Improved consistency and maintainability
-- ✅ Better type safety and prop validation
-- ✅ Easier testing and debugging
 
 ## 🚀 Quick Start
 
@@ -212,8 +199,8 @@ See [tests/README.md](tests/README.md) for detailed test documentation.
 ## 🏆 Benefits of Atomic Framework
 
 ### For Developers
-- ✅ **70% less code** in page components (see refactored examples)
-- ✅ **Faster development** with pre-built, composable components
+- ✅ **Composable components** reduce code duplication
+- ✅ **Faster development** with pre-built, reusable components
 - ✅ **Better type safety** with strict TypeScript props
 - ✅ **Easier testing** with isolated, single-responsibility components
 - ✅ **Self-documenting** - component hierarchy makes intent clear
@@ -237,14 +224,14 @@ See [tests/README.md](tests/README.md) for detailed test documentation.
 ### Getting Started
 1. Read [ATOMIC_FRAMEWORK.md](ATOMIC_FRAMEWORK.md) for architecture overview
 2. Review [QUICK_REFERENCE.md](QUICK_REFERENCE.md) for usage examples
-3. Compare `MainMenu.tsx` with `MainMenuRefactored.tsx` to see the difference
-4. Explore components in `src/components/atoms` through `templates`
+3. Explore the main screen components in `src/components/`
+4. Study atomic components in `src/components/atoms` through `templates`
 5. Check [PRD.md](PRD.md) for design system details
 
 ### Component Examples
-- **Simple Page**: See `MainMenuRefactored.tsx`
-- **Two-Column Layout**: See `SinglePlayerRefactored.tsx`
-- **Tabbed Interface**: See `SettingsRefactored.tsx`
+- **Simple Page**: See `MainMenu.tsx`
+- **Two-Column Layout**: See `SinglePlayer.tsx`
+- **Tabbed Interface**: See `Settings.tsx` or `Developer.tsx`
 - **Custom Organisms**: See `organisms/MapSelector.tsx`
 
 ## 🎨 Tech Stack
@@ -291,14 +278,12 @@ See [tests/README.md](tests/README.md) for detailed test documentation.
 │   │   ├── AnimatedBackground.tsx  # Canvas particle system
 │   │   ├── Logo.tsx                # Animated logo
 │   │   ├── GlitchText.tsx          # Glitch effect text
-│   │   ├── MainMenu.tsx            # Main menu (original)
-│   │   ├── MainMenuRefactored.tsx  # Main menu (atomic)
-│   │   ├── SinglePlayer.tsx        # Campaign (original)
-│   │   ├── SinglePlayerRefactored.tsx # Campaign (atomic)
+│   │   ├── MainMenu.tsx            # Main menu screen
+│   │   ├── SinglePlayer.tsx        # Campaign screen
 │   │   ├── Multiplayer.tsx         # Multiplayer screen
 │   │   ├── PlayerStats.tsx         # Stats screen
-│   │   ├── Settings.tsx            # Settings (original)
-│   │   ├── SettingsRefactored.tsx  # Settings (atomic)
+│   │   ├── Settings.tsx            # Settings screen
+│   │   ├── Developer.tsx           # Developer tools screen
 │   │   └── index.ts                # Barrel exports
 │   ├── theme/
 │   │   └── mui-theme.ts            # Material-UI theme
