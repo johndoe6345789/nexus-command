@@ -1,5 +1,6 @@
 import { Box, Tabs, Tab, useMediaQuery, useTheme } from '@mui/material'
 import { ChartLine, Gear, Lightning, Terminal, Eye, Cube, CircleNotch } from '@phosphor-icons/react'
+import { useRef, useEffect } from 'react'
 
 interface DeveloperTabsProps {
   activeTab: number
@@ -10,10 +11,28 @@ export function DeveloperTabs({ activeTab, onTabChange }: DeveloperTabsProps) {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const isTablet = useMediaQuery(theme.breakpoints.down('md'))
+  const tabsRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (tabsRef.current) {
+      const indicator = tabsRef.current.querySelector('.MuiTabs-indicator') as HTMLElement
+      const activeTabElement = tabsRef.current.querySelector(`[aria-selected="true"]`) as HTMLElement
+      
+      if (indicator && activeTabElement) {
+        const rect = activeTabElement.getBoundingClientRect()
+        const containerRect = tabsRef.current.getBoundingClientRect()
+        
+        indicator.style.left = `${activeTabElement.offsetLeft}px`
+        indicator.style.width = `${rect.width}px`
+        indicator.style.bottom = '0px'
+      }
+    }
+  }, [activeTab, isMobile, isTablet])
 
   return (
     <Box sx={{ borderBottom: 1, borderColor: 'rgba(74, 158, 255, 0.2)', mb: 4 }}>
       <Tabs
+        ref={tabsRef}
         value={activeTab}
         onChange={(_, newValue) => onTabChange(newValue)}
         variant="standard"
@@ -21,6 +40,9 @@ export function DeveloperTabs({ activeTab, onTabChange }: DeveloperTabsProps) {
           '& .MuiTabs-flexContainer': {
             flexWrap: 'wrap',
             gap: isMobile ? '4px' : '8px',
+          },
+          '& .MuiTabs-indicator': {
+            transition: 'all 300ms cubic-bezier(0.4, 0, 0.2, 1)',
           },
           '& .MuiTab-root': {
             textTransform: 'none',
