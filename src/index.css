@@ -1,5 +1,3 @@
-@import './styles/main.scss';
-
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
