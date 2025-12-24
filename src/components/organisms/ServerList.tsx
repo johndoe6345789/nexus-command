@@ -1,17 +1,8 @@
 import { Stack, TextField } from '@mui/material'
 import { motion } from 'framer-motion'
 import { ServerCard } from '../molecules/ServerCard'
-
-interface Server {
-  id: string
-  name: string
-  map: string
-  mode: string
-  region: string
-  players: number
-  maxPlayers: number
-  ping: number
-}
+import { Server } from '@/types'
+import { filterServers } from '@/utils'
 
 interface ServerListProps {
   servers: Server[]
@@ -28,11 +19,7 @@ export function ServerList({
   searchQuery,
   onSearchChange,
 }: ServerListProps) {
-  const filteredServers = servers.filter(
-    (server) =>
-      server.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      server.map.toLowerCase().includes(searchQuery.toLowerCase())
-  )
+  const filteredServers = filterServers(servers, searchQuery)
 
   return (
     <>

@@ -11,20 +11,17 @@ import { PlayerStats } from './components/PlayerStatsRefactored'
 import { Developer } from './components/DeveloperRefactored'
 import { Toaster } from '@/components/ui/sonner'
 import { motion, AnimatePresence } from 'framer-motion'
-
-type Screen = 'main' | 'singleplayer' | 'multiplayer' | 'settings' | 'stats' | 'developer' | 'exit'
+import { Screen } from '@/types'
+import { handleNavigate } from '@/handlers'
 
 function App() {
   const [currentScreen, setCurrentScreen] = useState<Screen>('main')
 
-  const handleNavigate = (screen: string) => {
-    if (screen === 'exit') {
-      if (confirm('Exit NEXUS COMMAND?')) {
-        window.close()
-      }
-      return
+  const handleNav = (screen: string) => {
+    const newScreen = handleNavigate(screen)
+    if (newScreen) {
+      setCurrentScreen(newScreen)
     }
-    setCurrentScreen(screen as Screen)
   }
 
   const handleBack = () => {
@@ -46,7 +43,7 @@ function App() {
               exit={{ opacity: 0, scale: 0.98 }}
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             >
-              {currentScreen === 'main' && <MainMenu onNavigate={handleNavigate} />}
+              {currentScreen === 'main' && <MainMenu onNavigate={handleNav} />}
               {currentScreen === 'singleplayer' && <SinglePlayer onBack={handleBack} />}
               {currentScreen === 'multiplayer' && <Multiplayer onBack={handleBack} />}
               {currentScreen === 'settings' && <Settings onBack={handleBack} />}

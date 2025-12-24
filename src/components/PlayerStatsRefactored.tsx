@@ -1,18 +1,16 @@
 import { Card, CardContent, Stack, Grid } from '@mui/material'
-import { Trophy } from '@phosphor-icons/react'
+import { Trophy, Crosshair, Target, Skull } from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
 import { useKV } from '@github/spark/hooks'
-import { Crosshair, Target, Skull } from '@phosphor-icons/react'
 import { PageContainer } from './atoms/PageContainer'
 import { BackButton } from './atoms/BackButton'
 import { ContentCard } from './atoms/ContentCard'
 import { PageHeader } from './atoms/PageHeader'
 import { StatCard } from './atoms/StatCard'
 import { MatchHistoryCard } from './molecules/MatchHistoryCard'
-
-interface PlayerStatsProps {
-  onBack: () => void
-}
+import { MatchResult } from '@/types'
+import { calculateKD, calculateWinRate } from '@/utils'
+import { PlayerStatsProps } from './props'
 
 export function PlayerStats({ onBack }: PlayerStatsProps) {
   const [playerName] = useKV<string>('player-name', 'Operator')
@@ -26,10 +24,10 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
     headshots: 412,
   }
 
-  const kd = (stats.kills / stats.deaths).toFixed(2)
-  const winRate = ((stats.wins / (stats.wins + stats.losses)) * 100).toFixed(1)
+  const kd = calculateKD(stats.kills, stats.deaths)
+  const winRate = calculateWinRate(stats.wins, stats.losses)
 
-  const recentMatches = [
+  const recentMatches: MatchResult[] = [
     { map: 'Aegis Station', mode: 'TDM', result: 'Victory' as const, score: '25-8', date: '2h ago' },
     { map: 'Outpost Zero', mode: 'CTF', result: 'Victory' as const, score: '18-12', date: '5h ago' },
     { map: 'Nexus Core', mode: 'DOM', result: 'Defeat' as const, score: '12-15', date: '1d ago' },

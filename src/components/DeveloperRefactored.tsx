@@ -10,10 +10,10 @@ import { PageHeader } from './atoms/PageHeader'
 import { StatCard } from './atoms/StatCard'
 import { DebugToggle } from './molecules/DebugToggle'
 import { ConsolePanel } from './organisms/ConsolePanel'
-
-interface DeveloperProps {
-  onBack: () => void
-}
+import { SystemStats } from '@/types'
+import { handleConsoleCommand } from '@/utils'
+import { DeveloperProps } from './props'
+import { INITIAL_CONSOLE_OUTPUT, CONSOLE_MAX_LINES } from '@/constants'
 
 export function Developer({ onBack }: DeveloperProps) {
   const [activeTab, setActiveTab] = useState(0)
@@ -24,13 +24,9 @@ export function Developer({ onBack }: DeveloperProps) {
   const [unlimitedAmmo, setUnlimitedAmmo] = useKV<boolean>('unlimited-ammo', false)
   const [noclip, setNoclip] = useKV<boolean>('noclip', false)
   const [consoleInput, setConsoleInput] = useState('')
-  const [consoleOutput, setConsoleOutput] = useState<string[]>([
-    '> System initialized',
-    '> Nexus Command v2.0.1 - Developer Console',
-    '> Type "help" for available commands',
-  ])
+  const [consoleOutput, setConsoleOutput] = useState<string[]>(INITIAL_CONSOLE_OUTPUT)
 
-  const systemStats = {
+  const systemStats: SystemStats = {
     fps: 144,
     ping: 23,
     memoryUsage: '2.4 GB',
@@ -48,24 +44,14 @@ export function Developer({ onBack }: DeveloperProps) {
     const newOutput = [...consoleOutput, `> ${consoleInput}`]
     
     const command = consoleInput.toLowerCase().trim()
-    if (command === 'help') {
-      newOutput.push('Available commands:')
-      newOutput.push('  help - Show this help message')
-      newOutput.push('  clear - Clear console output')
-      newOutput.push('  stats - Show detailed system statistics')
-    } else if (command === 'clear') {
+    if (command === 'clear') {
       setConsoleOutput(['> Console cleared'])
       setConsoleInput('')
       return
-    } else if (command === 'stats') {
-      newOutput.push('System Statistics:')
-      newOutput.push(`  FPS: ${systemStats.fps}`)
-      newOutput.push(`  Memory: ${systemStats.memoryUsage}`)
-    } else {
-      newOutput.push(`Unknown command: "${consoleInput}"`)
     }
 
-    setConsoleOutput(newOutput.slice(-20))
+    const commandOutput = handleConsoleCommand(consoleInput, systemStats)
+    setConsoleOutput([...newOutput, ...commandOutput].slice(-CONSOLE_MAX_LINES))
     setConsoleInput('')
   }
 

@@ -9,10 +9,7 @@ import { ContentCard } from './atoms/ContentCard'
 import { PageHeader } from './atoms/PageHeader'
 import { VolumeControl } from './molecules/VolumeControl'
 import { DebugToggle } from './molecules/DebugToggle'
-
-interface SettingsProps {
-  onBack: () => void
-}
+import { SettingsProps } from './props'
 
 export function Settings({ onBack }: SettingsProps) {
   const [graphicsQuality, setGraphicsQuality] = useKV<string>('graphics-quality', 'high')
