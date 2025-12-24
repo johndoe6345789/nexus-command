@@ -47,9 +47,12 @@ export function Developer({ onBack }: DeveloperProps) {
     '> Type "help" for available commands',
   ])
   const consoleEndRef = useRef<HTMLDivElement>(null)
+  const consoleContainerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    consoleEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    if (consoleContainerRef.current) {
+      consoleContainerRef.current.scrollTop = consoleContainerRef.current.scrollHeight
+    }
   }, [consoleOutput])
 
   const systemStats = {
@@ -444,6 +447,7 @@ export function Developer({ onBack }: DeveloperProps) {
                     </Stack>
 
                     <Box
+                      ref={consoleContainerRef}
                       sx={{
                         bgcolor: 'rgba(0, 0, 0, 0.6)',
                         borderRadius: 2,
@@ -470,7 +474,6 @@ export function Developer({ onBack }: DeveloperProps) {
                           {line}
                         </Typography>
                       ))}
-                      <div ref={consoleEndRef} />
                     </Box>
 
                     <form onSubmit={handleConsoleSubmit}>
