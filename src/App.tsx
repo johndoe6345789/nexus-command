@@ -15,7 +15,7 @@ function App() {
 
   const handleNavigate = (screen: string) => {
     if (screen === 'exit') {
-      if (confirm('EXIT ARENA COMMAND SYSTEM?')) {
+      if (confirm('Exit APEX ARENA?')) {
         window.close()
       }
       return
@@ -28,18 +28,17 @@ function App() {
   }
 
   return (
-    <div className="relative w-full min-h-screen overflow-hidden text-foreground">
+    <div className="relative w-full min-h-screen overflow-hidden">
       <AnimatedBackground />
       
-      <div className="relative z-10 w-full h-full">
+      <div className="relative z-10">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentScreen}
-            initial={{ opacity: 0, x: 30, scale: 0.98 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            exit={{ opacity: 0, x: -30, scale: 0.98 }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="w-full"
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.98 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
           >
             {currentScreen === 'main' && <MainMenu onNavigate={handleNavigate} />}
             {currentScreen === 'singleplayer' && <SinglePlayer onBack={handleBack} />}
@@ -54,15 +53,16 @@ function App() {
         position="top-center"
         toastOptions={{
           style: {
-            background: 'oklch(0.16 0.03 250 / 0.95)',
+            background: 'oklch(0.12 0.02 250 / 0.9)',
             backdropFilter: 'blur(20px)',
-            color: 'oklch(0.98 0.01 250)',
-            border: '2px solid oklch(0.68 0.28 245)',
-            fontFamily: 'Orbitron, sans-serif',
-            fontWeight: 'bold',
+            color: 'oklch(0.98 0.01 0)',
+            border: '1px solid oklch(0.75 0.20 220 / 0.3)',
+            fontFamily: 'Inter, sans-serif',
+            fontWeight: '600',
             fontSize: '14px',
             padding: '16px 24px',
-            boxShadow: '0 0 30px oklch(0.68 0.28 245 / 0.4), 0 10px 40px rgba(0, 0, 0, 0.5)',
+            borderRadius: '8px',
+            boxShadow: '0 8px 32px oklch(0 0 0 / 0.4)',
           },
         }}
       />

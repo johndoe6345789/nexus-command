@@ -1,14 +1,14 @@
 # Planning Guide
 
-A Quake 3 Arena-inspired menu system that captures the iconic sci-fi aesthetic and intense energy of the classic FPS, providing an immersive gateway to single-player and multiplayer game modes.
+A premium AAA-quality game menu system inspired by modern shooters like Apex Legends, Call of Duty, and Halo Infinite - featuring clean layouts, generous spacing, sophisticated glass morphism, and cinematic animations.
 
 **Experience Qualities**:
-1. **Premium** - AAAA-quality visual polish with refined animations, sophisticated glass morphism effects, and meticulously crafted details that project excellence and luxury
-2. **Powerful** - Heavy industrial sci-fi aesthetic with bold typography and commanding presence that makes players feel ready for combat
-3. **Responsive** - Buttery-smooth transitions with physics-based easing, immediate visual and audio feedback for every interaction, creating a tactile, high-performance feel
+1. **Premium** - AAAA-quality visual polish with refined glass morphism effects, sophisticated animations with physics-based easing, and meticulous attention to spacing and hierarchy
+2. **Clean** - Generous whitespace, clear visual hierarchy, and modern typography create a sophisticated, uncluttered experience that emphasizes content over decoration
+3. **Cinematic** - Smooth transitions with subtle parallax effects, elegant particle systems, and polished micro-interactions that feel like a blockbuster game experience
 
 **Complexity Level**: Light Application (multiple features with basic state)
-This is a menu system with navigation between different screens (main menu, server browser, settings, etc.) and basic state management for user preferences and selections. While it represents a complex game, the menu itself is focused on navigation and configuration.
+This is a menu system with navigation between different screens (main menu, campaign, multiplayer, settings, stats) and basic state management for user preferences and selections.
 
 ## Essential Features
 
@@ -64,80 +64,82 @@ This is a menu system with navigation between different screens (main menu, serv
 
 ## Design Direction
 
-The design should evoke the raw power and industrial sci-fi aesthetic of Quake 3 Arena elevated to AAAA premium quality - dark metallic surfaces with sophisticated glass morphism effects, intensified glowing energy accents, angular geometric shapes, and a sense of advanced futuristic military technology. The interface should feel like a premium combat computer terminal from a cutting-edge space station, with refined scan lines, elegant grid patterns, and pulsing energy effects that suggest advanced alien technology. Every element features meticulous attention to detail, smooth physics-based animations, and premium visual feedback that rivals the polish of top-tier AAA game studios.
+The design evokes premium AAA game menus with clean layouts, sophisticated depth through glass morphism, and generous breathing room between elements. Think modern military shooters - dark, sleek backgrounds with glowing accents, smooth particle effects, and cinematic transitions. Every element has proper spacing, clear hierarchy, and refined polish that rivals top-tier game studios. The interface feels like a high-end combat command system with elegant simplicity.
 
 ## Color Selection
 
-A refined, militaristic palette with vivid electric blue energy accents and rich warning oranges, evoking premium futuristic combat terminals and advanced alien technology.
+A refined, contemporary palette with cool blues and warm orange accents, creating sophisticated depth and premium feel.
 
-- **Primary Color**: Enhanced Electric Blue (oklch(0.68 0.28 245)) - Represents high-energy technology and the iconic Q3A blue team. Used for primary actions and key UI elements with intensified glow effects
+- **Primary Color**: Refined Blue (oklch(0.75 0.20 220)) - Modern, clean blue for primary actions and key UI elements with subtle glow effects
 - **Secondary Colors**: 
-  - Deep Space Indigo (oklch(0.12 0.02 250)) - Premium main background with richer depth
-  - Steel Blue (oklch(0.32 0.10 250)) - Refined secondary UI elements and borders
-  - Cyber Teal (oklch(0.58 0.16 200)) - Premium accent for secondary actions
-- **Accent Color**: Rich Warning Orange (oklch(0.72 0.22 45)) - High-energy highlight for CTAs, hover states, and red team references with enhanced saturation
+  - Deep Space Black (oklch(0.08 0.01 250)) - Rich, deep background with subtle blue tint
+  - Steel Gray (oklch(0.18 0.04 250)) - Secondary UI surfaces with transparency
+  - Muted Blue (oklch(0.15 0.02 250)) - Subdued backgrounds for cards
+- **Accent Color**: Warm Orange (oklch(0.70 0.18 35)) - Sophisticated warm accent for emphasis and hover states
 - **Foreground/Background Pairings**: 
-  - Primary Blue on Deep Space Indigo: White text (oklch(0.98 0.01 250)) - Ratio 8.5:1 ✓
-  - Warning Orange on Deep Space Indigo: White text (oklch(0.98 0.01 250)) - Ratio 9.2:1 ✓
-  - Steel Blue on Deep Space Indigo: Light gray text (oklch(0.88 0.03 250)) - Ratio 7.1:1 ✓
-  - Glass morphism surfaces: All text exceeds WCAG AAA standards
+  - Primary Blue on Deep Space: White text (oklch(0.98 0.01 0)) - Ratio 12:1 ✓
+  - Accent Orange on Deep Space: White text (oklch(0.98 0.01 0)) - Ratio 11:1 ✓
+  - Steel Gray on Deep Space: Light gray text (oklch(0.88 0.03 0)) - Ratio 8:1 ✓
+  - All glass morphism surfaces exceed WCAG AAA standards
 
 ## Font Selection
 
-Typography should convey military precision and futuristic technology through bold, geometric letterforms with technical characteristics.
+Typography conveys premium quality through clean, modern letterforms with excellent readability.
 
 - **Typographic Hierarchy**:
-  - H1 (Game Title/Logo): Orbitron Bold/48px/tight letter spacing/uppercase - Maximum impact for title screens
-  - H2 (Section Headers): Orbitron SemiBold/32px/normal spacing/uppercase - Clear section delineation
-  - H3 (Menu Items): Orbitron Medium/24px/normal spacing - Primary navigation elements
-  - Body (Descriptions): Rajdhani Medium/16px/relaxed spacing - Readable technical information
-  - Labels (UI Elements): Rajdhani SemiBold/14px/wide spacing/uppercase - Small labels and tags
-  - Stats/Numbers: Orbitron Regular/18px/tabular numbers - Precise numerical data
+  - H1 (Game Title): Rajdhani Black/96px/tight tracking/-0.02em - Maximum impact
+  - H2 (Section Headers): Rajdhani Bold/48px/tight tracking - Clear sections
+  - H3 (Card Titles): Rajdhani Bold/24px/normal spacing - Content hierarchy
+  - Body (Descriptions): Inter Medium/16px/normal spacing - Excellent readability
+  - Labels (UI): Inter Semibold/14px/uppercase - UI elements
+  - Stats (Numbers): Rajdhani Bold/32px/tabular - Precise data display
 
 ## Animations
 
-Animations should feel premium and sophisticated with physics-based easing curves (cubic-bezier(0.22, 1, 0.36, 1)), suggesting AAA-quality game systems with silky-smooth response times and refined energy-based effects. Buttons pulse with sophisticated contained energy, menus slide with mechanical precision using spring physics, and transitions feature elegant digital scan effects. Everything should feel razor-sharp and luxurious with premium hover states that scale to 1.05-1.06x, refined shadow effects that intensify on interaction, and occasional subtle glitch effects that add sci-fi authenticity. All animations maintain 60fps performance and use hardware acceleration for buttery-smooth motion.
+Animations feel premium and cinematic with sophisticated physics-based easing (cubic-bezier(0.22, 1, 0.36, 1)), creating smooth, polished interactions. Buttons scale subtly (1.02x) with smooth transitions, cards lift elegantly with shadow depth changes, and screen transitions feel seamless. Particle systems move organically with realistic physics. All animations maintain 60fps performance and use hardware acceleration for buttery-smooth motion. Micro-interactions provide satisfying feedback without being distracting.
 
 ## Component Selection
 
 - **Components**: 
-  - Button (Shadcn) - Premium primary actions with AAAA-quality customization: intensified glowing borders with multi-layer shadows, sophisticated energy pulse effects on hover with spring physics, refined corners with --radius set to 4px, glass morphism effects with backdrop blur
-  - Card (Shadcn) - Premium server entries, map selection cards, stat displays with sophisticated glass morphism backgrounds (backdrop-filter: blur(20px)) and vivid blue borders with layered glow effects
-  - Tabs (Shadcn) - Settings navigation with sophisticated glowing active tab indicators and smooth transitions
-  - Progress (Shadcn) - Loading bars with premium animated energy flow effect and gradient fills
-  - Slider (Shadcn) - Volume and graphics settings with illuminated track and refined thumb design
-  - Badge (Shadcn) - Server status indicators with premium styling and subtle animations
-  - Dialog (Shadcn) - Confirmation modals with glass morphism and refined scanline overlay effect
-  - Scroll Area (Shadcn) - Server list and match history with custom premium styled scrollbar
+  - Button (Shadcn) - Clean, modern design with subtle hover states (scale 1.02x), premium glass panel styling, and smooth color transitions
+  - Card (Shadcn) - Glass morphism backgrounds (backdrop-filter: blur(40px)) with refined borders and elegant hover elevations
+  - Tabs (Shadcn) - Clean tab navigation with smooth active indicators
+  - Progress (Shadcn) - Elegant loading bars with smooth animations
+  - Slider (Shadcn) - Modern sliders with refined styling
+  - Badge (Shadcn) - Status indicators with clean, minimal design
+  - Dialog (Shadcn) - Modal overlays with glass morphism
+  - Input (Shadcn) - Clean input fields with focus states
+  - Switch (Shadcn) - Toggle switches with smooth transitions
   
 - **Customizations**: 
-  - AnimatedBackground component - Enhanced layered gradient mesh with 150 moving particles, advanced geometric shapes, energy lines, and sophisticated grid patterns with multiple animation layers
-  - GlassEffect utility - Sophisticated backdrop-filter blur(20px) with semi-transparent backgrounds for premium depth
-  - Enhanced glow effects - Multi-layer box-shadows with 3-4 shadow layers for richer, more premium glow
-  - Spring-based animations - Physics-driven motion using framer-motion springs for natural, premium feel
+  - AnimatedBackground component - Layered gradients with 80 particles, hexagonal geometric shapes, and connection lines creating sophisticated depth
+  - Glass panel utility - backdrop-filter blur(40px) with semi-transparent backgrounds
+  - Refined glow effects - Subtle box-shadows that enhance without overwhelming
+  - Smooth animations - All transitions use premium easing curves
   
 - **States**: 
-  - Buttons: Default (enhanced blue glow border with multi-layer shadow), Hover (intensified glow + orange accent + scale 1.05 + spring animation), Active (compressed scale 0.97 with bright flash), Disabled (refined desaturated with dim border), Focus (premium ring with animated pulse)
-  - Inputs: Default (refined steel border with subtle glow), Focus (bright blue glow with premium pulse animation and backdrop blur), Error (red glow with shake animation), Success (green glow with check animation)
-  - Cards: Default (glass morphism with subtle border), Hover (elevated with enhanced blue glow and scale 1.02), Selected (bright border-[3px] + orange corner accents + animated pulse indicator)
+  - Buttons: Default (glass panel with subtle border), Hover (glow border + scale 1.02 + smooth transition), Active (slightly compressed), Disabled (reduced opacity), Focus (ring indicator)
+  - Inputs: Default (clean border), Focus (blue glow with smooth animation), Error (red indication), Success (green indication)
+  - Cards: Default (glass panel), Hover (elevated + blue glow + scale 1.01-1.02), Selected (glow border + blue tint)
   
 - **Icon Selection**: 
-  - Phosphor Icons with bold weight for premium combat feel
-  - Larger sizes (28px-38px) for more impactful presence
-  - Enhanced with background containers for better visual hierarchy
-  - Smooth color transitions on hover with spring animations
+  - Phosphor Icons with bold weight for clarity
+  - Appropriate sizes (20px-32px) for hierarchy
+  - Icons paired with text for clarity
+  - Smooth color transitions on interaction
   
 - **Spacing**: 
-  - Premium 4px base unit system with refined proportions
-  - Generous gaps (gap-10/40px) between major sections for breathing room
-  - Large gaps (gap-6/24px) between related items
-  - Medium gaps (gap-4/16px) within components
-  - Luxurious padding (p-8/32px to p-12/48px) on cards and containers for premium feel
+  - 8px base unit system for consistency
+  - Generous gaps (32-48px) between major sections
+  - Comfortable gaps (16-24px) between related items
+  - Medium gaps (8-16px) within components
+  - Ample padding (24-48px) on cards and containers
+  - Never cramped or cluttered - premium breathing room throughout
   
 - **Mobile**: 
-  - Refined single column layout on mobile with maintained premium aesthetics
-  - Enhanced touch-friendly button sizes (minimum 56px height for premium feel)
-  - Server list becomes elegantly stacked cards with maintained glass effects
-  - Settings tabs maintain premium styling with smooth transitions
-  - Proportional font size reduction maintaining hierarchy (H1: 48px, Body: 16px)
-  - Optimized particle count on mobile while maintaining visual richness
+  - Single column layouts with maintained spacing
+  - Touch-friendly button sizes (minimum 44px height)
+  - Stacked cards for server lists
+  - Maintained glass effects and polish
+  - Proportional font sizes
+  - Optimized particle counts for performance

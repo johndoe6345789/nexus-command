@@ -1,361 +1,228 @@
-import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Slider } from '@/components/ui/slider'
 import { Switch } from '@/components/ui/switch'
-import { ArrowLeft, User, Monitor, SpeakerHigh, GameController, ArrowCounterClockwise } from '@phosphor-icons/react'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { ArrowLeft, Monitor, SpeakerHigh, GameController, User } from '@phosphor-icons/react'
+import { motion } from 'framer-motion'
 import { useKV } from '@github/spark/hooks'
-import { toast } from 'sonner'
 
 interface SettingsProps {
   onBack: () => void
 }
 
 export function Settings({ onBack }: SettingsProps) {
-  const [playerName, setPlayerName] = useKV<string>('player-name', 'WARRIOR')
-  const [masterVolume, setMasterVolume] = useKV<number[]>('master-volume', [75])
-  const [musicVolume, setMusicVolume] = useKV<number[]>('music-volume', [60])
-  const [sfxVolume, setSfxVolume] = useKV<number[]>('sfx-volume', [80])
   const [graphicsQuality, setGraphicsQuality] = useKV<string>('graphics-quality', 'high')
-  const [showFPS, setShowFPS] = useKV<boolean>('show-fps', true)
-  const [vsync, setVsync] = useKV<boolean>('vsync', true)
-  const [mouseSensitivity, setMouseSensitivity] = useKV<number[]>('mouse-sensitivity', [50])
-
-  const handleRestoreDefaults = () => {
-    setPlayerName('WARRIOR')
-    setMasterVolume([75])
-    setMusicVolume([60])
-    setSfxVolume([80])
-    setGraphicsQuality('high')
-    setShowFPS(true)
-    setVsync(true)
-    setMouseSensitivity([50])
-    toast.success('SETTINGS RESTORED TO DEFAULT')
-  }
+  const [masterVolume, setMasterVolume] = useKV<number>('master-volume', 80)
+  const [musicVolume, setMusicVolume] = useKV<number>('music-volume', 60)
+  const [sfxVolume, setSfxVolume] = useKV<number>('sfx-volume', 90)
+  const [mouseSensitivity, setMouseSensitivity] = useKV<number>('mouse-sensitivity', 50)
+  const [invertY, setInvertY] = useKV<boolean>('invert-y', false)
+  const [playerName, setPlayerName] = useKV<string>('player-name', 'Operator')
 
   return (
-    <div className="relative w-full min-h-screen p-4 sm:p-6 md:p-8 overflow-y-auto">
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="max-w-5xl mx-auto w-full pb-16 sm:pb-20"
-      >
+    <div className="min-h-screen p-8">
+      <div className="max-w-5xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, x: -30 }}
+          initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.1 }}
-          className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6 mb-10 sm:mb-14"
+          className="mb-12"
         >
-          <div className="w-full sm:w-auto">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-1.5 h-16 bg-gradient-to-b from-primary via-accent to-primary rounded-full shadow-lg shadow-primary/50" />
-              <h1 className="text-4xl sm:text-5xl md:text-7xl font-black glow-text tracking-tight">SETTINGS</h1>
-            </div>
-            <p className="text-muted-foreground font-body tracking-[0.15em] text-sm sm:text-base flex items-center gap-3 ml-6">
-              <GameController size={20} weight="bold" className="text-accent" />
-              SYSTEM CONFIGURATION • PARAMETERS
-            </p>
-          </div>
           <Button
+            variant="ghost"
             onClick={onBack}
-            variant="outline"
-            className="glow-border w-full sm:w-auto h-14 px-10 font-black text-base hover:scale-[1.05] active:scale-95 hover:bg-primary/15 hover:border-primary hover:shadow-[0_0_30px_rgba(99,102,241,0.3)] transition-all duration-300 backdrop-blur-md"
+            className="mb-6 hover:bg-secondary/50"
           >
-            <ArrowLeft size={22} weight="bold" className="mr-3" />
-            RETURN
+            <ArrowLeft className="mr-2" size={20} weight="bold" />
+            Back to Menu
           </Button>
+
+          <h1 className="text-6xl font-black tracking-tight mb-4">Settings</h1>
+          <p className="text-muted-foreground text-lg">
+            Configure your experience
+          </p>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
+          transition={{ delay: 0.1 }}
         >
-          <Card className="p-8 sm:p-12 glow-border glass-effect hover:shadow-[0_0_35px_rgba(99,102,241,0.25)] transition-all duration-400">
-            <Tabs defaultValue="profile" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 mb-12 h-auto bg-background/50 p-3 gap-3">
-                <TabsTrigger value="profile" className="text-xs sm:text-sm font-bold py-5 data-[state=active]:glow-accent data-[state=active]:bg-accent/10 data-[state=active]:shadow-[0_0_20px_rgba(245,166,35,0.2)] gap-2 transition-all duration-200">
-                  <User size={18} weight="bold" className="hidden sm:inline" />
-                  PROFILE
-                </TabsTrigger>
-                <TabsTrigger value="graphics" className="text-xs sm:text-sm font-bold py-5 data-[state=active]:glow-accent data-[state=active]:bg-accent/10 data-[state=active]:shadow-[0_0_20px_rgba(245,166,35,0.2)] gap-2 transition-all duration-200">
-                  <Monitor size={18} weight="bold" className="hidden sm:inline" />
-                  GRAPHICS
-                </TabsTrigger>
-                <TabsTrigger value="audio" className="text-xs sm:text-sm font-bold py-5 data-[state=active]:glow-accent data-[state=active]:bg-accent/10 data-[state=active]:shadow-[0_0_20px_rgba(245,166,35,0.2)] gap-2 transition-all duration-200">
-                  <SpeakerHigh size={18} weight="bold" className="hidden sm:inline" />
-                  AUDIO
-                </TabsTrigger>
-                <TabsTrigger value="controls" className="text-xs sm:text-sm font-bold py-5 data-[state=active]:glow-accent data-[state=active]:bg-accent/10 data-[state=active]:shadow-[0_0_20px_rgba(245,166,35,0.2)] gap-2 transition-all duration-200">
-                  <GameController size={18} weight="bold" className="hidden sm:inline" />
-                  CONTROLS
-                </TabsTrigger>
-              </TabsList>
+          <Tabs defaultValue="graphics" className="w-full">
+            <TabsList className="grid w-full grid-cols-4 h-16 mb-8 glass-panel">
+              <TabsTrigger value="graphics" className="text-lg">
+                <Monitor className="mr-2" size={20} weight="bold" />
+                Graphics
+              </TabsTrigger>
+              <TabsTrigger value="audio" className="text-lg">
+                <SpeakerHigh className="mr-2" size={20} weight="bold" />
+                Audio
+              </TabsTrigger>
+              <TabsTrigger value="controls" className="text-lg">
+                <GameController className="mr-2" size={20} weight="bold" />
+                Controls
+              </TabsTrigger>
+              <TabsTrigger value="profile" className="text-lg">
+                <User className="mr-2" size={20} weight="bold" />
+                Profile
+              </TabsTrigger>
+            </TabsList>
 
-              <TabsContent value="profile" className="space-y-10 mt-10">
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                  className="space-y-10"
-                >
-                  <div className="space-y-5">
-                    <Label htmlFor="player-name" className="text-primary font-black text-lg tracking-wide flex items-center gap-2">
-                      <User size={20} weight="bold" />
-                      PLAYER NAME
+            <TabsContent value="graphics" className="space-y-6">
+              <Card className="p-8 glass-panel">
+                <h2 className="text-2xl font-bold mb-6">Visual Settings</h2>
+                <div className="space-y-8">
+                  <div>
+                    <Label className="text-lg mb-4 block">Graphics Quality</Label>
+                    <div className="grid grid-cols-4 gap-3">
+                      {['low', 'medium', 'high', 'ultra'].map((quality) => (
+                        <Button
+                          key={quality}
+                          variant={graphicsQuality === quality ? 'default' : 'outline'}
+                          className="h-14 text-base"
+                          onClick={() => setGraphicsQuality(quality)}
+                        >
+                          {quality.charAt(0).toUpperCase() + quality.slice(1)}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <Label className="text-lg">V-Sync</Label>
+                      <Switch />
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <Label className="text-lg">Anti-Aliasing</Label>
+                      <Switch defaultChecked />
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <Label className="text-lg">Motion Blur</Label>
+                      <Switch />
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="audio" className="space-y-6">
+              <Card className="p-8 glass-panel">
+                <h2 className="text-2xl font-bold mb-6">Audio Settings</h2>
+                <div className="space-y-8">
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <Label className="text-lg">Master Volume</Label>
+                      <span className="text-muted-foreground">{masterVolume}%</span>
+                    </div>
+                    <Slider
+                      value={[masterVolume ?? 80]}
+                      onValueChange={(value) => setMasterVolume(value[0])}
+                      max={100}
+                      step={1}
+                      className="w-full"
+                    />
+                  </div>
+
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <Label className="text-lg">Music Volume</Label>
+                      <span className="text-muted-foreground">{musicVolume}%</span>
+                    </div>
+                    <Slider
+                      value={[musicVolume ?? 60]}
+                      onValueChange={(value) => setMusicVolume(value[0])}
+                      max={100}
+                      step={1}
+                      className="w-full"
+                    />
+                  </div>
+
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <Label className="text-lg">SFX Volume</Label>
+                      <span className="text-muted-foreground">{sfxVolume}%</span>
+                    </div>
+                    <Slider
+                      value={[sfxVolume ?? 90]}
+                      onValueChange={(value) => setSfxVolume(value[0])}
+                      max={100}
+                      step={1}
+                      className="w-full"
+                    />
+                  </div>
+                </div>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="controls" className="space-y-6">
+              <Card className="p-8 glass-panel">
+                <h2 className="text-2xl font-bold mb-6">Control Settings</h2>
+                <div className="space-y-8">
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <Label className="text-lg">Mouse Sensitivity</Label>
+                      <span className="text-muted-foreground">{mouseSensitivity}%</span>
+                    </div>
+                    <Slider
+                      value={[mouseSensitivity ?? 50]}
+                      onValueChange={(value) => setMouseSensitivity(value[0])}
+                      max={100}
+                      step={1}
+                      className="w-full"
+                    />
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <Label className="text-lg">Invert Y-Axis</Label>
+                    <Switch
+                      checked={invertY}
+                      onCheckedChange={setInvertY}
+                    />
+                  </div>
+
+                  <div className="pt-6 border-t border-border">
+                    <Button variant="outline" size="lg" className="w-full">
+                      Customize Key Bindings
+                    </Button>
+                  </div>
+                </div>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="profile" className="space-y-6">
+              <Card className="p-8 glass-panel">
+                <h2 className="text-2xl font-bold mb-6">Player Profile</h2>
+                <div className="space-y-6">
+                  <div>
+                    <Label htmlFor="player-name" className="text-lg mb-3 block">
+                      Display Name
                     </Label>
                     <Input
                       id="player-name"
                       value={playerName}
-                      onChange={(e) => setPlayerName(e.target.value.toUpperCase())}
-                      className="glow-border font-black text-xl h-16 tracking-wider bg-background/50 hover:bg-background/70 focus:shadow-[0_0_20px_rgba(99,102,241,0.2)] transition-all duration-200"
-                      maxLength={16}
-                      placeholder="ENTER CALLSIGN"
-                    />
-                    <p className="text-sm text-muted-foreground tracking-wide mt-2">3-16 CHARACTERS • UPPERCASE</p>
-                  </div>
-
-                  <div className="p-10 bg-card/60 rounded-lg glow-border hover:shadow-[0_0_15px_rgba(99,102,241,0.15)] transition-all duration-300">
-                    <h3 className="font-black text-primary mb-8 text-xl tracking-wide flex items-center gap-3">
-                      <span className="w-2 h-8 bg-accent rounded"></span>
-                      PLAYER IDENTITY
-                    </h3>
-                    <div className="space-y-5 text-base">
-                      <div className="flex justify-between items-center p-5 bg-background/40 rounded-md hover:bg-background/60 transition-colors duration-200">
-                        <span className="text-muted-foreground font-bold">CALLSIGN</span>
-                        <span className="font-black text-accent text-lg">{playerName}</span>
-                      </div>
-                      <div className="flex justify-between items-center p-5 bg-background/40 rounded-md hover:bg-background/60 transition-colors duration-200">
-                        <span className="text-muted-foreground font-bold">RANK</span>
-                        <span className="font-black text-primary text-lg">SERGEANT</span>
-                      </div>
-                      <div className="flex justify-between items-center p-5 bg-background/40 rounded-md hover:bg-background/60 transition-colors duration-200">
-                        <span className="text-muted-foreground font-bold">COMBAT RATING</span>
-                        <span className="font-black text-foreground text-lg">1250</span>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              </TabsContent>
-
-              <TabsContent value="graphics" className="space-y-10 mt-10">
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                  className="space-y-10"
-                >
-                  <div className="space-y-6">
-                    <Label className="text-primary font-black text-lg tracking-wide flex items-center gap-2">
-                      <Monitor size={20} weight="bold" />
-                      GRAPHICS QUALITY
-                    </Label>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-                      {['low', 'medium', 'high', 'ultra'].map((quality, index) => (
-                        <motion.div
-                          key={quality}
-                          initial={{ opacity: 0, scale: 0.9 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: 0.35 + index * 0.05 }}
-                        >
-                          <Button
-                            onClick={() => setGraphicsQuality(quality)}
-                            variant={graphicsQuality === quality ? 'default' : 'outline'}
-                            className={`
-                              text-sm font-black h-20 w-full
-                              ${graphicsQuality === quality ? 'glow-accent bg-accent/20 border-accent shadow-[0_0_20px_rgba(245,166,35,0.2)]' : 'glow-border bg-card/60 hover:bg-card/80'}
-                              hover:scale-105 active:scale-95 transition-all duration-200
-                            `}
-                          >
-                            {quality.toUpperCase()}
-                          </Button>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between p-6 bg-card/60 rounded-lg glow-border hover:bg-card/80 hover:shadow-[0_0_15px_rgba(99,102,241,0.15)] transition-all duration-200 group">
-                    <div className="flex items-center gap-4">
-                      <div className="p-2 bg-primary/10 rounded-md group-hover:bg-primary/20 transition-colors">
-                        <Monitor size={24} weight="bold" className="text-primary" />
-                      </div>
-                      <div>
-                        <Label htmlFor="show-fps" className="font-black text-lg tracking-wide cursor-pointer">SHOW FPS COUNTER</Label>
-                        <p className="text-sm text-muted-foreground mt-1">Display frame rate on screen</p>
-                      </div>
-                    </div>
-                    <Switch
-                      id="show-fps"
-                      checked={showFPS}
-                      onCheckedChange={setShowFPS}
-                      className="data-[state=checked]:bg-accent"
+                      onChange={(e) => setPlayerName(e.target.value)}
+                      className="h-14 text-lg glass-panel"
+                      placeholder="Enter your name"
                     />
                   </div>
 
-                  <div className="flex items-center justify-between p-7 bg-card/60 rounded-lg glow-border hover:bg-card/80 hover:shadow-[0_0_15px_rgba(99,102,241,0.15)] transition-all duration-200 group">
-                    <div className="flex items-center gap-5">
-                      <div className="p-2 bg-primary/10 rounded-md group-hover:bg-primary/20 transition-colors">
-                        <Monitor size={24} weight="bold" className="text-primary" />
-                      </div>
-                      <div>
-                        <Label htmlFor="vsync" className="font-black text-lg tracking-wide cursor-pointer">V-SYNC</Label>
-                        <p className="text-sm text-muted-foreground mt-1">Synchronize with monitor refresh rate</p>
-                      </div>
-                    </div>
-                    <Switch
-                      id="vsync"
-                      checked={vsync}
-                      onCheckedChange={setVsync}
-                      className="data-[state=checked]:bg-accent"
-                    />
+                  <div className="pt-6 border-t border-border space-y-4">
+                    <Button variant="outline" size="lg" className="w-full">
+                      Change Avatar
+                    </Button>
+                    <Button variant="outline" size="lg" className="w-full">
+                      Manage Account
+                    </Button>
                   </div>
-                </motion.div>
-              </TabsContent>
-
-              <TabsContent value="audio" className="space-y-10 mt-10">
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                  className="space-y-10"
-                >
-                  <div className="space-y-6 p-10 bg-card/60 rounded-lg glow-border hover:shadow-[0_0_15px_rgba(99,102,241,0.15)] transition-all duration-200">
-                    <Label className="text-primary font-black text-lg tracking-wide flex items-center gap-2">
-                      <SpeakerHigh size={20} weight="bold" />
-                      MASTER VOLUME
-                    </Label>
-                    <div className="flex items-center gap-6">
-                      <Slider
-                        value={masterVolume}
-                        onValueChange={setMasterVolume}
-                        max={100}
-                        step={1}
-                        className="flex-1"
-                      />
-                      <div className="flex items-center gap-2 min-w-[90px] justify-end">
-                        <span className="font-black text-accent text-3xl tabular-nums">{masterVolume?.[0] ?? 75}</span>
-                        <span className="text-muted-foreground text-base font-bold">%</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="space-y-6 p-10 bg-card/60 rounded-lg glow-border hover:shadow-[0_0_15px_rgba(99,102,241,0.15)] transition-all duration-200">
-                    <Label className="text-primary font-black text-lg tracking-wide flex items-center gap-2">
-                      <SpeakerHigh size={20} weight="bold" />
-                      MUSIC VOLUME
-                    </Label>
-                    <div className="flex items-center gap-6">
-                      <Slider
-                        value={musicVolume}
-                        onValueChange={setMusicVolume}
-                        max={100}
-                        step={1}
-                        className="flex-1"
-                      />
-                      <div className="flex items-center gap-2 min-w-[90px] justify-end">
-                        <span className="font-black text-accent text-3xl tabular-nums">{musicVolume?.[0] ?? 60}</span>
-                        <span className="text-muted-foreground text-base font-bold">%</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="space-y-6 p-10 bg-card/60 rounded-lg glow-border hover:shadow-[0_0_15px_rgba(99,102,241,0.15)] transition-all duration-200">
-                    <Label className="text-primary font-black text-lg tracking-wide flex items-center gap-2">
-                      <SpeakerHigh size={20} weight="bold" />
-                      EFFECTS VOLUME
-                    </Label>
-                    <div className="flex items-center gap-6">
-                      <Slider
-                        value={sfxVolume}
-                        onValueChange={setSfxVolume}
-                        max={100}
-                        step={1}
-                        className="flex-1"
-                      />
-                      <div className="flex items-center gap-2 min-w-[90px] justify-end">
-                        <span className="font-black text-accent text-3xl tabular-nums">{sfxVolume?.[0] ?? 80}</span>
-                        <span className="text-muted-foreground text-base font-bold">%</span>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              </TabsContent>
-
-              <TabsContent value="controls" className="space-y-10 mt-10">
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                  className="space-y-10"
-                >
-                  <div className="space-y-6 p-10 bg-card/60 rounded-lg glow-border hover:shadow-[0_0_15px_rgba(99,102,241,0.15)] transition-all duration-200">
-                    <Label className="text-primary font-black text-lg tracking-wide flex items-center gap-2">
-                      <GameController size={20} weight="bold" />
-                      MOUSE SENSITIVITY
-                    </Label>
-                    <div className="flex items-center gap-6">
-                      <Slider
-                        value={mouseSensitivity}
-                        onValueChange={setMouseSensitivity}
-                        max={100}
-                        step={1}
-                        className="flex-1"
-                      />
-                      <div className="flex items-center gap-2 min-w-[90px] justify-end">
-                        <span className="font-black text-accent text-3xl tabular-nums">{mouseSensitivity?.[0] ?? 50}</span>
-                        <span className="text-muted-foreground text-base font-bold">%</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="p-10 bg-card/60 rounded-lg glow-border hover:shadow-[0_0_15px_rgba(99,102,241,0.15)] transition-all duration-300">
-                    <h3 className="font-black text-primary mb-8 text-xl tracking-wide flex items-center gap-3">
-                      <span className="w-2 h-8 bg-accent rounded"></span>
-                      KEY BINDINGS
-                    </h3>
-                    <div className="space-y-4">
-                      {[
-                        { action: 'MOVE FORWARD', key: 'W' },
-                        { action: 'MOVE BACKWARD', key: 'S' },
-                        { action: 'STRAFE LEFT', key: 'A' },
-                        { action: 'STRAFE RIGHT', key: 'D' },
-                        { action: 'JUMP', key: 'SPACE' },
-                        { action: 'FIRE', key: 'MOUSE 1' },
-                      ].map((bind, i) => (
-                        <div key={i} className="flex justify-between items-center p-5 bg-background/40 rounded-md hover:bg-background/60 hover:shadow-[0_0_10px_rgba(99,102,241,0.1)] transition-all duration-200 group">
-                          <span className="text-muted-foreground font-bold text-base group-hover:text-foreground transition-colors">{bind.action}</span>
-                          <span className="font-black bg-primary/20 text-primary px-6 py-3 rounded-md text-base border border-primary/30 group-hover:border-primary/50 group-hover:bg-primary/30 transition-all duration-200">
-                            {bind.key}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </motion.div>
-              </TabsContent>
-            </Tabs>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="mt-10 pt-10 border-t border-border/50 flex justify-end"
-            >
-              <Button
-                onClick={handleRestoreDefaults}
-                variant="outline"
-                className="glow-border w-full sm:w-auto h-14 px-10 font-black text-base hover:scale-105 active:scale-95 hover:bg-accent/10 hover:border-accent transition-all duration-200"
-              >
-                <ArrowCounterClockwise size={22} weight="bold" className="mr-2" />
-                RESTORE DEFAULTS
-              </Button>
-            </motion.div>
-          </Card>
+                </div>
+              </Card>
+            </TabsContent>
+          </Tabs>
         </motion.div>
-      </motion.div>
+      </div>
     </div>
   )
 }
