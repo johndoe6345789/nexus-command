@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import { ArrowLeft, Target, Crosshair, Skull, Trophy } from '@phosphor-icons/react'
+import { Badge } from '@/components/ui/badge'
+import { ArrowLeft, Target, Crosshair, Skull, Trophy, Sword, Lightning } from '@phosphor-icons/react'
 import { useKV } from '@github/spark/hooks'
 import { useEffect, useState } from 'react'
 
@@ -50,23 +51,32 @@ function StatCard({ icon: Icon, label, value, color, delay }: StatCardProps) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay }}
+      transition={{ delay, type: "spring", stiffness: 100 }}
+      whileHover={{ y: -4, scale: 1.02 }}
     >
-      <Card className={`p-4 sm:p-6 glow-border ${color} relative overflow-hidden`}>
+      <Card className={`p-5 sm:p-7 glow-border ${color} relative overflow-hidden group bg-card/40 backdrop-blur-sm hover:bg-card/60 transition-all duration-300`}>
         <div className="relative z-10">
-          <div className="flex items-center gap-2 sm:gap-3 mb-2">
-            <Icon size={20} weight="bold" className={`${color} sm:w-7 sm:h-7`} />
-            <h3 className="font-bold text-xs sm:text-sm text-muted-foreground">{label}</h3>
+          <div className="flex items-center gap-2 sm:gap-3 mb-3">
+            <div className={`p-2 rounded ${color.replace('text-', 'bg-')}/20 border border-current`}>
+              <Icon size={24} weight="bold" className={`${color}`} />
+            </div>
+            <h3 className="font-black text-xs sm:text-sm text-muted-foreground tracking-widest">{label}</h3>
           </div>
-          <div className="text-2xl sm:text-4xl font-black tabular-nums">
+          <div className="text-3xl sm:text-5xl font-black tabular-nums tracking-tight">
             {formattedValue}
           </div>
         </div>
-        <div className="absolute top-0 right-0 opacity-5">
-          <Icon size={80} weight="bold" className="sm:w-[120px] sm:h-[120px]" />
+        <div className="absolute -bottom-2 -right-2 opacity-5 group-hover:opacity-10 transition-opacity">
+          <Icon size={120} weight="bold" className="sm:w-[160px] sm:h-[160px]" />
         </div>
+        <motion.div
+          className={`absolute bottom-0 left-0 right-0 h-1 ${color.replace('text-', 'bg-')}`}
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ delay: delay + 0.3, duration: 0.5 }}
+        />
       </Card>
     </motion.div>
   )
@@ -110,123 +120,153 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-7xl mx-auto w-full"
+        className="max-w-7xl mx-auto w-full pb-12"
       >
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 sm:mb-8">
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.1 }}
+          className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 sm:mb-12"
+        >
           <div className="w-full sm:w-auto">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black glow-text mb-2">PLAYER STATS</h1>
-            <p className="text-muted-foreground font-body tracking-wider text-sm sm:text-base">
-              CALLSIGN: {playerName}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black glow-text mb-2 tracking-tight">PLAYER STATS</h1>
+            <p className="text-muted-foreground font-body tracking-widest text-sm sm:text-base flex items-center gap-2">
+              <Sword size={16} weight="bold" className="text-accent" />
+              CALLSIGN: <span className="text-accent font-black">{playerName}</span>
             </p>
           </div>
           <Button
             onClick={onBack}
             variant="outline"
-            className="glow-border w-full sm:w-auto"
+            className="glow-border w-full sm:w-auto h-11 px-6"
           >
             <ArrowLeft size={20} weight="bold" className="mr-2" />
             BACK
           </Button>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-12">
           <StatCard
             icon={Crosshair}
             label="TOTAL KILLS"
             value={stats?.kills ?? 0}
             color="text-primary"
-            delay={0.1}
+            delay={0.2}
           />
           <StatCard
             icon={Skull}
             label="TOTAL DEATHS"
             value={stats?.deaths ?? 0}
             color="text-destructive"
-            delay={0.2}
+            delay={0.3}
           />
           <StatCard
             icon={Target}
             label="K/D RATIO"
             value={kd}
             color="text-accent"
-            delay={0.3}
+            delay={0.4}
           />
           <StatCard
             icon={Trophy}
             label="WIN RATE"
             value={`${winRate}%`}
             color="text-primary"
-            delay={0.4}
+            delay={0.5}
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 pb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.5 }}
+            transition={{ delay: 0.6 }}
           >
-            <Card className="p-4 sm:p-6 glow-border">
-              <h2 className="text-lg sm:text-xl font-bold mb-4 text-primary">RECENT MATCHES</h2>
+            <Card className="p-6 sm:p-8 glow-border bg-card/40 backdrop-blur-sm">
+              <h2 className="text-xl sm:text-2xl font-black mb-6 text-primary tracking-wide flex items-center gap-3">
+                <span className="w-1 h-8 bg-accent"></span>
+                RECENT MATCHES
+              </h2>
               <div className="space-y-3">
                 {recentMatches.map((match, index) => (
-                  <div
+                  <motion.div
                     key={index}
-                    className="p-3 bg-card/50 rounded glow-border"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.7 + index * 0.08 }}
                   >
-                    <div className="flex justify-between items-start mb-2">
-                      <div>
-                        <div className="font-bold text-xs sm:text-sm">{match.map}</div>
-                        <div className="text-xs text-muted-foreground">{match.mode}</div>
+                    <div className="p-4 bg-card/60 rounded-lg glow-border hover:bg-card/80 transition-all duration-200 group">
+                      <div className="flex justify-between items-start mb-3">
+                        <div>
+                          <div className="font-black text-sm sm:text-base flex items-center gap-2">
+                            <Lightning size={14} weight="fill" className="text-accent" />
+                            {match.map}
+                          </div>
+                          <div className="text-xs text-muted-foreground mt-1">
+                            <Badge variant="outline" className="text-xs font-bold border-primary/30">{match.mode}</Badge>
+                          </div>
+                        </div>
+                        <div
+                          className={`text-xs font-black px-3 py-1.5 rounded-md ${
+                            match.result === 'Victory'
+                              ? 'bg-primary/20 text-primary border border-primary/40'
+                              : 'bg-destructive/20 text-destructive border border-destructive/40'
+                          }`}
+                        >
+                          {match.result.toUpperCase()}
+                        </div>
                       </div>
-                      <div
-                        className={`text-xs font-bold px-2 py-1 rounded ${
-                          match.result === 'Victory'
-                            ? 'bg-primary/20 text-primary'
-                            : 'bg-destructive/20 text-destructive'
-                        }`}
-                      >
-                        {match.result}
+                      <div className="flex justify-between text-xs">
+                        <span className="text-muted-foreground">SCORE: <span className="text-foreground font-black ml-1">{match.score}</span></span>
+                        <span className="text-muted-foreground">K/D: <span className="text-accent font-black ml-1">{match.kd}</span></span>
                       </div>
                     </div>
-                    <div className="flex justify-between text-xs">
-                      <span className="text-muted-foreground">Score: <span className="text-foreground font-bold">{match.score}</span></span>
-                      <span className="text-muted-foreground">K/D: <span className="text-foreground font-bold">{match.kd}</span></span>
-                    </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </Card>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
+            initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.6 }}
           >
-            <Card className="p-4 sm:p-6 glow-border">
-              <h2 className="text-lg sm:text-xl font-bold mb-4 text-primary">WEAPON STATISTICS</h2>
-              <div className="space-y-4">
+            <Card className="p-6 sm:p-8 glow-border bg-card/40 backdrop-blur-sm">
+              <h2 className="text-xl sm:text-2xl font-black mb-6 text-primary tracking-wide flex items-center gap-3">
+                <span className="w-1 h-8 bg-accent"></span>
+                WEAPON STATISTICS
+              </h2>
+              <div className="space-y-5">
                 {weaponStats.map((weapon, index) => (
-                  <div key={index}>
-                    <div className="flex justify-between mb-2">
-                      <span className="font-bold text-xs sm:text-sm">{weapon.name}</span>
-                      <span className="text-xs text-muted-foreground">{weapon.kills} kills</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="flex-1 h-2 bg-secondary rounded-full overflow-hidden">
-                        <motion.div
-                          className="h-full bg-primary"
-                          initial={{ width: 0 }}
-                          animate={{ width: `${weapon.accuracy}%` }}
-                          transition={{ delay: 0.7 + index * 0.1, duration: 0.8 }}
-                        />
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.7 + index * 0.08 }}
+                  >
+                    <div className="space-y-2">
+                      <div className="flex justify-between items-center">
+                        <span className="font-black text-sm sm:text-base tracking-wide">{weapon.name}</span>
+                        <span className="text-xs text-muted-foreground bg-background/50 px-2 py-1 rounded">
+                          {weapon.kills} kills
+                        </span>
                       </div>
-                      <span className="text-xs font-bold text-primary w-12 text-right tabular-nums">
-                        {weapon.accuracy}%
-                      </span>
+                      <div className="flex items-center gap-3">
+                        <div className="flex-1 h-2.5 bg-secondary/30 rounded-full overflow-hidden border border-border/30">
+                          <motion.div
+                            className="h-full bg-gradient-to-r from-primary to-accent"
+                            initial={{ width: 0 }}
+                            animate={{ width: `${weapon.accuracy}%` }}
+                            transition={{ delay: 0.8 + index * 0.1, duration: 0.8, ease: "easeOut" }}
+                          />
+                        </div>
+                        <span className="text-sm font-black text-accent w-14 text-right tabular-nums">
+                          {weapon.accuracy}%
+                        </span>
+                      </div>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </Card>
