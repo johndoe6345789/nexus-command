@@ -3,6 +3,7 @@ import { Cube, Planet, Tree, Mountains, Building, Shuffle, Download, Play, Arrow
 import { useState, useRef, useEffect } from 'react'
 import { toast } from 'sonner'
 import { useKV } from '@github/spark/hooks'
+import { ProgressBar, Spinner } from '../atoms'
 
 interface GenerationOption {
   id: string
@@ -34,6 +35,7 @@ export function ProceduralGenPanel() {
   const [seed, setSeed] = useState<string>('')
   const [complexity, setComplexity] = useState<string>('medium')
   const [isGenerating, setIsGenerating] = useState(false)
+  const [generationProgress, setGenerationProgress] = useState(0)
   const [generationHistory, setGenerationHistory] = useKV<MapData[]>('map-generation-history', [])
   const [currentMapData, setCurrentMapData] = useState<MapData | null>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -260,11 +262,16 @@ export function ProceduralGenPanel() {
 
   const handleGenerate = async () => {
     setIsGenerating(true)
+    setGenerationProgress(0)
     const actualSeed = seed || Math.floor(Math.random() * 1000000).toString()
     
     toast.loading(`Generating ${selectedType}...`, { id: 'gen-toast' })
     
-    await new Promise(resolve => setTimeout(resolve, 800))
+    const steps = 5
+    for (let i = 0; i <= steps; i++) {
+      await new Promise(resolve => setTimeout(resolve, 180))
+      setGenerationProgress((i / steps) * 100)
+    }
     
     const mapData: MapData = {
       type: selectedType,
@@ -280,6 +287,7 @@ export function ProceduralGenPanel() {
     
     toast.success(`Generated ${selectedType} with seed: ${actualSeed}`, { id: 'gen-toast' })
     setIsGenerating(false)
+    setGenerationProgress(0)
   }
 
   const handleRandomSeed = () => {
@@ -404,6 +412,17 @@ export function ProceduralGenPanel() {
                 </Stack>
               </Box>
 
+              {isGenerating && (
+                <Box sx={{ py: 2 }}>
+                  <ProgressBar 
+                    value={generationProgress} 
+                    label="Generating map..."
+                    color="oklch(0.65 0.25 230)"
+                    height={12}
+                  />
+                </Box>
+              )}
+
               <Stack direction="row" spacing={2} sx={{ pt: 2 }}>
                 <Button
                   variant="contained"
@@ -485,7 +504,14 @@ export function ProceduralGenPanel() {
                     minHeight: 300,
                     backgroundColor: 'oklch(0.08 0.01 250)'
                   }}>
-                    {currentMapData ? (
+                    {isGenerating ? (
+                      <Spinner 
+                        size={60} 
+                        label="Generating..." 
+                        variant="ring"
+                        color="oklch(0.65 0.25 230)"
+                      />
+                    ) : currentMapData ? (
                       <canvas
                         ref={canvasRef}
                         width={400}

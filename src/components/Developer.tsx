@@ -13,6 +13,7 @@ import { CheatCodesTab } from './organisms/CheatCodesTab'
 import { ConsoleTab } from './organisms/ConsoleTab'
 import { RenderStatsTab } from './organisms/RenderStatsTab'
 import { ProceduralGenTab } from './organisms/ProceduralGenTab'
+import { LoadingTab } from './organisms/LoadingTab'
 import { SystemStats } from '@/types'
 import { handleConsoleCommand } from '@/utils'
 import { DeveloperProps } from './props'
@@ -107,6 +108,8 @@ export function Developer({ onBack }: DeveloperProps) {
           {activeTab === 4 && <RenderStatsTab systemStats={systemStats} />}
 
           {activeTab === 5 && <ProceduralGenTab />}
+
+          {activeTab === 6 && <LoadingTab />}
         </AnimatePresence>
       </ContentCard>
     </PageContainer>
