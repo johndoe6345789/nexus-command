@@ -308,3 +308,8 @@ export function Developer({ onBack }: DeveloperProps) {
     </PageContainer>
   )
 }
+        </AnimatePresence>
+      </ContentCard>
+    </PageContainer>
+  )
+}
