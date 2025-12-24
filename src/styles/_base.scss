@@ -10,19 +10,10 @@ body {
   font-family: $font-body;
   background: $color-background;
   color: $color-foreground;
-}
-
-html {
   overflow-x: hidden;
-}
-
-#root {
-  min-height: 100vh;
-  width: 100%;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: $font-heading;
   font-weight: 700;
-  letter-spacing: 0.03em;
 }
