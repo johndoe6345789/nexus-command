@@ -2,10 +2,10 @@ import { MainMenuLayout } from './templates'
 import { MenuGrid } from './organisms'
 import { Text } from './atoms'
 import { menuItems } from '@/data'
-import { MainMenuRefactoredProps } from './props'
+import { MainMenuProps } from './props'
 import { APP_VERSION, APP_TAGLINE } from '@/constants'
 
-export function MainMenu({ onNavigate }: MainMenuRefactoredProps) {
+export function MainMenu({ onNavigate }: MainMenuProps) {
   return (
     <MainMenuLayout
       tagline={APP_TAGLINE}
