@@ -90,7 +90,7 @@ export function Developer({ onBack }: DeveloperProps) {
   }
 
   return (
-    <Box sx={{ minHeight: '100vh', p: 4 }}>
+    <Box sx={{ minHeight: '100vh', p: 4, bgcolor: 'transparent' }}>
       <Box sx={{ maxWidth: '1400px', mx: 'auto' }}>
         <motion.div
           initial={{ opacity: 0, x: -20 }}
