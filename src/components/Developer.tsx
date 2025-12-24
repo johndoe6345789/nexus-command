@@ -10,6 +10,8 @@ import {
   TextField,
   Switch,
   FormControlLabel,
+  Tabs,
+  Tab,
 } from '@mui/material'
 import { 
   ArrowLeft, 
@@ -31,6 +33,7 @@ interface DeveloperProps {
 }
 
 export function Developer({ onBack }: DeveloperProps) {
+  const [activeTab, setActiveTab] = useState(0)
   const [debugMode, setDebugMode] = useKV<boolean>('debug-mode', false)
   const [showFPS, setShowFPS] = useKV<boolean>('show-fps', false)
   const [showHitboxes, setShowHitboxes] = useKV<boolean>('show-hitboxes', false)
@@ -117,7 +120,7 @@ export function Developer({ onBack }: DeveloperProps) {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
             >
-              <Stack direction="row" justifyContent="space-between" alignItems="flex-start" sx={{ mb: 6 }}>
+              <Stack direction="row" justifyContent="space-between" alignItems="flex-start" sx={{ mb: 4 }}>
                 <Box>
                   <Typography variant="h2" sx={{ mb: 2 }}>
                     Developer Tools
@@ -130,223 +133,230 @@ export function Developer({ onBack }: DeveloperProps) {
               </Stack>
             </motion.div>
 
-        <Grid container spacing={3} sx={{ mb: 4 }}>
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-            >
-              <Card>
-                <CardContent>
-                  <Stack direction="row" alignItems="center" spacing={2}>
-                    <Box
-                      sx={{
-                        p: 2,
-                        borderRadius: 2,
-                        bgcolor: 'primary.main',
-                        opacity: 0.2,
-                      }}
-                    >
-                      <ChartLine size={40} weight="bold" color="oklch(0.75 0.20 220)" />
-                    </Box>
-                    <Box>
-                      <Typography variant="body2" color="text.secondary">
-                        FPS
-                      </Typography>
-                      <Typography variant="h3" fontWeight="black">
-                        {systemStats.fps}
-                      </Typography>
-                    </Box>
-                  </Stack>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </Grid>
-
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-            >
-              <Card>
-                <CardContent>
-                  <Stack direction="row" alignItems="center" spacing={2}>
-                    <Box
-                      sx={{
-                        p: 2,
-                        borderRadius: 2,
-                        bgcolor: '#4ade80',
-                        opacity: 0.2,
-                      }}
-                    >
-                      <Lightning size={40} weight="bold" color="#4ade80" />
-                    </Box>
-                    <Box>
-                      <Typography variant="body2" color="text.secondary">
-                        Ping
-                      </Typography>
-                      <Typography variant="h3" fontWeight="black">
-                        {systemStats.ping}ms
-                      </Typography>
-                    </Box>
-                  </Stack>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </Grid>
-
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-            >
-              <Card>
-                <CardContent>
-                  <Stack direction="row" alignItems="center" spacing={2}>
-                    <Box
-                      sx={{
-                        p: 2,
-                        borderRadius: 2,
-                        bgcolor: '#fbbf24',
-                        opacity: 0.2,
-                      }}
-                    >
-                      <Database size={40} weight="bold" color="#fbbf24" />
-                    </Box>
-                    <Box>
-                      <Typography variant="body2" color="text.secondary">
-                        Memory
-                      </Typography>
-                      <Typography variant="h5" fontWeight="black">
-                        {systemStats.memoryUsage}
-                      </Typography>
-                    </Box>
-                  </Stack>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </Grid>
-
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-            >
-              <Card>
-                <CardContent>
-                  <Stack direction="row" alignItems="center" spacing={2}>
-                    <Box
-                      sx={{
-                        p: 2,
-                        borderRadius: 2,
-                        bgcolor: '#8b5cf6',
-                        opacity: 0.2,
-                      }}
-                    >
-                      <Bug size={40} weight="bold" color="#8b5cf6" />
-                    </Box>
-                    <Box>
-                      <Typography variant="body2" color="text.secondary">
-                        Draw Calls
-                      </Typography>
-                      <Typography variant="h5" fontWeight="black">
-                        {systemStats.drawCalls}
-                      </Typography>
-                    </Box>
-                  </Stack>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </Grid>
-        </Grid>
-
-        <Grid container spacing={4}>
-          <Grid size={{ xs: 12, lg: 6 }}>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-            >
-              <Card>
-                <CardContent sx={{ p: 4 }}>
-                  <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 4 }}>
-                    <Gear size={32} weight="duotone" color="oklch(0.75 0.20 220)" />
-                    <Typography variant="h4">
-                      Debug Options
-                    </Typography>
-                  </Stack>
-                  
-                  <Stack spacing={3}>
-                    <FormControlLabel
-                      control={
-                        <Switch
-                          checked={debugMode}
-                          onChange={(e) => setDebugMode(e.target.checked)}
-                        />
-                      }
-                      label={
-                        <Box>
-                          <Typography variant="h6">Debug Mode</Typography>
-                          <Typography variant="body2" color="text.secondary">
-                            Enable verbose logging and debug overlays
-                          </Typography>
-                        </Box>
-                      }
-                      labelPlacement="start"
-                      sx={{ justifyContent: 'space-between', ml: 0 }}
-                    />
-
-                    <FormControlLabel
-                      control={
-                        <Switch
-                          checked={showFPS}
-                          onChange={(e) => setShowFPS(e.target.checked)}
-                        />
-                      }
-                      label={
-                        <Box>
-                          <Typography variant="h6">Show FPS Counter</Typography>
-                          <Typography variant="body2" color="text.secondary">
-                            Display real-time frame rate information
-                          </Typography>
-                        </Box>
-                      }
-                      labelPlacement="start"
-                      sx={{ justifyContent: 'space-between', ml: 0 }}
-                    />
-
-                    <FormControlLabel
-                      control={
-                        <Switch
-                          checked={showHitboxes}
-                          onChange={(e) => setShowHitboxes(e.target.checked)}
-                        />
-                      }
-                      label={
-                        <Box>
-                          <Typography variant="h6">Show Hitboxes</Typography>
-                          <Typography variant="body2" color="text.secondary">
-                            Render collision boundaries for all entities
-                          </Typography>
-                        </Box>
-                      }
-                      labelPlacement="start"
-                      sx={{ justifyContent: 'space-between', ml: 0 }}
-                    />
-                  </Stack>
-                </CardContent>
-              </Card>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
+            <Box sx={{ borderBottom: 1, borderColor: 'rgba(74, 158, 255, 0.2)', mb: 4 }}>
+              <Tabs 
+                value={activeTab} 
+                onChange={(_, newValue) => setActiveTab(newValue)}
+                sx={{
+                  '& .MuiTab-root': {
+                    textTransform: 'none',
+                    fontSize: '1rem',
+                    fontWeight: 600,
+                    minHeight: '56px',
+                  }
+                }}
               >
-                <Card sx={{ mt: 3 }}>
+                <Tab label="Overview" />
+                <Tab label="Debug Options" />
+                <Tab label="Cheat Codes" />
+                <Tab label="Console" />
+                <Tab label="Render Stats" />
+              </Tabs>
+            </Box>
+
+            {activeTab === 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Grid container spacing={3}>
+                  <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                    <Card>
+                      <CardContent>
+                        <Stack direction="row" alignItems="center" spacing={2}>
+                          <Box
+                            sx={{
+                              p: 2,
+                              borderRadius: 2,
+                              bgcolor: 'primary.main',
+                              opacity: 0.2,
+                            }}
+                          >
+                            <ChartLine size={40} weight="bold" color="oklch(0.75 0.20 220)" />
+                          </Box>
+                          <Box>
+                            <Typography variant="body2" color="text.secondary">
+                              FPS
+                            </Typography>
+                            <Typography variant="h3" fontWeight="black">
+                              {systemStats.fps}
+                            </Typography>
+                          </Box>
+                        </Stack>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+
+                  <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                    <Card>
+                      <CardContent>
+                        <Stack direction="row" alignItems="center" spacing={2}>
+                          <Box
+                            sx={{
+                              p: 2,
+                              borderRadius: 2,
+                              bgcolor: '#4ade80',
+                              opacity: 0.2,
+                            }}
+                          >
+                            <Lightning size={40} weight="bold" color="#4ade80" />
+                          </Box>
+                          <Box>
+                            <Typography variant="body2" color="text.secondary">
+                              Ping
+                            </Typography>
+                            <Typography variant="h3" fontWeight="black">
+                              {systemStats.ping}ms
+                            </Typography>
+                          </Box>
+                        </Stack>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+
+                  <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                    <Card>
+                      <CardContent>
+                        <Stack direction="row" alignItems="center" spacing={2}>
+                          <Box
+                            sx={{
+                              p: 2,
+                              borderRadius: 2,
+                              bgcolor: '#fbbf24',
+                              opacity: 0.2,
+                            }}
+                          >
+                            <Database size={40} weight="bold" color="#fbbf24" />
+                          </Box>
+                          <Box>
+                            <Typography variant="body2" color="text.secondary">
+                              Memory
+                            </Typography>
+                            <Typography variant="h5" fontWeight="black">
+                              {systemStats.memoryUsage}
+                            </Typography>
+                          </Box>
+                        </Stack>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+
+                  <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                    <Card>
+                      <CardContent>
+                        <Stack direction="row" alignItems="center" spacing={2}>
+                          <Box
+                            sx={{
+                              p: 2,
+                              borderRadius: 2,
+                              bgcolor: '#8b5cf6',
+                              opacity: 0.2,
+                            }}
+                          >
+                            <Bug size={40} weight="bold" color="#8b5cf6" />
+                          </Box>
+                          <Box>
+                            <Typography variant="body2" color="text.secondary">
+                              Draw Calls
+                            </Typography>
+                            <Typography variant="h5" fontWeight="black">
+                              {systemStats.drawCalls}
+                            </Typography>
+                          </Box>
+                        </Stack>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                </Grid>
+              </motion.div>
+            )}
+
+            {activeTab === 1 && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Card>
+                  <CardContent sx={{ p: 4 }}>
+                    <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 4 }}>
+                      <Gear size={32} weight="duotone" color="oklch(0.75 0.20 220)" />
+                      <Typography variant="h4">
+                        Debug Options
+                      </Typography>
+                    </Stack>
+                    
+                    <Stack spacing={3}>
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            checked={debugMode}
+                            onChange={(e) => setDebugMode(e.target.checked)}
+                          />
+                        }
+                        label={
+                          <Box>
+                            <Typography variant="h6">Debug Mode</Typography>
+                            <Typography variant="body2" color="text.secondary">
+                              Enable verbose logging and debug overlays
+                            </Typography>
+                          </Box>
+                        }
+                        labelPlacement="start"
+                        sx={{ justifyContent: 'space-between', ml: 0 }}
+                      />
+
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            checked={showFPS}
+                            onChange={(e) => setShowFPS(e.target.checked)}
+                          />
+                        }
+                        label={
+                          <Box>
+                            <Typography variant="h6">Show FPS Counter</Typography>
+                            <Typography variant="body2" color="text.secondary">
+                              Display real-time frame rate information
+                            </Typography>
+                          </Box>
+                        }
+                        labelPlacement="start"
+                        sx={{ justifyContent: 'space-between', ml: 0 }}
+                      />
+
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            checked={showHitboxes}
+                            onChange={(e) => setShowHitboxes(e.target.checked)}
+                          />
+                        }
+                        label={
+                          <Box>
+                            <Typography variant="h6">Show Hitboxes</Typography>
+                            <Typography variant="body2" color="text.secondary">
+                              Render collision boundaries for all entities
+                            </Typography>
+                          </Box>
+                        }
+                        labelPlacement="start"
+                        sx={{ justifyContent: 'space-between', ml: 0 }}
+                      />
+                    </Stack>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            )}
+
+            {activeTab === 2 && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Card>
                   <CardContent sx={{ p: 4 }}>
                     <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 4 }}>
                       <Lightning size={32} weight="duotone" color="#fbbf24" />
@@ -416,84 +426,86 @@ export function Developer({ onBack }: DeveloperProps) {
                   </CardContent>
                 </Card>
               </motion.div>
-            </motion.div>
-          </Grid>
+            )}
 
-          <Grid size={{ xs: 12, lg: 6 }}>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
-            >
-              <Card>
-                <CardContent sx={{ p: 4 }}>
-                  <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 4 }}>
-                    <Terminal size={32} weight="duotone" color="oklch(0.75 0.20 220)" />
-                    <Typography variant="h4">
-                      Console
-                    </Typography>
-                  </Stack>
-
-                  <Box
-                    sx={{
-                      bgcolor: 'rgba(0, 0, 0, 0.6)',
-                      borderRadius: 2,
-                      p: 3,
-                      mb: 2,
-                      height: '400px',
-                      overflowY: 'auto',
-                      fontFamily: 'monospace',
-                      border: '1px solid rgba(74, 158, 255, 0.3)',
-                    }}
-                  >
-                    {consoleOutput.map((line, index) => (
-                      <Typography
-                        key={index}
-                        variant="body2"
-                        sx={{
-                          color: line.startsWith('>') 
-                            ? 'oklch(0.75 0.20 220)' 
-                            : 'oklch(0.85 0.05 220)',
-                          fontFamily: 'monospace',
-                          mb: 0.5,
-                        }}
-                      >
-                        {line}
-                      </Typography>
-                    ))}
-                    <div ref={consoleEndRef} />
-                  </Box>
-
-                  <form onSubmit={handleConsoleSubmit}>
-                    <TextField
-                      fullWidth
-                      value={consoleInput}
-                      onChange={(e) => setConsoleInput(e.target.value)}
-                      placeholder="Enter command..."
-                      variant="outlined"
-                      slotProps={{
-                        input: {
-                          startAdornment: (
-                            <Typography sx={{ mr: 1, color: 'oklch(0.75 0.20 220)' }}>
-                              &gt;
-                            </Typography>
-                          ),
-                          sx: {
-                            fontFamily: 'monospace',
-                          },
-                        },
-                      }}
-                    />
-                  </form>
-                </CardContent>
-              </Card>
-
+            {activeTab === 3 && (
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8 }}
+                transition={{ duration: 0.2 }}
               >
-                <Card sx={{ mt: 3 }}>
+                <Card>
+                  <CardContent sx={{ p: 4 }}>
+                    <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 4 }}>
+                      <Terminal size={32} weight="duotone" color="oklch(0.75 0.20 220)" />
+                      <Typography variant="h4">
+                        Console
+                      </Typography>
+                    </Stack>
+
+                    <Box
+                      sx={{
+                        bgcolor: 'rgba(0, 0, 0, 0.6)',
+                        borderRadius: 2,
+                        p: 3,
+                        mb: 2,
+                        height: '500px',
+                        overflowY: 'auto',
+                        fontFamily: 'monospace',
+                        border: '1px solid rgba(74, 158, 255, 0.3)',
+                      }}
+                    >
+                      {consoleOutput.map((line, index) => (
+                        <Typography
+                          key={index}
+                          variant="body2"
+                          sx={{
+                            color: line.startsWith('>') 
+                              ? 'oklch(0.75 0.20 220)' 
+                              : 'oklch(0.85 0.05 220)',
+                            fontFamily: 'monospace',
+                            mb: 0.5,
+                          }}
+                        >
+                          {line}
+                        </Typography>
+                      ))}
+                      <div ref={consoleEndRef} />
+                    </Box>
+
+                    <form onSubmit={handleConsoleSubmit}>
+                      <TextField
+                        fullWidth
+                        value={consoleInput}
+                        onChange={(e) => setConsoleInput(e.target.value)}
+                        placeholder="Enter command..."
+                        variant="outlined"
+                        slotProps={{
+                          input: {
+                            startAdornment: (
+                              <Typography sx={{ mr: 1, color: 'oklch(0.75 0.20 220)' }}>
+                                &gt;
+                              </Typography>
+                            ),
+                            sx: {
+                              fontFamily: 'monospace',
+                            },
+                          },
+                        }}
+                      />
+                    </form>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            )}
+
+            {activeTab === 4 && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Card>
                   <CardContent sx={{ p: 4 }}>
                     <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 4 }}>
                       <Eye size={32} weight="duotone" color="#4ade80" />
@@ -523,9 +535,7 @@ export function Developer({ onBack }: DeveloperProps) {
                   </CardContent>
                 </Card>
               </motion.div>
-            </motion.div>
-          </Grid>
-        </Grid>
+            )}
           </CardContent>
         </Card>
       </Box>
