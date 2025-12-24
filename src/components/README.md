@@ -90,8 +90,7 @@ import { MainMenuProps, DeveloperProps } from './components/props'
 
 ## Notes
 
-- Empty `*Refactored.tsx` files exist but should be ignored/deleted
-- The active components are the ones without "Refactored" in the name
 - All components use Material-UI (MUI) with custom theming
 - Animations are powered by framer-motion
 - Icons come from @phosphor-icons/react
+- Components follow the atomic design pattern for maintainability
