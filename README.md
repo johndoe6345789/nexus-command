@@ -2,6 +2,8 @@
 
 A premium AAA-quality game menu system for a Quake 3 Arena clone, featuring a comprehensive atomic design system built with React, TypeScript, Material-UI, and Framer Motion.
 
+> **🧹 Cleanup Required**: This project contains placeholder files from previous refactoring that need to be manually deleted. See **[MANUAL_CLEANUP_GUIDE.md](MANUAL_CLEANUP_GUIDE.md)** for instructions.
+
 ## ✨ Key Features
 
 - 🎨 **Atomic Design System**: Fully modular component framework with atoms, molecules, organisms, templates, and pages
