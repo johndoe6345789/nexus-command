@@ -16,23 +16,20 @@ export function DeveloperTabs({ activeTab, onTabChange }: DeveloperTabsProps) {
       <Tabs
         value={activeTab}
         onChange={(_, newValue) => onTabChange(newValue)}
-        variant="scrollable"
-        scrollButtons="auto"
-        allowScrollButtonsMobile
+        variant="standard"
         sx={{
+          '& .MuiTabs-flexContainer': {
+            flexWrap: 'wrap',
+            gap: isMobile ? '4px' : '8px',
+          },
           '& .MuiTab-root': {
             textTransform: 'none',
-            fontSize: isMobile ? '0.875rem' : '1rem',
+            fontSize: isMobile ? '0.75rem' : '0.875rem',
             fontWeight: 600,
-            minHeight: isMobile ? '48px' : '56px',
-            minWidth: isMobile ? 'auto' : '90px',
-            px: isMobile ? 2 : 3,
-          },
-          '& .MuiTabs-scrollButtons': {
-            color: 'oklch(0.75 0.20 220)',
-            '&.Mui-disabled': {
-              opacity: 0.3,
-            },
+            minHeight: isMobile ? '44px' : '48px',
+            minWidth: isMobile ? 'auto' : '80px',
+            px: isMobile ? 1.5 : 2,
+            py: 1,
           },
         }}
       >
