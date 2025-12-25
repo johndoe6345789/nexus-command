@@ -23,7 +23,7 @@ interface MapData {
 interface ProceduralGenPanelProps {
   isGenerating: boolean
   generationProgress: number
-  onGenerationStart: (type: string) => void
+  onGenerationStart: (type: string, seed: string) => void
   onGenerationProgress: (progress: number) => void
   onGenerationEnd: () => void
 }
@@ -274,7 +274,7 @@ export function ProceduralGenPanel({
   const handleGenerate = async () => {
     const actualSeed = seed || Math.floor(Math.random() * 1000000).toString()
     
-    onGenerationStart(selectedType)
+    onGenerationStart(selectedType, actualSeed)
     
     const steps = 5
     for (let i = 0; i <= steps; i++) {

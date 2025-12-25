@@ -33,6 +33,7 @@ export function Developer({ onBack }: DeveloperProps) {
   const [isGenerating, setIsGenerating] = useState(false)
   const [generationProgress, setGenerationProgress] = useState(0)
   const [generationType, setGenerationType] = useState<string>('')
+  const [generationSeed, setGenerationSeed] = useState<string>('')
 
   const systemStats: SystemStats = {
     fps: 144,
@@ -70,6 +71,7 @@ export function Developer({ onBack }: DeveloperProps) {
         progress={generationProgress}
         label={generationType ? `Generating ${generationType}...` : "Generating..."}
         type={generationType}
+        seed={generationSeed}
       />
       
       <BackButton onBack={onBack} />
@@ -122,9 +124,10 @@ export function Developer({ onBack }: DeveloperProps) {
             <ProceduralGenTab 
               isGenerating={isGenerating}
               generationProgress={generationProgress}
-              onGenerationStart={(type: string) => {
+              onGenerationStart={(type: string, seed: string) => {
                 setIsGenerating(true)
                 setGenerationType(type)
+                setGenerationSeed(seed)
                 setGenerationProgress(0)
               }}
               onGenerationProgress={(progress: number) => {
@@ -134,6 +137,7 @@ export function Developer({ onBack }: DeveloperProps) {
                 setIsGenerating(false)
                 setGenerationProgress(0)
                 setGenerationType('')
+                setGenerationSeed('')
               }}
             />
           )}

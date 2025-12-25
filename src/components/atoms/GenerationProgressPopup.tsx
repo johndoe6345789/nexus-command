@@ -7,13 +7,15 @@ interface GenerationProgressPopupProps {
   progress: number
   label?: string
   type?: string
+  seed?: string
 }
 
 export function GenerationProgressPopup({ 
   isVisible, 
   progress, 
   label = 'Generating...', 
-  type 
+  type,
+  seed
 }: GenerationProgressPopupProps) {
   return (
     <AnimatePresence>
@@ -60,6 +62,11 @@ export function GenerationProgressPopup({
                     {type && (
                       <Typography variant="caption" sx={{ color: 'oklch(0.65 0.25 230)', textTransform: 'capitalize' }}>
                         {type}
+                      </Typography>
+                    )}
+                    {seed && (
+                      <Typography variant="caption" sx={{ color: 'oklch(0.55 0.12 230)', fontFamily: 'monospace' }}>
+                        Seed: {seed}
                       </Typography>
                     )}
                   </Stack>

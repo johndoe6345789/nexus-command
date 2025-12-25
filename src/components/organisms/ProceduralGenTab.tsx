@@ -4,7 +4,7 @@ import { ProceduralGenPanel } from './ProceduralGenPanel'
 interface ProceduralGenTabProps {
   isGenerating: boolean
   generationProgress: number
-  onGenerationStart: (type: string) => void
+  onGenerationStart: (type: string, seed: string) => void
   onGenerationProgress: (progress: number) => void
   onGenerationEnd: () => void
 }
