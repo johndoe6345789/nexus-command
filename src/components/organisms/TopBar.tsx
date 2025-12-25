@@ -23,7 +23,7 @@ import { AchievementCard } from '@/components/atoms/AchievementCard'
 import { PullToRefresh } from '@/components/atoms/PullToRefresh'
 import { Alert, Achievement } from '@/types'
 import { ACHIEVEMENT_DEFINITIONS } from '@/constants'
-import { useKV } from '@github/spark/hooks'
+import { useKV } from '@/hooks/useKV'
 
 interface TopBarProps {
   className?: string
@@ -66,19 +66,19 @@ export function TopBar({ className }: TopBarProps) {
   const totalAchievements = achievements?.length ?? 0
 
   const handleMarkAsRead = (id: string) => {
-    setAlerts((currentAlerts) =>
-      currentAlerts?.map(alert =>
+    setAlerts(
+      alerts?.map(alert =>
         alert.id === id ? { ...alert, read: true } : alert
       ) ?? []
     )
   }
 
   const handleDismissAlert = (id: string) => {
-    setAlerts((currentAlerts) => currentAlerts?.filter(alert => alert.id !== id) ?? [])
+    setAlerts(alerts?.filter(alert => alert.id !== id) ?? [])
   }
 
   const handleClearAll = () => {
-    setAlerts((currentAlerts) => currentAlerts?.map(alert => ({ ...alert, read: true })) ?? [])
+    setAlerts(alerts?.map(alert => ({ ...alert, read: true })) ?? [])
   }
 
   const handleDeleteAll = () => {

@@ -1,6 +1,6 @@
 import { Code } from '@mui/icons-material'
 import { AnimatePresence } from 'framer-motion'
-import { useKV } from '@github/spark/hooks'
+import { useKV } from '@/hooks/useKV'
 import { useState } from 'react'
 import { PageContainer } from './atoms/PageContainer'
 import { BackButton } from './atoms/BackButton'

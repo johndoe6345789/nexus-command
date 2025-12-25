@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useKV } from '@github/spark/hooks'
+import { useKV } from '@/hooks/useKV'
 import { addAlert } from '@/utils/notifications'
 
 export function useWelcomeAlerts() {
