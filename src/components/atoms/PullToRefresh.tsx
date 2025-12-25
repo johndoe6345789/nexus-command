@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowsClockwise } from '@phosphor-icons/react'
+import { RefreshCw } from 'lucide-react'
 import { usePullToRefresh } from '@/hooks/use-pull-to-refresh'
 import { cn } from '@/lib/utils'
 
@@ -21,7 +21,6 @@ export function PullToRefresh({
     usePullToRefresh({ onRefresh, enabled })
 
   const showIndicator = isPulling || isRefreshing
-  const rotation = isRefreshing ? 360 : progress * 360
 
   return (
     <div className={cn('relative', className)}>
@@ -48,17 +47,20 @@ export function PullToRefresh({
                   "backdrop-blur-xl"
                 )}
               >
-                <ArrowsClockwise
-                  size={24}
-                  weight="bold"
-                  className={cn(
-                    "text-primary-foreground transition-transform duration-200",
-                    isRefreshing && "animate-spin"
-                  )}
-                  style={{
-                    transform: isRefreshing ? undefined : `rotate(${rotation}deg)`
-                  }}
-                />
+                <motion.div
+                  animate={isRefreshing ? { rotate: 360 } : { rotate: progress * 360 }}
+                  transition={
+                    isRefreshing 
+                      ? { duration: 1, repeat: Infinity, ease: 'linear' }
+                      : { duration: 0 }
+                  }
+                >
+                  <RefreshCw
+                    size={24}
+                    strokeWidth={2.5}
+                    className="text-primary-foreground"
+                  />
+                </motion.div>
               </div>
               
               {!isRefreshing && progress < 1 && (

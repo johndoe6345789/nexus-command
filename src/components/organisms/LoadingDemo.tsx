@@ -92,8 +92,8 @@ export function LoadingDemo() {
                 >
                   <Spinner 
                     size={50}
-                    variant="ring"
-                    label="Ring"
+                    variant="loader"
+                    label="Loader"
                     color="oklch(0.65 0.25 230)"
                   />
                 </Box>
@@ -112,8 +112,8 @@ export function LoadingDemo() {
                 >
                   <Spinner 
                     size={50}
-                    variant="circle"
-                    label="Circle"
+                    variant="refresh"
+                    label="Refresh"
                     color="oklch(0.75 0.25 150)"
                   />
                 </Box>
@@ -152,9 +152,29 @@ export function LoadingDemo() {
                 >
                   <Spinner 
                     size={50}
-                    variant="pulse"
-                    label="Pulse"
+                    variant="orbit"
+                    label="Orbit"
                     color="oklch(0.65 0.20 280)"
+                  />
+                </Box>
+              </Grid>
+
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <Box 
+                  sx={{ 
+                    p: 3, 
+                    backgroundColor: 'rgba(74, 158, 255, 0.05)',
+                    borderRadius: 2,
+                    border: '1px solid rgba(74, 158, 255, 0.2)',
+                    display: 'flex',
+                    justifyContent: 'center'
+                  }}
+                >
+                  <Spinner 
+                    size={50}
+                    variant="disc"
+                    label="Disc"
+                    color="oklch(0.70 0.22 190)"
                   />
                 </Box>
               </Grid>
@@ -168,10 +188,10 @@ export function LoadingDemo() {
               Different Sizes
             </Typography>
             <Stack direction="row" spacing={4} justifyContent="center" alignItems="center">
-              <Spinner size={30} variant="ring" color="oklch(0.65 0.25 230)" />
-              <Spinner size={40} variant="ring" color="oklch(0.65 0.25 230)" />
-              <Spinner size={60} variant="ring" color="oklch(0.65 0.25 230)" />
-              <Spinner size={80} variant="ring" color="oklch(0.65 0.25 230)" />
+              <Spinner size={30} variant="loader" color="oklch(0.65 0.25 230)" />
+              <Spinner size={40} variant="loader" color="oklch(0.65 0.25 230)" />
+              <Spinner size={60} variant="loader" color="oklch(0.65 0.25 230)" />
+              <Spinner size={80} variant="loader" color="oklch(0.65 0.25 230)" />
             </Stack>
           </Box>
         </Stack>
