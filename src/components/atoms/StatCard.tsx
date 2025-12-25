@@ -22,7 +22,10 @@ export function StatCard({ icon: IconComponent, iconColor, label, value, delay =
               opacity: 0.2,
             }}
           >
-            <IconComponent sx={{ fontSize: 40, color: iconColor }} />
+            <IconComponent 
+              sx={{ fontSize: 40, color: iconColor }} 
+              titleAccess={label}
+            />
           </Box>
           <Box>
             <Typography variant="body2" color="text.secondary">

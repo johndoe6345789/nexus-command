@@ -150,6 +150,7 @@ export function TopBar({ className }: TopBarProps) {
               setActiveTab(0)
               setIsOpen(!isOpen)
             }}
+            aria-label="Notifications"
             sx={{ 
               color: 'oklch(0.85 0.03 250)',
               p: 1.5,
@@ -171,7 +172,7 @@ export function TopBar({ className }: TopBarProps) {
                 }
               }}
             >
-              <Notifications sx={{ fontSize: 24 }} />
+              <Notifications sx={{ fontSize: 24 }} titleAccess="Notifications" />
             </Badge>
           </IconButton>
 
@@ -180,6 +181,7 @@ export function TopBar({ className }: TopBarProps) {
               setActiveTab(1)
               setIsOpen(!isOpen)
             }}
+            aria-label="Achievements"
             sx={{ 
               color: 'oklch(0.85 0.03 250)',
               position: 'relative',
@@ -189,7 +191,7 @@ export function TopBar({ className }: TopBarProps) {
               },
             }}
           >
-            <EmojiEvents sx={{ fontSize: 24 }} />
+            <EmojiEvents sx={{ fontSize: 24 }} titleAccess="Achievements" />
             <Typography 
               component="span"
               sx={{ 
@@ -249,7 +251,7 @@ export function TopBar({ className }: TopBarProps) {
                 <Tab 
                   label={
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      <Notifications sx={{ fontSize: 16 }} />
+                      <Notifications sx={{ fontSize: 16 }} titleAccess="" />
                       Alerts
                       {unreadCount > 0 && (
                         <Chip 
@@ -265,7 +267,7 @@ export function TopBar({ className }: TopBarProps) {
                 <Tab 
                   label={
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      <EmojiEvents sx={{ fontSize: 16 }} />
+                      <EmojiEvents sx={{ fontSize: 16 }} titleAccess="" />
                       Achievements
                       <Typography 
                         sx={{ 
@@ -282,12 +284,13 @@ export function TopBar({ className }: TopBarProps) {
               </Tabs>
               <IconButton 
                 onClick={() => setIsOpen(false)}
+                aria-label="Close"
                 sx={{ 
                   color: 'oklch(0.85 0.03 250)',
                   '&:hover': { bgcolor: 'oklch(0.20 0.03 250)' },
                 }}
               >
-                <Close sx={{ fontSize: 20 }} />
+                <Close sx={{ fontSize: 20 }} titleAccess="Close" />
               </IconButton>
             </Box>
           </Box>
@@ -332,7 +335,10 @@ export function TopBar({ className }: TopBarProps) {
                         textAlign: 'center',
                       }}
                     >
-                      <Notifications sx={{ fontSize: 48, color: 'oklch(0.35 0.05 250)', mb: 2, opacity: 0.3 }} />
+                      <Notifications 
+                        sx={{ fontSize: 48, color: 'oklch(0.35 0.05 250)', mb: 2, opacity: 0.3 }} 
+                        titleAccess="No notifications"
+                      />
                       <Typography sx={{ fontSize: '14px', color: 'oklch(0.55 0.05 250)' }}>
                         No alerts yet
                       </Typography>

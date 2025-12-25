@@ -155,4 +155,14 @@ export const miscStyles = {
       },
     },
   },
+  MuiSvgIcon: {
+    styleOverrides: {
+      root: {
+        userSelect: 'none' as const,
+        display: 'inline-block',
+        fill: 'currentColor',
+        flexShrink: 0,
+      },
+    },
+  },
 }

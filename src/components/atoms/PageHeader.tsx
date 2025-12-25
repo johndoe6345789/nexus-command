@@ -7,9 +7,10 @@ interface PageHeaderProps {
   subtitle: string
   icon?: SvgIconComponent
   iconColor?: string
+  iconTitle?: string
 }
 
-export function PageHeader({ title, subtitle, icon: IconComponent, iconColor }: PageHeaderProps) {
+export function PageHeader({ title, subtitle, icon: IconComponent, iconColor, iconTitle }: PageHeaderProps) {
   return (
     <motion.div
       initial={{ opacity: 0, x: -20 }}
@@ -25,7 +26,10 @@ export function PageHeader({ title, subtitle, icon: IconComponent, iconColor }: 
           </Typography>
         </Box>
         {IconComponent && (
-          <IconComponent sx={{ fontSize: 80, color: iconColor || 'oklch(0.75 0.20 220)' }} />
+          <IconComponent 
+            sx={{ fontSize: 80, color: iconColor || 'oklch(0.75 0.20 220)' }} 
+            titleAccess={iconTitle || title}
+          />
         )}
       </Stack>
     </motion.div>

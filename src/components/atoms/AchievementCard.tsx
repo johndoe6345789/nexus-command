@@ -86,9 +86,15 @@ export function AchievementCard({ achievement, className }: AchievementCardProps
             }}
           >
             {isUnlocked ? (
-              <IconComponent sx={{ fontSize: 24, color: 'oklch(0.95 0.14 230)' }} />
+              <IconComponent 
+                sx={{ fontSize: 24, color: 'oklch(0.95 0.14 230)' }} 
+                titleAccess={achievement.name}
+              />
             ) : (
-              <Lock sx={{ fontSize: 24, color: 'oklch(0.65 0.08 250)' }} />
+              <Lock 
+                sx={{ fontSize: 24, color: 'oklch(0.65 0.08 250)' }} 
+                titleAccess="Locked achievement"
+              />
             )}
           </Box>
 

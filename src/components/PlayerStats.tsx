@@ -54,6 +54,7 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
           subtitle={`${playerName} • Level 42 • Elite Rank`}
           icon={EmojiEvents}
           iconColor="oklch(0.70 0.18 35)"
+          iconTitle="Player Achievements"
         />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
