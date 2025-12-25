@@ -348,12 +348,12 @@ export function TopBar({ className }: TopBarProps) {
                 sx={{ 
                   mb: 2, 
                   p: 2, 
-                  bgcolor: 'oklch(0.22 0.04 250)',
-                  border: '1px solid oklch(0.32 0.06 250)',
+                  bgcolor: 'oklch(0.30 0.06 250)',
+                  border: '1px solid oklch(0.45 0.08 250)',
                 }}
               >
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
-                  <Typography sx={{ fontSize: '14px', color: 'oklch(0.85 0.04 250)' }}>
+                  <Typography sx={{ fontSize: '14px', color: 'oklch(0.92 0.05 250)', fontWeight: 600 }}>
                     Progress
                   </Typography>
                   <Typography 
@@ -372,7 +372,7 @@ export function TopBar({ className }: TopBarProps) {
                   sx={{ 
                     height: 6,
                     borderRadius: 3,
-                    bgcolor: 'oklch(0.32 0.06 250)',
+                    bgcolor: 'oklch(0.42 0.08 250)',
                   }}
                 />
               </Paper>
