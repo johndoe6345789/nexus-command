@@ -205,6 +205,14 @@ export function TopBar({ className }: TopBarProps) {
         anchor="right"
         open={isOpen}
         onClose={() => setIsOpen(false)}
+        slotProps={{
+          backdrop: {
+            sx: {
+              bgcolor: 'oklch(0 0 0 / 0.7)',
+              backdropFilter: 'blur(4px)',
+            }
+          }
+        }}
         PaperProps={{
           sx: {
             width: 480,
