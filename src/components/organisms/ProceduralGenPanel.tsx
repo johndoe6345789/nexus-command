@@ -294,6 +294,8 @@ export function ProceduralGenPanel({
     
     setGenerationHistory((current) => [mapData, ...(current || [])].slice(0, 10))
     
+    await new Promise(resolve => setTimeout(resolve, 3000))
+    
     onGenerationEnd()
   }
 
