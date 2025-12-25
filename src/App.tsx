@@ -15,11 +15,13 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Screen } from '@/types'
 import { handleNavigate } from '@/handlers'
 import { useWelcomeAlerts } from '@/hooks/use-welcome-alerts'
+import { useGlobalSpringyScroll } from '@/hooks/use-global-springy-scroll'
 
 function App() {
   const [currentScreen, setCurrentScreen] = useState<Screen>('main')
   
   useWelcomeAlerts()
+  useGlobalSpringyScroll()
 
   const handleNav = (screen: string) => {
     const newScreen = handleNavigate(screen)

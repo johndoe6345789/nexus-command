@@ -34,6 +34,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+html {
+  scroll-behavior: smooth;
+  overscroll-behavior-y: contain;
 }
 
 body {
@@ -41,6 +47,36 @@ body {
   background: oklch(0.08 0.01 250);
   color: oklch(0.98 0.01 0);
   overflow-x: hidden;
+  overscroll-behavior-y: contain;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: oklch(0.35 0.08 230) oklch(0.12 0.02 250);
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: oklch(0.12 0.02 250);
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: oklch(0.35 0.08 230);
+  border-radius: 4px;
+  transition: background 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.45 0.10 230);
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background: oklch(0.55 0.12 230);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -108,4 +144,42 @@ h1, h2, h3, h4, h5, h6 {
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
+}
+
+[data-radix-scroll-area-viewport] {
+  scroll-behavior: smooth !important;
+  overscroll-behavior: contain !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+.smooth-scroll {
+  scroll-behavior: smooth;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.springy-scroll {
+  scroll-behavior: smooth;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: y proximity;
+}
+
+@supports (scroll-timeline: --scroll) {
+  * {
+    scroll-timeline: --scroll block;
+    animation-timeline: --scroll;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  * {
+    scroll-behavior: smooth !important;
+  }
+}
+
+.MuiBox-root[style*="overflowY"] {
+  scroll-behavior: smooth !important;
+  overscroll-behavior: contain !important;
+  -webkit-overflow-scrolling: touch !important;
 }

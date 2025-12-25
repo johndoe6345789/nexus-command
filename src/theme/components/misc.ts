@@ -52,6 +52,7 @@ export const miscStyles = {
         backgroundColor: '#5B8FC7',
         height: '3px',
         borderRadius: '3px 3px 0 0',
+        transition: 'all 400ms cubic-bezier(0.34, 1.56, 0.64, 1)',
       },
     },
   },
@@ -64,6 +65,7 @@ export const miscStyles = {
         fontSize: '0.9rem',
         minHeight: '48px',
         color: 'rgba(224, 224, 224, 0.7)',
+        transition: 'all 300ms cubic-bezier(0.4, 0, 0.2, 1)',
         '&.Mui-selected': {
           color: '#5B8FC7',
         },
@@ -125,6 +127,7 @@ export const miscStyles = {
         background: 'linear-gradient(90deg, #5B8FC7, #C99758)',
         borderRadius: '8px',
         boxShadow: '0 0 10px rgba(91, 143, 199, 0.2)',
+        transition: 'transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1)',
       },
     },
   },
@@ -138,6 +141,17 @@ export const miscStyles = {
         fontWeight: 600,
         padding: '12px 16px',
         boxShadow: '0 8px 24px rgba(0, 0, 0, 0.4)',
+      },
+    },
+  },
+  MuiBox: {
+    styleOverrides: {
+      root: {
+        '&[style*="overflow"]': {
+          scrollBehavior: 'smooth',
+          overscrollBehavior: 'contain',
+          WebkitOverflowScrolling: 'touch',
+        },
       },
     },
   },

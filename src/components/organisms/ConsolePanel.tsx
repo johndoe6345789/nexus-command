@@ -13,7 +13,11 @@ export function ConsolePanel({ output, input, onInputChange, onSubmit }: Console
 
   useEffect(() => {
     if (consoleContainerRef.current) {
-      consoleContainerRef.current.scrollTop = consoleContainerRef.current.scrollHeight
+      const element = consoleContainerRef.current
+      element.scrollTo({
+        top: element.scrollHeight,
+        behavior: 'smooth'
+      })
     }
   }, [output])
 
@@ -30,6 +34,9 @@ export function ConsolePanel({ output, input, onInputChange, onSubmit }: Console
           overflowY: 'auto',
           fontFamily: 'monospace',
           border: '1px solid rgba(74, 158, 255, 0.3)',
+          scrollBehavior: 'smooth',
+          overscrollBehavior: 'contain',
+          WebkitOverflowScrolling: 'touch',
         }}
       >
         {output.map((line, index) => (
