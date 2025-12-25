@@ -44,3 +44,11 @@ pids
 /out/
 next-env.d.ts
 .vercel
+
+# Build artifacts
+build/
+*.tsbuildinfo
+
+# Docker
+*.tar.gz
+docker-compose.override.yml

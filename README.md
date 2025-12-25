@@ -1,5 +1,10 @@
 # 🎮 NEXUS COMMAND - Atomic Component Framework
 
+[![CI](https://github.com/johndoe6345789/nexus-command/workflows/CI%20-%20Build%20and%20Lint/badge.svg)](https://github.com/johndoe6345789/nexus-command/actions/workflows/build.yml)
+[![Playwright Tests](https://github.com/johndoe6345789/nexus-command/workflows/Playwright%20Tests/badge.svg)](https://github.com/johndoe6345789/nexus-command/actions/workflows/playwright.yml)
+[![CodeQL](https://github.com/johndoe6345789/nexus-command/workflows/CodeQL%20Security%20Analysis/badge.svg)](https://github.com/johndoe6345789/nexus-command/actions/workflows/codeql.yml)
+[![Docker](https://github.com/johndoe6345789/nexus-command/workflows/Build%20and%20Push%20to%20GHCR/badge.svg)](https://github.com/johndoe6345789/nexus-command/actions/workflows/docker-publish.yml)
+
 A premium AAA-quality game menu system for a Quake 3 Arena clone, featuring a comprehensive atomic design system built with **Next.js**, React, TypeScript, Material-UI, and Framer Motion.
 
 > **✨ Now powered by Next.js!** - Converted from Vite to Next.js with static export support.
@@ -319,13 +324,159 @@ See [tests/README.md](tests/README.md) for detailed test documentation.
 ### Border Radius
 - Minimal: `2px` for sharp, military aesthetic
 
+## 🔧 CI/CD Pipeline
+
+This project uses a comprehensive CI/CD pipeline with multiple automated workflows:
+
+### Continuous Integration (CI)
+
+#### 🎭 Playwright Tests (`playwright.yml`)
+- Runs on: Push to `main`/`dev`, PRs to `main`
+- Executes: 50+ automated tests covering UI, UX, accessibility, and performance
+- Artifacts: Test reports and screenshots on failure
+
+#### 🏗️ Build & Lint (`build.yml`)
+- Runs on: Push to `main`/`dev`, PRs to `main`
+- Executes: ESLint checks and Next.js production build
+- Artifacts: Build output for verification
+
+#### 🔒 CodeQL Security (`codeql.yml`)
+- Runs on: Push, PRs, and weekly schedule
+- Executes: Static security analysis for vulnerabilities
+- Reports: Security alerts in GitHub Security tab
+
+#### 📦 Dependency Review (`dependency-review.yml`)
+- Runs on: Pull requests to `main`
+- Executes: Checks for known vulnerabilities in dependencies
+- Blocks: PRs with moderate or higher severity issues
+
+### Continuous Deployment (CD)
+
+#### 🐳 Docker Build & GHCR (`docker-publish.yml`)
+- Runs on: Push to `main`/`dev`, tags, PRs
+- Builds: Multi-architecture Docker images (amd64, arm64)
+- Publishes: Images to GitHub Container Registry (GHCR)
+- Tags: Branch names, SemVer, SHA, and `latest`
+
+**Pull the latest image:**
+```bash
+docker pull ghcr.io/johndoe6345789/nexus-command:latest
+docker run -p 80:80 ghcr.io/johndoe6345789/nexus-command:latest
+```
+
+#### 🚀 Release Workflow (`release.yml`)
+- Triggers on: Git tags matching `v*.*.*` pattern
+- Creates: GitHub release with changelog
+- Builds: Production artifacts and Docker images
+- Publishes: Release assets and Docker images with version tags
+
+**Create a release:**
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+#### 🌐 Deployment (`deploy.yml`)
+- Trigger: Manual workflow dispatch
+- Environments: Staging and Production
+- Features: Health checks, deployment status tracking
+- Configurable: Docker image version selection
+
+### Issue Bot Automation
+
+#### 🤖 Auto-Create Issues (`auto-create-issues.yml`)
+- Schedule: Daily at 9 AM UTC
+- Creates: Maintenance, testing, and documentation tasks
+- Limit: Maximum 5 open bot issues at a time
+- Labels: `bot-created`, `needs-review`
+
+#### 🔄 Issue to PR Conversion (`issue-to-pr.yml`)
+- Triggers on: Issue labeled with `approved`
+- Creates: Branch and PR automatically
+- Links: PR to original issue with "Resolves #N"
+- Labels: `bot-generated`, `needs-implementation`
+
+#### ⚙️ Issue Lifecycle (`issue-lifecycle.yml`)
+- Auto-labels: New bot issues
+- Notifications: Approval instructions
+- Stale handling: Warns after 7 days, closes after 14 days
+- Cleanup: Keeps issue queue manageable
+
+### Workflow Triggers Summary
+
+| Workflow | Push | PR | Schedule | Manual | Tags |
+|----------|------|----|---------:|--------|------|
+| Playwright Tests | ✅ | ✅ | - | ✅ | - |
+| Build & Lint | ✅ | ✅ | - | ✅ | - |
+| CodeQL | ✅ | ✅ | Weekly | ✅ | - |
+| Dependency Review | - | ✅ | - | - | - |
+| Docker Publish | ✅ | ✅ | - | ✅ | ✅ |
+| Release | - | - | - | ✅ | ✅ |
+| Deploy | - | - | - | ✅ | - |
+| Auto-Create Issues | - | - | Daily | ✅ | - |
+| Issue to PR | Issue labeled | - | - | - | - |
+| Issue Lifecycle | Issue events | - | - | - | - |
+
+### Docker Deployment
+
+The application is containerized using a multi-stage Dockerfile:
+
+1. **Dependencies**: Installs npm packages
+2. **Builder**: Builds Next.js static export
+3. **Runner**: Serves with nginx
+
+**Local Docker build:**
+```bash
+docker build -t nexus-command .
+docker run -p 8080:80 nexus-command
+```
+
+**Using pre-built image:**
+```bash
+# Latest from main branch
+docker pull ghcr.io/johndoe6345789/nexus-command:latest
+
+# Specific version
+docker pull ghcr.io/johndoe6345789/nexus-command:v1.0.0
+
+# Run it
+docker run -d -p 8080:80 ghcr.io/johndoe6345789/nexus-command:latest
+```
+
+Visit `http://localhost:8080` to see the application.
+
+### Release Process
+
+1. **Development**: Work on `dev` branch
+2. **Testing**: All CI checks must pass
+3. **Version**: Create a version tag: `git tag v1.0.0`
+4. **Push**: `git push origin v1.0.0`
+5. **Automatic**: Release workflow builds and publishes
+6. **Deploy**: Use deploy workflow to push to environments
+
+### Bot Issue Management
+
+The bot creates issues automatically for maintenance tasks:
+
+1. **Creation**: Bot creates issue with `[BOT]` prefix
+2. **Review**: Maintainer reviews and adds `approved` label
+3. **Conversion**: Automatically converts to PR
+4. **Implementation**: Developer implements changes
+5. **Merge**: PR is reviewed and merged
+
+**Manual trigger:**
+```bash
+# Go to Actions > Auto-Create Issues > Run workflow
+# Select task type: maintenance, documentation, testing, or refactoring
+```
+
 ## 🔧 CI/CD
 
 Tests run automatically on:
 - Push to `main` or `dev` branches
 - Pull requests to `main`
 
-See `.github/workflows/playwright.yml` for CI configuration.
+See `.github/workflows/` for all workflow configurations.
 
 ## 🧹 Just Exploring?
 
