@@ -17,7 +17,7 @@ import {
   Chip,
   Paper,
 } from '@mui/material'
-import { Notifications, EmojiEvents, Close } from '@mui/icons-material'
+import { Notifications, EmojiEvents, Close, GitHub } from '@mui/icons-material'
 import { AlertItem } from '@/components/atoms/AlertItem'
 import { AchievementCard } from '@/components/atoms/AchievementCard'
 import { PullToRefresh } from '@/components/atoms/PullToRefresh'
@@ -115,6 +115,17 @@ export function TopBar({ className }: TopBarProps) {
           <Typography variant="h6" component="h1" sx={{ flexGrow: 1 }}>
             NEXUS COMMAND
           </Typography>
+
+          <IconButton
+            component="a"
+            href="https://github.com/johndoe6345789/nexus-command/actions"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub Actions"
+            color="inherit"
+          >
+            <GitHub titleAccess="GitHub Actions" />
+          </IconButton>
 
           <IconButton
             onClick={() => {
