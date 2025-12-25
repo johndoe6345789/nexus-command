@@ -3,7 +3,6 @@ import { Cube, Planet, Tree, Mountains, Building, Shuffle, Download, Play, Arrow
 import { useState, useRef, useEffect } from 'react'
 import { toast } from 'sonner'
 import { useKV } from '@github/spark/hooks'
-import { Spinner } from '../atoms'
 
 interface GenerationOption {
   id: string
@@ -502,14 +501,7 @@ export function ProceduralGenPanel({
                     minHeight: 300,
                     backgroundColor: 'oklch(0.08 0.01 250)'
                   }}>
-                    {isGenerating ? (
-                      <Spinner 
-                        size={60} 
-                        label="Generating..." 
-                        variant="ring"
-                        color="oklch(0.65 0.25 230)"
-                      />
-                    ) : currentMapData ? (
+                    {currentMapData ? (
                       <canvas
                         ref={canvasRef}
                         width={400}

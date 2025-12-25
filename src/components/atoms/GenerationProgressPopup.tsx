@@ -29,7 +29,8 @@ export function GenerationProgressPopup({
             left: '50%',
             transform: 'translateX(-50%)',
             zIndex: 9999,
-            width: 'min(500px, calc(100% - 48px))',
+            width: 'min(500px, calc(100vw - 48px))',
+            maxWidth: 'calc(100vw - 48px)',
           }}
         >
           <Card
@@ -49,7 +50,7 @@ export function GenerationProgressPopup({
                   >
                     <Cube size={24} weight="duotone" color="oklch(0.65 0.25 230)" />
                   </motion.div>
-                  <Stack spacing={0.5} sx={{ flex: 1 }}>
+                  <Stack spacing={0.5} sx={{ flex: 1, minWidth: 0 }}>
                     <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'oklch(0.98 0.01 0)' }}>
                       {label}
                     </Typography>
@@ -65,7 +66,8 @@ export function GenerationProgressPopup({
                       fontWeight: 700, 
                       color: 'oklch(0.65 0.25 230)',
                       fontFamily: 'monospace',
-                      fontSize: '0.9rem'
+                      fontSize: '0.9rem',
+                      flexShrink: 0,
                     }}
                   >
                     {Math.round(progress)}%
