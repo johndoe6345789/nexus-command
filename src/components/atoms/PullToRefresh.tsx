@@ -1,5 +1,6 @@
 import { ReactNode } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { CircularProgress, Box } from '@mui/material'
 import { usePullToRefresh } from '@/hooks/use-pull-to-refresh'
 import { cn } from '@/lib/utils'
 
@@ -37,118 +38,46 @@ export function PullToRefresh({
             className="absolute left-1/2 -translate-x-1/2 z-50 pointer-events-none"
             style={{ top: -10 }}
           >
-            <div className="relative">
-              <div 
-                className={cn(
-                  "w-14 h-14 rounded-full flex items-center justify-center",
-                  "relative overflow-hidden"
-                )}
-                style={{
-                  background: 'linear-gradient(135deg, oklch(0.65 0.25 230 / 0.15) 0%, oklch(0.55 0.20 240 / 0.15) 100%)',
-                  backdropFilter: 'blur(20px)',
-                  border: '2px solid oklch(0.65 0.25 230 / 0.3)',
-                  boxShadow: '0 8px 32px oklch(0.65 0.25 230 / 0.2), inset 0 1px 2px oklch(1 0 0 / 0.1)',
-                }}
-              >
-                <motion.div
-                  className="absolute inset-0 rounded-full"
-                  style={{
-                    background: 'conic-gradient(from 0deg, oklch(0.65 0.25 230 / 0.0) 0%, oklch(0.65 0.25 230 / 0.5) 50%, oklch(0.65 0.25 230 / 0.0) 100%)',
+            <Box
+              sx={{
+                width: 56,
+                height: 56,
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: 'linear-gradient(135deg, oklch(0.65 0.25 230 / 0.15) 0%, oklch(0.55 0.20 240 / 0.15) 100%)',
+                backdropFilter: 'blur(20px)',
+                border: '2px solid oklch(0.65 0.25 230 / 0.3)',
+                boxShadow: '0 8px 32px oklch(0.65 0.25 230 / 0.2), inset 0 1px 2px oklch(1 0 0 / 0.1)',
+              }}
+            >
+              {isRefreshing ? (
+                <CircularProgress
+                  size={32}
+                  thickness={4}
+                  sx={{
+                    color: 'oklch(0.70 0.25 230)',
+                    '& .MuiCircularProgress-circle': {
+                      strokeLinecap: 'round',
+                    }
                   }}
-                  animate={isRefreshing ? { 
-                    rotate: 360,
-                  } : { 
-                    rotate: progress * 360 
-                  }}
-                  transition={
-                    isRefreshing 
-                      ? { duration: 1.5, repeat: Infinity, ease: 'linear' }
-                      : { duration: 0.1 }
-                  }
                 />
-
-                <motion.div
-                  className="relative z-10 flex items-center justify-center w-7 h-7"
-                  animate={isRefreshing ? { 
-                    rotate: 360
-                  } : {}}
-                  transition={
-                    isRefreshing 
-                      ? { duration: 0.8, repeat: Infinity, ease: 'linear' }
-                      : {}
-                  }
-                >
-                  <motion.div
-                    className="absolute w-6 h-6 rounded-full"
-                    style={{
-                      border: '3px solid transparent',
-                      borderTopColor: 'oklch(0.75 0.25 230)',
-                      borderRightColor: 'oklch(0.70 0.23 235)',
-                    }}
-                    animate={isRefreshing ? { 
-                      scale: [1, 1.1, 1]
-                    } : {}}
-                    transition={
-                      isRefreshing 
-                        ? { duration: 1.2, repeat: Infinity, ease: 'easeInOut' }
-                        : {}
+              ) : (
+                <CircularProgress
+                  variant="determinate"
+                  value={progress * 100}
+                  size={32}
+                  thickness={4}
+                  sx={{
+                    color: 'oklch(0.70 0.25 230)',
+                    '& .MuiCircularProgress-circle': {
+                      strokeLinecap: 'round',
                     }
-                  />
-                  <motion.div
-                    className="absolute w-4 h-4 rounded-full"
-                    style={{
-                      border: '2.5px solid transparent',
-                      borderBottomColor: 'oklch(0.65 0.22 240)',
-                      borderLeftColor: 'oklch(0.60 0.20 245)',
-                    }}
-                    animate={isRefreshing ? { 
-                      rotate: -360,
-                      scale: [1, 0.9, 1]
-                    } : {}}
-                    transition={
-                      isRefreshing 
-                        ? { 
-                            rotate: { duration: 1, repeat: Infinity, ease: 'linear' },
-                            scale: { duration: 1.2, repeat: Infinity, ease: 'easeInOut' }
-                          }
-                        : {}
-                    }
-                  />
-                  <motion.div
-                    className="w-2 h-2 rounded-full"
-                    style={{
-                      background: 'linear-gradient(135deg, oklch(0.70 0.25 230), oklch(0.65 0.22 240))',
-                    }}
-                    animate={isRefreshing ? { 
-                      scale: [1, 1.3, 1],
-                      opacity: [1, 0.7, 1]
-                    } : {
-                      scale: progress
-                    }}
-                    transition={
-                      isRefreshing 
-                        ? { duration: 1.2, repeat: Infinity, ease: 'easeInOut' }
-                        : { duration: 0.1 }
-                    }
-                  />
-                </motion.div>
-
-                {!isRefreshing && (
-                  <motion.div
-                    className="absolute inset-0 rounded-full"
-                    initial={{ scale: 0.9, opacity: 0 }}
-                    animate={{ 
-                      scale: progress >= 1 ? [1, 1.2] : 1,
-                      opacity: progress >= 1 ? [0.5, 0] : 0,
-                    }}
-                    transition={{ duration: 0.6 }}
-                    style={{
-                      border: '3px solid oklch(0.65 0.25 230)',
-                    }}
-                  />
-                )}
-              </div>
-            </div>
+                  }}
+                />
+              )}
+            </Box>
           </motion.div>
         )}
       </AnimatePresence>
