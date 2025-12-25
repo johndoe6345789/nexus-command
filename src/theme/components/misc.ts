@@ -23,6 +23,77 @@ export const miscStyles = {
       },
     },
   },
+  MuiBadge: {
+    styleOverrides: {
+      badge: {
+        fontWeight: 700,
+        fontSize: '0.7rem',
+        minWidth: '20px',
+        height: '20px',
+        padding: '0 6px',
+      },
+    },
+  },
+  MuiDrawer: {
+    styleOverrides: {
+      paper: {
+        background: 'rgba(18, 20, 31, 0.98)',
+        backdropFilter: 'blur(40px) saturate(180%)',
+        borderLeft: '1px solid rgba(91, 143, 199, 0.25)',
+      },
+    },
+  },
+  MuiTabs: {
+    styleOverrides: {
+      root: {
+        minHeight: '48px',
+      },
+      indicator: {
+        backgroundColor: '#5B8FC7',
+        height: '3px',
+        borderRadius: '3px 3px 0 0',
+      },
+    },
+  },
+  MuiTab: {
+    styleOverrides: {
+      root: {
+        textTransform: 'none',
+        fontFamily: "'Orbitron', system-ui, sans-serif",
+        fontWeight: 600,
+        fontSize: '0.9rem',
+        minHeight: '48px',
+        color: 'rgba(224, 224, 224, 0.7)',
+        '&.Mui-selected': {
+          color: '#5B8FC7',
+        },
+        '&:hover': {
+          color: '#88B3D9',
+        },
+      },
+    },
+  },
+  MuiList: {
+    styleOverrides: {
+      root: {
+        padding: 0,
+      },
+    },
+  },
+  MuiListItem: {
+    styleOverrides: {
+      root: {
+        padding: 0,
+      },
+    },
+  },
+  MuiPaper: {
+    styleOverrides: {
+      root: {
+        backgroundImage: 'none',
+      },
+    },
+  },
   MuiAppBar: {
     styleOverrides: {
       root: {

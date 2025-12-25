@@ -1,7 +1,6 @@
 import { Achievement } from '@/types'
 import { AchievementBadge } from '@/components/atoms/AchievementBadge'
-import { Progress } from '@/components/ui/progress'
-import { cn } from '@/lib/utils'
+import { Box, Typography, LinearProgress, Paper } from '@mui/material'
 import { 
   Crosshair,
   Fire,
@@ -34,6 +33,13 @@ const iconMap: Record<string, React.ComponentType<any>> = {
   'arrow-up': ArrowUp,
 }
 
+const rarityGlow = {
+  common: '0 0 20px oklch(0.55 0.08 200 / 0.3)',
+  rare: '0 0 20px oklch(0.45 0.15 240 / 0.4)',
+  epic: '0 0 20px oklch(0.45 0.18 290 / 0.5)',
+  legendary: '0 0 30px oklch(0.50 0.20 45 / 0.6)',
+}
+
 export function AchievementCard({ achievement, className }: AchievementCardProps) {
   const IconComponent = iconMap[achievement.icon] || Medal
   const isUnlocked = achievement.unlockedAt !== undefined
@@ -41,80 +47,132 @@ export function AchievementCard({ achievement, className }: AchievementCardProps
   const maxProgress = achievement.maxProgress ?? 1
   const progressPercent = (progress / maxProgress) * 100
 
-  const rarityGlow = {
-    common: 'shadow-[0_0_20px_oklch(0.55_0.08_200/0.3)]',
-    rare: 'shadow-[0_0_20px_oklch(0.45_0.15_240/0.4)]',
-    epic: 'shadow-[0_0_20px_oklch(0.45_0.18_290/0.5)]',
-    legendary: 'shadow-[0_0_30px_oklch(0.50_0.20_45/0.6)]',
-  }
-
   return (
-    <div
-      className={cn(
-        'relative overflow-hidden rounded-lg border transition-all duration-300',
-        'bg-[oklch(0.15_0.02_250)]',
-        isUnlocked
-          ? `border-[oklch(0.40_0.10_250)] hover:border-[oklch(0.55_0.12_230)] ${rarityGlow[achievement.rarity]}`
-          : 'border-[oklch(0.25_0.04_250)] opacity-60',
-        className
-      )}
+    <Paper
+      elevation={0}
+      className={className}
+      sx={{
+        position: 'relative',
+        overflow: 'hidden',
+        borderRadius: 2,
+        border: '1px solid',
+        borderColor: isUnlocked ? 'oklch(0.40 0.10 250)' : 'oklch(0.25 0.04 250)',
+        bgcolor: 'oklch(0.15 0.02 250)',
+        opacity: isUnlocked ? 1 : 0.6,
+        boxShadow: isUnlocked ? rarityGlow[achievement.rarity] : 'none',
+        transition: 'all 0.3s ease',
+        width: '100%',
+        '&:hover': isUnlocked ? {
+          borderColor: 'oklch(0.55 0.12 230)',
+        } : {},
+      }}
     >
-      <div className="p-4">
-        <div className="flex items-start gap-3">
-          <div
-            className={cn(
-              'flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center',
-              'bg-gradient-to-br transition-all duration-300',
-              isUnlocked
-                ? 'from-[oklch(0.35_0.08_250)] to-[oklch(0.25_0.06_250)]'
-                : 'from-[oklch(0.20_0.03_250)] to-[oklch(0.15_0.02_250)]'
-            )}
+      <Box sx={{ p: 2 }}>
+        <Box sx={{ display: 'flex', alignItems: 'start', gap: 1.5 }}>
+          <Box
+            sx={{
+              flexShrink: 0,
+              width: 48,
+              height: 48,
+              borderRadius: 2,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              background: isUnlocked
+                ? 'linear-gradient(135deg, oklch(0.35 0.08 250), oklch(0.25 0.06 250))'
+                : 'linear-gradient(135deg, oklch(0.20 0.03 250), oklch(0.15 0.02 250))',
+              transition: 'all 0.3s ease',
+            }}
           >
             {isUnlocked ? (
-              <IconComponent size={24} weight="duotone" className="text-[oklch(0.75_0.12_230)]" />
+              <IconComponent size={24} weight="duotone" style={{ color: 'oklch(0.75 0.12 230)' }} />
             ) : (
-              <LockKey size={24} weight="duotone" className="text-[oklch(0.40_0.05_250)]" />
+              <LockKey size={24} weight="duotone" style={{ color: 'oklch(0.40 0.05 250)' }} />
             )}
-          </div>
+          </Box>
 
-          <div className="flex-1 min-w-0">
-            <div className="flex items-start justify-between gap-2 mb-1">
-              <h3 className="font-heading font-bold text-sm text-[oklch(0.98_0.01_250)]">
+          <Box sx={{ flex: 1, minWidth: 0 }}>
+            <Box sx={{ display: 'flex', alignItems: 'start', justifyContent: 'space-between', gap: 1, mb: 0.5 }}>
+              <Typography 
+                variant="subtitle2" 
+                sx={{ 
+                  fontFamily: 'var(--font-heading)',
+                  fontWeight: 700,
+                  color: 'oklch(0.98 0.01 250)',
+                  fontSize: '14px',
+                }}
+              >
                 {achievement.hidden && !isUnlocked ? '???' : achievement.name}
-              </h3>
+              </Typography>
               <AchievementBadge rarity={achievement.rarity} />
-            </div>
+            </Box>
 
-            <p className="text-xs text-[oklch(0.70_0.03_250)] leading-relaxed">
+            <Typography 
+              variant="body2" 
+              sx={{ 
+                fontSize: '12px',
+                color: 'oklch(0.70 0.03 250)',
+                lineHeight: 1.6,
+              }}
+            >
               {achievement.hidden && !isUnlocked
                 ? 'Hidden achievement'
                 : achievement.description}
-            </p>
+            </Typography>
 
             {achievement.reward && isUnlocked && (
-              <div className="mt-2 text-[10px] text-[oklch(0.75_0.10_45)] font-semibold">
+              <Typography 
+                variant="caption" 
+                sx={{ 
+                  display: 'block',
+                  mt: 1,
+                  fontSize: '10px',
+                  color: 'oklch(0.75 0.10 45)',
+                  fontWeight: 600,
+                }}
+              >
                 Reward: {achievement.reward}
-              </div>
+              </Typography>
             )}
 
             {maxProgress > 1 && !isUnlocked && (
-              <div className="mt-3 space-y-1">
-                <div className="flex justify-between text-[10px] text-[oklch(0.65_0.05_250)]">
-                  <span>Progress</span>
-                  <span>{progress}/{maxProgress}</span>
-                </div>
-                <Progress value={progressPercent} className="h-1.5" />
-              </div>
+              <Box sx={{ mt: 1.5 }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
+                  <Typography sx={{ fontSize: '10px', color: 'oklch(0.65 0.05 250)' }}>
+                    Progress
+                  </Typography>
+                  <Typography sx={{ fontSize: '10px', color: 'oklch(0.65 0.05 250)' }}>
+                    {progress}/{maxProgress}
+                  </Typography>
+                </Box>
+                <LinearProgress 
+                  variant="determinate" 
+                  value={progressPercent}
+                  sx={{ 
+                    height: 6,
+                    borderRadius: 3,
+                    bgcolor: 'oklch(0.25 0.04 250)',
+                  }}
+                />
+              </Box>
             )}
 
             {isUnlocked && achievement.unlockedAt && (
-              <div className="mt-2 text-[10px] text-[oklch(0.55_0.05_250)]">
+              <Typography 
+                variant="caption" 
+                sx={{ 
+                  display: 'block',
+                  mt: 1,
+                  fontSize: '10px',
+                  color: 'oklch(0.55 0.05 250)',
+                }}
+              >
                 Unlocked {new Date(achievement.unlockedAt).toLocaleDateString()}
-              </div>
+              </Typography>
             )}
-          </div>
-        </div>
-      </div>
-    </div>
+          </Box>
+        </Box>
+      </Box>
+    </Paper>
   )
 }

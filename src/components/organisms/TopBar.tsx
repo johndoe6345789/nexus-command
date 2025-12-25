@@ -1,24 +1,56 @@
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { 
+  AppBar, 
+  Toolbar, 
+  IconButton, 
+  Badge, 
+  Drawer, 
+  Box, 
+  Typography,
+  Tabs,
+  Tab,
+  List,
+  ListItem,
+  Button,
+  Divider,
+  LinearProgress,
+  Chip,
+  Paper,
+} from '@mui/material'
 import { Bell, Trophy, X } from '@phosphor-icons/react'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { ScrollArea } from '@/components/ui/scroll-area'
 import { AlertItem } from '@/components/atoms/AlertItem'
 import { AchievementCard } from '@/components/atoms/AchievementCard'
 import { Alert, Achievement } from '@/types'
 import { ACHIEVEMENT_DEFINITIONS } from '@/constants'
 import { useKV } from '@github/spark/hooks'
-import { cn } from '@/lib/utils'
 
 interface TopBarProps {
   className?: string
 }
 
+interface TabPanelProps {
+  children?: React.ReactNode
+  value: number
+  index: number
+}
+
+function TabPanel({ children, value, index }: TabPanelProps) {
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`tabpanel-${index}`}
+      aria-labelledby={`tab-${index}`}
+      style={{ height: '100%' }}
+    >
+      {value === index && <Box sx={{ height: '100%' }}>{children}</Box>}
+    </div>
+  )
+}
+
 export function TopBar({ className }: TopBarProps) {
   const [isOpen, setIsOpen] = useState(false)
-  const [activeTab, setActiveTab] = useState<'alerts' | 'achievements'>('alerts')
+  const [activeTab, setActiveTab] = useState(0)
   const [alerts, setAlerts] = useKV<Alert[]>('game-alerts', [])
   const [achievements, setAchievements] = useKV<Achievement[]>('game-achievements', [])
 
@@ -69,195 +101,264 @@ export function TopBar({ className }: TopBarProps) {
 
   return (
     <>
-      <div
-        className={cn(
-          'fixed top-0 left-0 right-0 z-40 h-16',
-          'bg-gradient-to-b from-[oklch(0.12_0.02_250/0.95)] to-[oklch(0.12_0.02_250/0.85)]',
-          'backdrop-blur-xl border-b border-[oklch(0.25_0.04_250)]',
-          className
-        )}
+      <AppBar 
+        position="fixed" 
+        className={className}
+        sx={{
+          zIndex: 40,
+          background: 'linear-gradient(180deg, oklch(0.12 0.02 250 / 0.95) 0%, oklch(0.12 0.02 250 / 0.85) 100%)',
+          backdropFilter: 'blur(40px)',
+          borderBottom: '1px solid oklch(0.25 0.04 250)',
+        }}
       >
-        <div className="h-full max-w-7xl mx-auto px-6 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <h1 className="font-heading font-bold text-lg text-[oklch(0.98_0.01_250)] tracking-wide">
-              NEXUS COMMAND
-            </h1>
-          </div>
+        <Toolbar sx={{ maxWidth: '1280px', width: '100%', mx: 'auto', px: 3 }}>
+          <Typography 
+            variant="h6" 
+            component="h1"
+            sx={{ 
+              flexGrow: 1,
+              fontFamily: 'var(--font-heading)',
+              fontWeight: 700,
+              letterSpacing: '0.05em',
+              color: 'oklch(0.98 0.01 250)',
+            }}
+          >
+            NEXUS COMMAND
+          </Typography>
 
-          <div className="flex items-center gap-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => {
-                setActiveTab('alerts')
-                setIsOpen(!isOpen)
+          <IconButton
+            onClick={() => {
+              setActiveTab(0)
+              setIsOpen(!isOpen)
+            }}
+            sx={{ 
+              color: 'oklch(0.85 0.03 250)',
+              '&:hover': { 
+                bgcolor: 'oklch(0.20 0.03 250)',
+              },
+            }}
+          >
+            <Badge 
+              badgeContent={unreadCount > 99 ? '99+' : unreadCount} 
+              color="error"
+              invisible={unreadCount === 0}
+            >
+              <Bell size={24} weight={unreadCount > 0 ? 'fill' : 'regular'} />
+            </Badge>
+          </IconButton>
+
+          <IconButton
+            onClick={() => {
+              setActiveTab(1)
+              setIsOpen(!isOpen)
+            }}
+            sx={{ 
+              color: 'oklch(0.85 0.03 250)',
+              position: 'relative',
+              '&:hover': { 
+                bgcolor: 'oklch(0.20 0.03 250)',
+              },
+            }}
+          >
+            <Trophy size={24} weight="duotone" />
+            <Typography 
+              sx={{ 
+                position: 'absolute',
+                bottom: 4,
+                right: 4,
+                fontSize: '9px',
+                fontWeight: 700,
+                color: 'oklch(0.70 0.12 230)',
+                bgcolor: 'oklch(0.12 0.02 250)',
+                px: 0.5,
+                borderRadius: 1,
               }}
-              className={cn(
-                'relative',
-                isOpen && activeTab === 'alerts' && 'bg-[oklch(0.20_0.03_250)]'
-              )}
             >
-              <Bell size={20} weight={unreadCount > 0 ? 'fill' : 'regular'} />
-              {unreadCount > 0 && (
-                <Badge
-                  className="absolute -top-1 -right-1 h-5 min-w-5 flex items-center justify-center p-1 bg-[oklch(0.65_0.20_15)] text-white text-[10px] font-bold"
-                >
-                  {unreadCount > 99 ? '99+' : unreadCount}
-                </Badge>
+              {unlockedAchievements}/{totalAchievements}
+            </Typography>
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+
+      <Drawer
+        anchor="right"
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+        PaperProps={{
+          sx: {
+            width: 480,
+            maxWidth: '90vw',
+            bgcolor: 'oklch(0.12 0.02 250 / 0.98)',
+            backdropFilter: 'blur(40px)',
+            border: '1px solid oklch(0.25 0.04 250)',
+            borderRight: 'none',
+            mt: 8,
+            height: 'calc(100vh - 64px)',
+          },
+        }}
+      >
+        <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+          <Box sx={{ borderBottom: '1px solid oklch(0.25 0.04 250)' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', px: 2, pt: 2 }}>
+              <Tabs 
+                value={activeTab} 
+                onChange={(_, newValue) => setActiveTab(newValue)}
+                sx={{ flexGrow: 1 }}
+              >
+                <Tab 
+                  label={
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <Bell size={16} />
+                      Alerts
+                      {unreadCount > 0 && (
+                        <Chip 
+                          label={unreadCount} 
+                          size="small" 
+                          color="error"
+                          sx={{ height: 20, minWidth: 20, fontSize: '10px', fontWeight: 700 }}
+                        />
+                      )}
+                    </Box>
+                  } 
+                />
+                <Tab 
+                  label={
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <Trophy size={16} />
+                      Achievements
+                      <Typography 
+                        sx={{ 
+                          fontSize: '11px', 
+                          color: 'oklch(0.70 0.12 230)',
+                          fontWeight: 600,
+                        }}
+                      >
+                        {unlockedAchievements}/{totalAchievements}
+                      </Typography>
+                    </Box>
+                  } 
+                />
+              </Tabs>
+              <IconButton 
+                onClick={() => setIsOpen(false)}
+                sx={{ 
+                  color: 'oklch(0.85 0.03 250)',
+                  '&:hover': { bgcolor: 'oklch(0.20 0.03 250)' },
+                }}
+              >
+                <X size={20} />
+              </IconButton>
+            </Box>
+          </Box>
+
+          <TabPanel value={activeTab} index={0}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+              {(alerts?.length ?? 0) > 0 && (
+                <>
+                  <Box sx={{ p: 2, display: 'flex', gap: 1 }}>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      onClick={handleClearAll}
+                      disabled={unreadCount === 0}
+                      fullWidth
+                    >
+                      Mark All Read
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      onClick={handleDeleteAll}
+                      fullWidth
+                    >
+                      Clear All
+                    </Button>
+                  </Box>
+                  <Divider />
+                </>
               )}
-            </Button>
 
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => {
-                setActiveTab('achievements')
-                setIsOpen(!isOpen)
-              }}
-              className={cn(
-                'relative',
-                isOpen && activeTab === 'achievements' && 'bg-[oklch(0.20_0.03_250)]'
-              )}
-            >
-              <Trophy size={20} weight="duotone" />
-              <span className="absolute -bottom-1 right-0 text-[9px] font-bold text-[oklch(0.70_0.12_230)]">
-                {unlockedAchievements}/{totalAchievements}
-              </span>
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      <AnimatePresence>
-        {isOpen && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="fixed inset-0 z-50 bg-[oklch(0_0_0/0.7)] backdrop-blur-sm"
-              onClick={() => setIsOpen(false)}
-            />
-
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed top-16 right-6 z-50 w-[480px] max-h-[calc(100vh-5rem)]"
-            >
-              <div className="bg-[oklch(0.12_0.02_250/0.98)] backdrop-blur-xl rounded-lg border border-[oklch(0.25_0.04_250)] shadow-2xl overflow-hidden">
-                <div className="flex items-center justify-between p-4 border-b border-[oklch(0.25_0.04_250)]">
-                  <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)} className="w-full">
-                    <TabsList className="w-full grid grid-cols-2">
-                      <TabsTrigger value="alerts" className="gap-2">
-                        <Bell size={16} />
-                        Alerts
-                        {unreadCount > 0 && (
-                          <Badge className="ml-1 h-5 min-w-5 bg-[oklch(0.65_0.20_15)]">
-                            {unreadCount}
-                          </Badge>
-                        )}
-                      </TabsTrigger>
-                      <TabsTrigger value="achievements" className="gap-2">
-                        <Trophy size={16} />
-                        Achievements
-                        <span className="ml-1 text-xs text-[oklch(0.70_0.12_230)]">
-                          {unlockedAchievements}/{totalAchievements}
-                        </span>
-                      </TabsTrigger>
-                    </TabsList>
-                  </Tabs>
-
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => setIsOpen(false)}
-                    className="ml-2 flex-shrink-0"
+              <Box sx={{ flexGrow: 1, overflow: 'auto', p: 2 }}>
+                {sortedAlerts.length === 0 ? (
+                  <Box 
+                    sx={{ 
+                      display: 'flex', 
+                      flexDirection: 'column', 
+                      alignItems: 'center', 
+                      justifyContent: 'center',
+                      py: 8,
+                      textAlign: 'center',
+                    }}
                   >
-                    <X size={20} />
-                  </Button>
-                </div>
+                    <Bell size={48} weight="thin" style={{ color: 'oklch(0.35 0.05 250)', marginBottom: 16 }} />
+                    <Typography sx={{ fontSize: '14px', color: 'oklch(0.55 0.05 250)' }}>
+                      No alerts yet
+                    </Typography>
+                  </Box>
+                ) : (
+                  <List sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+                    {sortedAlerts.map(alert => (
+                      <ListItem key={alert.id} sx={{ p: 0 }}>
+                        <AlertItem
+                          alert={alert}
+                          onRead={handleMarkAsRead}
+                          onDismiss={handleDismissAlert}
+                        />
+                      </ListItem>
+                    ))}
+                  </List>
+                )}
+              </Box>
+            </Box>
+          </TabPanel>
 
-                <Tabs value={activeTab} className="w-full">
-                  <TabsContent value="alerts" className="m-0">
-                    {(alerts?.length ?? 0) > 0 && (
-                      <div className="flex gap-2 p-4 border-b border-[oklch(0.25_0.04_250)]">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={handleClearAll}
-                          disabled={unreadCount === 0}
-                          className="flex-1"
-                        >
-                          Mark All Read
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={handleDeleteAll}
-                          className="flex-1"
-                        >
-                          Clear All
-                        </Button>
-                      </div>
-                    )}
+          <TabPanel value={activeTab} index={1}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', overflow: 'auto', p: 2 }}>
+              <Paper 
+                elevation={0}
+                sx={{ 
+                  mb: 2, 
+                  p: 2, 
+                  bgcolor: 'oklch(0.18 0.03 250)',
+                  border: '1px solid oklch(0.25 0.04 250)',
+                }}
+              >
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
+                  <Typography sx={{ fontSize: '14px', color: 'oklch(0.75 0.03 250)' }}>
+                    Progress
+                  </Typography>
+                  <Typography 
+                    sx={{ 
+                      fontFamily: 'var(--font-heading)',
+                      fontWeight: 700,
+                      color: 'oklch(0.98 0.01 250)',
+                    }}
+                  >
+                    {Math.round((unlockedAchievements / totalAchievements) * 100)}%
+                  </Typography>
+                </Box>
+                <LinearProgress 
+                  variant="determinate" 
+                  value={(unlockedAchievements / totalAchievements) * 100}
+                  sx={{ 
+                    height: 6,
+                    borderRadius: 3,
+                    bgcolor: 'oklch(0.25 0.04 250)',
+                  }}
+                />
+              </Paper>
 
-                    <ScrollArea className="h-[500px]">
-                      <div className="p-4 space-y-3">
-                        {sortedAlerts.length === 0 ? (
-                          <div className="flex flex-col items-center justify-center py-12 text-center">
-                            <Bell size={48} weight="thin" className="text-[oklch(0.35_0.05_250)] mb-4" />
-                            <p className="text-sm text-[oklch(0.55_0.05_250)]">
-                              No alerts yet
-                            </p>
-                          </div>
-                        ) : (
-                          sortedAlerts.map(alert => (
-                            <AlertItem
-                              key={alert.id}
-                              alert={alert}
-                              onRead={handleMarkAsRead}
-                              onDismiss={handleDismissAlert}
-                            />
-                          ))
-                        )}
-                      </div>
-                    </ScrollArea>
-                  </TabsContent>
-
-                  <TabsContent value="achievements" className="m-0">
-                    <ScrollArea className="h-[548px]">
-                      <div className="p-4">
-                        <div className="mb-4 p-4 rounded-lg bg-[oklch(0.18_0.03_250)] border border-[oklch(0.25_0.04_250)]">
-                          <div className="flex items-center justify-between">
-                            <span className="text-sm text-[oklch(0.75_0.03_250)]">
-                              Progress
-                            </span>
-                            <span className="font-heading font-bold text-[oklch(0.98_0.01_250)]">
-                              {Math.round((unlockedAchievements / totalAchievements) * 100)}%
-                            </span>
-                          </div>
-                        </div>
-
-                        <div className="space-y-3">
-                          {sortedAchievements.map(achievement => (
-                            <AchievementCard
-                              key={achievement.id}
-                              achievement={achievement}
-                            />
-                          ))}
-                        </div>
-                      </div>
-                    </ScrollArea>
-                  </TabsContent>
-                </Tabs>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+              <List sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+                {sortedAchievements.map(achievement => (
+                  <ListItem key={achievement.id} sx={{ p: 0 }}>
+                    <AchievementCard achievement={achievement} />
+                  </ListItem>
+                ))}
+              </List>
+            </Box>
+          </TabPanel>
+        </Box>
+      </Drawer>
     </>
   )
 }

@@ -1,6 +1,5 @@
-import { Badge } from '@/components/ui/badge'
+import { Chip } from '@mui/material'
 import { AchievementRarity } from '@/types'
-import { cn } from '@/lib/utils'
 
 interface AchievementBadgeProps {
   rarity: AchievementRarity
@@ -11,33 +10,51 @@ export function AchievementBadge({ rarity, className }: AchievementBadgeProps) {
   const rarityConfig = {
     common: {
       label: 'Common',
-      className: 'bg-[oklch(0.55_0.08_200)] text-[oklch(0.95_0.01_200)] border-[oklch(0.65_0.1_200)]',
+      bgcolor: 'oklch(0.55 0.08 200)',
+      color: 'oklch(0.95 0.01 200)',
+      borderColor: 'oklch(0.65 0.1 200)',
     },
     rare: {
       label: 'Rare',
-      className: 'bg-[oklch(0.45_0.15_240)] text-[oklch(0.95_0.01_240)] border-[oklch(0.55_0.18_240)]',
+      bgcolor: 'oklch(0.45 0.15 240)',
+      color: 'oklch(0.95 0.01 240)',
+      borderColor: 'oklch(0.55 0.18 240)',
     },
     epic: {
       label: 'Epic',
-      className: 'bg-[oklch(0.45_0.18_290)] text-[oklch(0.95_0.01_290)] border-[oklch(0.55_0.22_290)]',
+      bgcolor: 'oklch(0.45 0.18 290)',
+      color: 'oklch(0.95 0.01 290)',
+      borderColor: 'oklch(0.55 0.22 290)',
     },
     legendary: {
       label: 'Legendary',
-      className: 'bg-[oklch(0.50_0.20_45)] text-[oklch(0.98_0.01_45)] border-[oklch(0.60_0.25_45)]',
+      bgcolor: 'oklch(0.50 0.20 45)',
+      color: 'oklch(0.98 0.01 45)',
+      borderColor: 'oklch(0.60 0.25 45)',
     },
   }
 
   const config = rarityConfig[rarity]
 
   return (
-    <Badge
-      className={cn(
-        'text-xs font-bold uppercase tracking-wider border',
-        config.className,
-        className
-      )}
-    >
-      {config.label}
-    </Badge>
+    <Chip
+      label={config.label}
+      size="small"
+      className={className}
+      sx={{
+        bgcolor: config.bgcolor,
+        color: config.color,
+        borderColor: config.borderColor,
+        border: '1px solid',
+        fontSize: '10px',
+        height: 20,
+        fontWeight: 700,
+        textTransform: 'uppercase',
+        letterSpacing: '0.05em',
+        '& .MuiChip-label': {
+          px: 1,
+        },
+      }}
+    />
   )
 }
