@@ -68,79 +68,69 @@ export function PullToRefresh({
                 />
 
                 <motion.div
-                  className="relative z-10"
+                  className="relative z-10 flex items-center justify-center w-7 h-7"
                   animate={isRefreshing ? { 
-                    rotate: [0, 10, -10, 10, 0],
-                    scale: [1, 1.05, 0.95, 1.05, 1]
+                    rotate: 360
                   } : {}}
                   transition={
                     isRefreshing 
-                      ? { duration: 2, repeat: Infinity, ease: 'easeInOut' }
+                      ? { duration: 0.8, repeat: Infinity, ease: 'linear' }
                       : {}
                   }
                 >
-                  <svg
-                    width="28"
-                    height="28"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <motion.path
-                      d="M4 12a8 8 0 0 1 8-8V2.5"
-                      stroke="oklch(0.65 0.25 230)"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      initial={{ pathLength: 0 }}
-                      animate={{ pathLength: isRefreshing ? [0.8, 0.2] : progress * 0.8 }}
-                      transition={
-                        isRefreshing
-                          ? { duration: 1.5, repeat: Infinity, ease: 'linear' }
-                          : { duration: 0.1 }
-                      }
-                    />
-                    <motion.path
-                      d="M20 12a8 8 0 0 1-8 8v1.5"
-                      stroke="oklch(0.75 0.22 240)"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      initial={{ pathLength: 0 }}
-                      animate={{ pathLength: isRefreshing ? [0.8, 0.2] : progress * 0.8 }}
-                      transition={
-                        isRefreshing
-                          ? { duration: 1.5, repeat: Infinity, ease: 'linear', delay: 0.2 }
-                          : { duration: 0.1 }
-                      }
-                    />
-                    <motion.path
-                      d="M9 2.5 12 0l3 2.5"
-                      stroke="oklch(0.65 0.25 230)"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      animate={isRefreshing ? { opacity: [1, 0.3, 1] } : {}}
-                      transition={
-                        isRefreshing
-                          ? { duration: 1.5, repeat: Infinity, ease: 'linear' }
-                          : {}
-                      }
-                    />
-                    <motion.path
-                      d="M15 21.5 12 24l-3-2.5"
-                      stroke="oklch(0.75 0.22 240)"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      animate={isRefreshing ? { opacity: [1, 0.3, 1] } : {}}
-                      transition={
-                        isRefreshing
-                          ? { duration: 1.5, repeat: Infinity, ease: 'linear', delay: 0.2 }
-                          : {}
-                      }
-                    />
-                  </svg>
+                  <motion.div
+                    className="absolute w-6 h-6 rounded-full"
+                    style={{
+                      border: '3px solid transparent',
+                      borderTopColor: 'oklch(0.75 0.25 230)',
+                      borderRightColor: 'oklch(0.70 0.23 235)',
+                    }}
+                    animate={isRefreshing ? { 
+                      scale: [1, 1.1, 1]
+                    } : {}}
+                    transition={
+                      isRefreshing 
+                        ? { duration: 1.2, repeat: Infinity, ease: 'easeInOut' }
+                        : {}
+                    }
+                  />
+                  <motion.div
+                    className="absolute w-4 h-4 rounded-full"
+                    style={{
+                      border: '2.5px solid transparent',
+                      borderBottomColor: 'oklch(0.65 0.22 240)',
+                      borderLeftColor: 'oklch(0.60 0.20 245)',
+                    }}
+                    animate={isRefreshing ? { 
+                      rotate: -360,
+                      scale: [1, 0.9, 1]
+                    } : {}}
+                    transition={
+                      isRefreshing 
+                        ? { 
+                            rotate: { duration: 1, repeat: Infinity, ease: 'linear' },
+                            scale: { duration: 1.2, repeat: Infinity, ease: 'easeInOut' }
+                          }
+                        : {}
+                    }
+                  />
+                  <motion.div
+                    className="w-2 h-2 rounded-full"
+                    style={{
+                      background: 'linear-gradient(135deg, oklch(0.70 0.25 230), oklch(0.65 0.22 240))',
+                    }}
+                    animate={isRefreshing ? { 
+                      scale: [1, 1.3, 1],
+                      opacity: [1, 0.7, 1]
+                    } : {
+                      scale: progress
+                    }}
+                    transition={
+                      isRefreshing 
+                        ? { duration: 1.2, repeat: Infinity, ease: 'easeInOut' }
+                        : { duration: 0.1 }
+                    }
+                  />
                 </motion.div>
 
                 {!isRefreshing && (
