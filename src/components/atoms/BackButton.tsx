@@ -9,9 +9,8 @@ export function BackButton({ onBack }: BackButtonProps) {
   return (
     <Button
       variant="outlined"
-      startIcon={<ArrowBack sx={{ fontSize: 20 }} />}
+      startIcon={<ArrowBack />}
       onClick={onBack}
-      sx={{ mb: 4 }}
     >
       Back to Menu
     </Button>

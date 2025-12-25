@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ThemeProvider } from '@mui/material/styles'
+import { ThemeProvider, Box } from '@mui/material'
 import CssBaseline from '@mui/material/CssBaseline'
 import { muiTheme } from './theme/mui-theme'
 import { AnimatedBackground } from './components/AnimatedBackground'
@@ -11,7 +11,6 @@ import { Settings } from './components/Settings'
 import { PlayerStats } from './components/PlayerStats'
 import { Developer } from './components/Developer'
 import { Toaster } from '@/components/ui/sonner'
-import { motion, AnimatePresence } from 'framer-motion'
 import { Screen } from '@/types'
 import { handleNavigate } from '@/handlers'
 import { useWelcomeAlerts } from '@/hooks/use-welcome-alerts'
@@ -37,48 +36,22 @@ function App() {
   return (
     <ThemeProvider theme={muiTheme}>
       <CssBaseline />
-      <div className="relative w-full min-h-screen overflow-hidden">
+      <Box sx={{ position: 'relative', minHeight: '100vh', overflow: 'hidden' }}>
         <AnimatedBackground />
         
         <TopBar />
         
-        <div className="relative z-10 pt-14 sm:pt-16">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentScreen}
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.98 }}
-              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            >
-              {currentScreen === 'main' && <MainMenu onNavigate={handleNav} />}
-              {currentScreen === 'singleplayer' && <SinglePlayer onBack={handleBack} />}
-              {currentScreen === 'multiplayer' && <Multiplayer onBack={handleBack} />}
-              {currentScreen === 'settings' && <Settings onBack={handleBack} />}
-              {currentScreen === 'stats' && <PlayerStats onBack={handleBack} />}
-              {currentScreen === 'developer' && <Developer onBack={handleBack} />}
-            </motion.div>
-          </AnimatePresence>
-        </div>
+        <Box sx={{ position: 'relative', zIndex: 10, pt: { xs: 7, sm: 8 } }}>
+          {currentScreen === 'main' && <MainMenu onNavigate={handleNav} />}
+          {currentScreen === 'singleplayer' && <SinglePlayer onBack={handleBack} />}
+          {currentScreen === 'multiplayer' && <Multiplayer onBack={handleBack} />}
+          {currentScreen === 'settings' && <Settings onBack={handleBack} />}
+          {currentScreen === 'stats' && <PlayerStats onBack={handleBack} />}
+          {currentScreen === 'developer' && <Developer onBack={handleBack} />}
+        </Box>
 
-        <Toaster 
-          position="top-center"
-          toastOptions={{
-            style: {
-              background: 'oklch(0.12 0.02 250 / 0.9)',
-              backdropFilter: 'blur(20px)',
-              color: 'oklch(0.98 0.01 0)',
-              border: '1px solid oklch(0.55 0.12 230 / 0.25)',
-              fontFamily: 'Inter, sans-serif',
-              fontWeight: '600',
-              fontSize: '14px',
-              padding: '16px 24px',
-              borderRadius: '8px',
-              boxShadow: '0 8px 32px oklch(0 0 0 / 0.4)',
-            },
-          }}
-        />
-      </div>
+        <Toaster position="top-center" />
+      </Box>
     </ThemeProvider>
   )
 }

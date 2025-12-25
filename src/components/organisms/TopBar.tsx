@@ -113,35 +113,9 @@ export function TopBar({ className }: TopBarProps) {
 
   return (
     <>
-      <AppBar 
-        position="fixed" 
-        className={className}
-        sx={{
-          zIndex: 40,
-          background: 'linear-gradient(180deg, oklch(0.12 0.02 250 / 0.95) 0%, oklch(0.12 0.02 250 / 0.85) 100%)',
-          backdropFilter: 'blur(40px)',
-          borderBottom: '1px solid oklch(0.25 0.04 250)',
-        }}
-      >
-        <Toolbar sx={{ 
-          maxWidth: '1280px', 
-          width: '100%', 
-          mx: 'auto', 
-          px: 3,
-          minHeight: { xs: 56, sm: 64 },
-          gap: 1,
-        }}>
-          <Typography 
-            variant="h6" 
-            component="h1"
-            sx={{ 
-              flexGrow: 1,
-              fontFamily: 'var(--font-heading)',
-              fontWeight: 700,
-              letterSpacing: '0.05em',
-              color: 'oklch(0.98 0.01 250)',
-            }}
-          >
+      <AppBar position="fixed" className={className}>
+        <Toolbar sx={{ maxWidth: 1280, width: '100%', mx: 'auto', px: 3 }}>
+          <Typography variant="h6" component="h1" sx={{ flexGrow: 1 }}>
             NEXUS COMMAND
           </Typography>
 
@@ -151,28 +125,10 @@ export function TopBar({ className }: TopBarProps) {
               setIsOpen(!isOpen)
             }}
             aria-label="Notifications"
-            sx={{ 
-              color: 'oklch(0.85 0.03 250)',
-              p: 1.5,
-              '&:hover': { 
-                bgcolor: 'oklch(0.20 0.03 250)',
-              },
-            }}
+            color="inherit"
           >
-            <Badge 
-              badgeContent={unreadCount > 99 ? '99+' : unreadCount} 
-              color="error"
-              invisible={unreadCount === 0}
-              sx={{
-                '& .MuiBadge-badge': {
-                  fontSize: '10px',
-                  fontWeight: 700,
-                  minWidth: '18px',
-                  height: '18px',
-                }
-              }}
-            >
-              <Notifications sx={{ fontSize: 24 }} titleAccess="Notifications" />
+            <Badge badgeContent={unreadCount > 99 ? '99+' : unreadCount} color="error">
+              <Notifications titleAccess="Notifications" />
             </Badge>
           </IconButton>
 
@@ -182,35 +138,11 @@ export function TopBar({ className }: TopBarProps) {
               setIsOpen(!isOpen)
             }}
             aria-label="Achievements"
-            sx={{ 
-              color: 'oklch(0.85 0.03 250)',
-              position: 'relative',
-              p: 1.5,
-              '&:hover': { 
-                bgcolor: 'oklch(0.20 0.03 250)',
-              },
-            }}
+            color="inherit"
           >
-            <EmojiEvents sx={{ fontSize: 24 }} titleAccess="Achievements" />
-            <Typography 
-              component="span"
-              sx={{ 
-                position: 'absolute',
-                bottom: 6,
-                right: 6,
-                fontSize: '9px',
-                fontWeight: 700,
-                lineHeight: 1,
-                color: 'oklch(0.70 0.12 230)',
-                bgcolor: 'oklch(0.12 0.02 250)',
-                px: 0.5,
-                py: 0.25,
-                borderRadius: 0.5,
-                pointerEvents: 'none',
-              }}
-            >
-              {unlockedAchievements}/{totalAchievements}
-            </Typography>
+            <Badge badgeContent={`${unlockedAchievements}/${totalAchievements}`} color="primary">
+              <EmojiEvents titleAccess="Achievements" />
+            </Badge>
           </IconButton>
         </Toolbar>
       </AppBar>
@@ -219,78 +151,42 @@ export function TopBar({ className }: TopBarProps) {
         anchor="right"
         open={isOpen}
         onClose={() => setIsOpen(false)}
-        slotProps={{
-          backdrop: {
-            sx: {
-              bgcolor: 'oklch(0 0 0 / 0.7)',
-              backdropFilter: 'blur(4px)',
-            }
-          }
-        }}
         PaperProps={{
           sx: {
             width: 480,
             maxWidth: '90vw',
-            bgcolor: 'oklch(0.12 0.02 250 / 0.98)',
-            backdropFilter: 'blur(40px)',
-            border: '1px solid oklch(0.25 0.04 250)',
-            borderRight: 'none',
             mt: { xs: 7, sm: 8 },
             height: { xs: 'calc(100vh - 56px)', sm: 'calc(100vh - 64px)' },
           },
         }}
       >
         <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-          <Box sx={{ borderBottom: '1px solid oklch(0.25 0.04 250)' }}>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', px: 2, pt: 2 }}>
-              <Tabs 
-                value={activeTab} 
-                onChange={(_, newValue) => setActiveTab(newValue)}
-                sx={{ flexGrow: 1 }}
-              >
+              <Tabs value={activeTab} onChange={(_, newValue) => setActiveTab(newValue)} sx={{ flexGrow: 1 }}>
                 <Tab 
                   label={
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      <Notifications sx={{ fontSize: 16 }} titleAccess="" />
+                      <Notifications fontSize="small" titleAccess="" />
                       Alerts
-                      {unreadCount > 0 && (
-                        <Chip 
-                          label={unreadCount} 
-                          size="small" 
-                          color="error"
-                          sx={{ height: 20, minWidth: 20, fontSize: '10px', fontWeight: 700 }}
-                        />
-                      )}
+                      {unreadCount > 0 && <Chip label={unreadCount} size="small" color="error" />}
                     </Box>
                   } 
                 />
                 <Tab 
                   label={
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      <EmojiEvents sx={{ fontSize: 16 }} titleAccess="" />
+                      <EmojiEvents fontSize="small" titleAccess="" />
                       Achievements
-                      <Typography 
-                        sx={{ 
-                          fontSize: '11px', 
-                          color: 'oklch(0.70 0.12 230)',
-                          fontWeight: 600,
-                        }}
-                      >
+                      <Typography variant="caption" color="text.secondary">
                         {unlockedAchievements}/{totalAchievements}
                       </Typography>
                     </Box>
                   } 
                 />
               </Tabs>
-              <IconButton 
-                onClick={() => setIsOpen(false)}
-                aria-label="Close"
-                sx={{ 
-                  color: 'oklch(0.85 0.03 250)',
-                  '&:hover': { bgcolor: 'oklch(0.20 0.03 250)' },
-                }}
-              >
-                <Close sx={{ fontSize: 20 }} titleAccess="Close" />
+              <IconButton onClick={() => setIsOpen(false)} aria-label="Close">
+                <Close titleAccess="Close" />
               </IconButton>
             </Box>
           </Box>
@@ -309,12 +205,7 @@ export function TopBar({ className }: TopBarProps) {
                     >
                       Mark All Read
                     </Button>
-                    <Button
-                      variant="outlined"
-                      size="small"
-                      onClick={handleDeleteAll}
-                      fullWidth
-                    >
+                    <Button variant="outlined" size="small" onClick={handleDeleteAll} fullWidth>
                       Clear All
                     </Button>
                   </Box>
@@ -325,28 +216,14 @@ export function TopBar({ className }: TopBarProps) {
               <PullToRefresh onRefresh={handleRefreshAlerts}>
                 <Box sx={{ flexGrow: 1, overflow: 'auto', p: 2 }}>
                   {sortedAlerts.length === 0 ? (
-                    <Box 
-                      sx={{ 
-                        display: 'flex', 
-                        flexDirection: 'column', 
-                        alignItems: 'center', 
-                        justifyContent: 'center',
-                        py: 8,
-                        textAlign: 'center',
-                      }}
-                    >
-                      <Notifications 
-                        sx={{ fontSize: 48, color: 'oklch(0.35 0.05 250)', mb: 2, opacity: 0.3 }} 
-                        titleAccess="No notifications"
-                      />
-                      <Typography sx={{ fontSize: '14px', color: 'oklch(0.55 0.05 250)' }}>
-                        No alerts yet
-                      </Typography>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', py: 8 }}>
+                      <Notifications sx={{ fontSize: 48, color: 'text.disabled', mb: 2, opacity: 0.3 }} titleAccess="No notifications" />
+                      <Typography color="text.secondary">No alerts yet</Typography>
                     </Box>
                   ) : (
                     <List sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                       {sortedAlerts.map(alert => (
-                        <ListItem key={alert.id} sx={{ p: 0 }}>
+                        <ListItem key={alert.id}>
                           <AlertItem
                             alert={alert}
                             onRead={handleMarkAsRead}
@@ -364,43 +241,22 @@ export function TopBar({ className }: TopBarProps) {
           <TabPanel value={activeTab} index={1}>
             <PullToRefresh onRefresh={handleRefreshAchievements}>
               <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', overflow: 'auto', p: 2 }}>
-                <Paper 
-                  elevation={0}
-                  sx={{ 
-                    mb: 2, 
-                    p: 2, 
-                    bgcolor: 'oklch(0.30 0.06 250)',
-                    border: '1px solid oklch(0.45 0.08 250)',
-                  }}
-                >
+                <Paper elevation={0} sx={{ mb: 2, p: 2 }}>
                   <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
-                    <Typography sx={{ fontSize: '14px', color: 'oklch(0.92 0.05 250)', fontWeight: 600 }}>
-                      Progress
-                    </Typography>
-                    <Typography 
-                      sx={{ 
-                        fontFamily: 'var(--font-heading)',
-                        fontWeight: 700,
-                        color: 'oklch(0.98 0.01 250)',
-                      }}
-                    >
+                    <Typography variant="body2" fontWeight={600}>Progress</Typography>
+                    <Typography variant="body2" fontWeight={700}>
                       {Math.round((unlockedAchievements / totalAchievements) * 100)}%
                     </Typography>
                   </Box>
                   <LinearProgress 
                     variant="determinate" 
                     value={(unlockedAchievements / totalAchievements) * 100}
-                    sx={{ 
-                      height: 6,
-                      borderRadius: 3,
-                      bgcolor: 'oklch(0.42 0.08 250)',
-                    }}
                   />
                 </Paper>
 
                 <List sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                   {sortedAchievements.map(achievement => (
-                    <ListItem key={achievement.id} sx={{ p: 0 }}>
+                    <ListItem key={achievement.id}>
                       <AchievementCard achievement={achievement} />
                     </ListItem>
                   ))}

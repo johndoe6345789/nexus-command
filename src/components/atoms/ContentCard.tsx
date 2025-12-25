@@ -1,22 +1,14 @@
-import { Card, CardContent } from '@mui/material'
+import { Card, CardContent, CardProps } from '@mui/material'
 import { ReactNode } from 'react'
 
-interface ContentCardProps {
+interface ContentCardProps extends CardProps {
   children: ReactNode
-  noPadding?: boolean
 }
 
-export function ContentCard({ children, noPadding = false }: ContentCardProps) {
+export function ContentCard({ children, ...props }: ContentCardProps) {
   return (
-    <Card
-      sx={{
-        p: noPadding ? 0 : 4,
-        bgcolor: 'rgba(10, 15, 30, 0.6)',
-        backdropFilter: 'blur(20px)',
-        border: '1px solid rgba(74, 158, 255, 0.2)',
-      }}
-    >
-      <CardContent sx={{ p: noPadding ? 0 : undefined }}>
+    <Card {...props}>
+      <CardContent>
         {children}
       </CardContent>
     </Card>

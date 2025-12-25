@@ -1,7 +1,5 @@
-import { Box, BoxProps } from '@mui/material'
+import { Box, BoxProps, Typography } from '@mui/material'
 import { Logo } from '../Logo'
-import { Text } from '../atoms'
-import { motion } from 'framer-motion'
 import { ReactNode } from 'react'
 
 interface MainMenuLayoutProps extends BoxProps {
@@ -23,53 +21,22 @@ export function MainMenuLayout({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 4,
+        p: 4,
         pt: { xs: 10, sm: 12 },
       }}
       {...props}
     >
-      <Box sx={{ width: '100%', maxWidth: '1200px' }}>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            mb: 10,
-          }}
-        >
+      <Box sx={{ width: '100%', maxWidth: 1200 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 10 }}>
           <Logo size={100} showText={true} animate={true} />
-          
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.2 }}
-          >
-            <Text
-              variant="body1"
-              align="center"
-              sx={{
-                color: 'text.secondary',
-                letterSpacing: '0.15em',
-                textTransform: 'uppercase',
-                mt: 3,
-              }}
-            >
-              {tagline}
-            </Text>
-          </motion.div>
+          <Typography variant="body1" align="center" color="text.secondary" sx={{ mt: 3 }}>
+            {tagline}
+          </Typography>
         </Box>
 
         {children}
 
-        {footer && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8, duration: 0.5 }}
-          >
-            {footer}
-          </motion.div>
-        )}
+        {footer}
       </Box>
     </Box>
   )
