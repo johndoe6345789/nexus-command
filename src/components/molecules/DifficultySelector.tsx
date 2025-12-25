@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button'
+import { Button, Stack } from '@mui/material'
 
 interface Difficulty {
   id: string
@@ -14,25 +14,27 @@ interface DifficultySelectorProps {
 
 export function DifficultySelector({ difficulties, selected, onSelect }: DifficultySelectorProps) {
   return (
-    <div className="space-y-3">
+    <Stack spacing={1.5}>
       {difficulties.map((diff) => (
         <Button
           key={diff.id}
-          variant={selected === diff.id ? 'default' : 'outline'}
+          variant={selected === diff.id ? 'contained' : 'outlined'}
           onClick={() => onSelect(diff.id)}
-          className="w-full h-14 justify-start text-lg font-heading"
-          style={
-            selected !== diff.id
-              ? {
-                  color: diff.color,
-                  borderColor: diff.color,
-                }
-              : undefined
-          }
+          sx={{
+            width: '100%',
+            height: 56,
+            justifyContent: 'flex-start',
+            fontSize: '1.125rem',
+            fontFamily: 'heading',
+            ...(selected !== diff.id && {
+              color: diff.color,
+              borderColor: diff.color,
+            }),
+          }}
         >
           {diff.label}
         </Button>
       ))}
-    </div>
+    </Stack>
   )
 }

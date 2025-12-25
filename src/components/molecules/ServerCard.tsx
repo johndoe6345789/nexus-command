@@ -1,9 +1,6 @@
 import { Users, WifiHigh } from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
-import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Progress } from '@/components/ui/progress'
-import { cn } from '@/lib/utils'
+import { Card, CardContent, Box, Typography, Chip, LinearProgress } from '@mui/material'
 
 interface ServerCardProps {
   id: string
@@ -39,49 +36,54 @@ export function ServerCard({
       transition={{ delay }}
     >
       <Card
-        className={cn(
-          'cursor-pointer transition-all duration-300 hover:shadow-lg',
-          selected 
-            ? 'border-2 border-primary bg-gradient-to-br from-[oklch(0.75_0.20_220/0.05)] to-[oklch(0.70_0.18_35/0.05)]' 
-            : 'border-border hover:border-primary/50'
-        )}
+        sx={{
+          cursor: 'pointer',
+          transition: 'all 0.3s',
+          border: selected ? 2 : 1,
+          borderColor: selected ? 'primary.main' : 'divider',
+          background: selected 
+            ? 'linear-gradient(135deg, rgba(100, 150, 255, 0.05), rgba(255, 150, 100, 0.05))' 
+            : 'background.paper',
+          '&:hover': {
+            boxShadow: 6,
+            borderColor: 'primary.light',
+          }
+        }}
         onClick={() => onSelect(id)}
       >
-        <CardContent className="p-4">
-          <div className="flex justify-between items-center">
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-3 mb-2">
-                <h6 className="font-heading text-base font-bold text-foreground truncate">
+        <CardContent>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Box sx={{ flex: 1, minWidth: 0 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
+                <Typography variant="subtitle1" fontFamily="heading" fontWeight="bold" noWrap>
                   {name}
-                </h6>
-                <Badge 
-                  variant={ping < 50 ? 'default' : 'secondary'}
-                  className="flex items-center gap-1 flex-shrink-0"
-                >
-                  <WifiHigh size={14} weight="bold" />
-                  {ping}ms
-                </Badge>
-              </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground flex-wrap">
-                <span>{map}</span>
-                <span>•</span>
-                <span>{mode}</span>
-                <span>•</span>
-                <Badge variant="outline" className="text-xs">
-                  {region}
-                </Badge>
-              </div>
-            </div>
-            <div className="flex items-center gap-2 text-muted-foreground ml-4 flex-shrink-0">
+                </Typography>
+                <Chip 
+                  size="small"
+                  color={ping < 50 ? 'success' : 'default'}
+                  icon={<WifiHigh size={14} weight="bold" />}
+                  label={`${ping}ms`}
+                />
+              </Box>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
+                <Typography variant="body2" color="text.secondary">{map}</Typography>
+                <Typography variant="body2" color="text.secondary">•</Typography>
+                <Typography variant="body2" color="text.secondary">{mode}</Typography>
+                <Typography variant="body2" color="text.secondary">•</Typography>
+                <Chip label={region} size="small" variant="outlined" />
+              </Box>
+            </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, ml: 2 }}>
               <Users size={24} weight="bold" />
-              <span className="font-heading text-lg font-bold text-foreground">
+              <Typography variant="h6" fontFamily="heading" fontWeight="bold">
                 {players}/{maxPlayers}
-              </span>
-            </div>
-          </div>
-          <Progress 
-            value={(players / maxPlayers) * 100} 
-            className="mt-3 h-2"
+              </Typography>
+            </Box>
+          </Box>
+          <LinearProgress 
+            variant="determinate"
+            value={(players / maxPlayers) * 100}
+            sx={{ mt: 1.5, height: 8, borderRadius: 1 }}
           />
         </CardContent>
       </Card>

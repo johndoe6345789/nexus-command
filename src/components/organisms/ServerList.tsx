@@ -1,9 +1,8 @@
 import { motion } from 'framer-motion'
+import { TextField, Box, Stack } from '@mui/material'
 import { ServerCard } from '../molecules/ServerCard'
 import { Server } from '@/types'
 import { filterServers } from '@/utils'
-import { Input } from '@/components/ui/input'
-import { ScrollArea } from '@/components/ui/scroll-area'
 import { PullToRefresh } from '@/components/atoms/PullToRefresh'
 
 interface ServerListProps {
@@ -32,11 +31,12 @@ export function ServerList({
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
       >
-        <Input
+        <TextField
+          fullWidth
           placeholder="Search servers or maps..."
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
-          className="mb-4 h-12"
+          sx={{ mb: 2 }}
         />
       </motion.div>
 
@@ -46,8 +46,8 @@ export function ServerList({
         transition={{ delay: 0.2 }}
       >
         <PullToRefresh onRefresh={onRefresh || (() => {})} enabled={!!onRefresh}>
-          <ScrollArea className="h-[600px]">
-            <div className="space-y-3 pr-4">
+          <Box sx={{ maxHeight: 600, overflowY: 'auto', pr: 2 }}>
+            <Stack spacing={1.5}>
               {filteredServers.map((server, index) => (
                 <ServerCard
                   key={server.id}
@@ -57,8 +57,8 @@ export function ServerList({
                   delay={0.3 + index * 0.05}
                 />
               ))}
-            </div>
-          </ScrollArea>
+            </Stack>
+          </Box>
         </PullToRefresh>
       </motion.div>
     </>

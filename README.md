@@ -1,21 +1,22 @@
 # 🎮 NEXUS COMMAND - Atomic Component Framework
 
-A premium AAA-quality game menu system for a Quake 3 Arena clone, featuring a comprehensive atomic design system built with React, TypeScript, Material-UI, and Framer Motion.
+A premium AAA-quality game menu system for a Quake 3 Arena clone, featuring a comprehensive atomic design system built with **Next.js**, React, TypeScript, Material-UI, and Framer Motion.
 
-> **🧹 Cleanup Required**: This project contains placeholder files from previous refactoring that need to be manually deleted. See **[MANUAL_CLEANUP_GUIDE.md](MANUAL_CLEANUP_GUIDE.md)** for instructions.
+> **✨ Now powered by Next.js!** - Converted from Vite to Next.js with static export support.
 
 ## ✨ Key Features
 
 - 🎨 **Atomic Design System**: Fully modular component framework with atoms, molecules, organisms, templates, and pages
 - 🎮 **Complete Menu System**: Single player, multiplayer, stats, and settings screens
 - 🌟 **Stunning Visuals**: Canvas-based particle system with geometric shapes and dynamic gradients
-- 💎 **Premium UI**: Glass morphism, glow effects, and cinematic animations
-- 🎯 **Futuristic Aesthetic**: Custom fonts (Orbitron, Space Grotesk), OKLCH colors, sophisticated theming
+- 💎 **Premium UI**: Material-UI components with glass morphism, glow effects, and cinematic animations
+- 🎯 **Futuristic Aesthetic**: Custom fonts (Rajdhani, Inter), sophisticated theming
 - 🧪 **Comprehensive Test Suite**: 50+ Playwright tests ensuring quality and performance
 - ⚡ **Smooth Animations**: Framer Motion with physics-based easing
 - 📱 **Responsive Design**: Works on desktop, tablet, and mobile devices
 - 🔧 **Type-Safe**: Full TypeScript coverage with strict mode
 - ♿ **Accessible**: WCAG AA compliant with proper ARIA labels
+- 🚀 **Next.js**: Fast, modern React framework with static export capability
 
 ## 🏗️ Atomic Component Framework
 
@@ -238,17 +239,19 @@ See [tests/README.md](tests/README.md) for detailed test documentation.
 
 ## 🎨 Tech Stack
 
-- **Framework**: React 19 + TypeScript
-- **Styling**: Tailwind CSS 4 with custom OKLCH colors
-- **Components**: Shadcn UI v4
+- **Framework**: Next.js 16 + React 19 + TypeScript
+- **Styling**: Material-UI (MUI) v7
 - **Animations**: Framer Motion + Canvas API
-- **Icons**: Phosphor Icons
+- **Icons**: Phosphor Icons + Material Icons
 - **Testing**: Playwright
-- **Build Tool**: Vite
+- **Build**: Next.js with static export
 
 ## 📁 Project Structure
 
 ```
+├── app/                            # Next.js app directory
+│   ├── layout.tsx                  # Root layout
+│   └── page.tsx                    # Home page
 ├── src/
 │   ├── components/
 │   │   ├── atoms/                  # Basic building blocks
@@ -261,7 +264,7 @@ See [tests/README.md](tests/README.md) for detailed test documentation.
 │   │   │   ├── ActionButton.tsx
 │   │   │   ├── GlassCard.tsx
 │   │   │   ├── IconLabel.tsx
-│   │   │   ├── VolumeSlider.tsx
+│   │   │   ├── VolumeControl.tsx
 │   │   │   ├── PageHeader.tsx
 │   │   │   └── index.ts
 │   │   ├── organisms/              # Complex UI sections
@@ -276,7 +279,6 @@ See [tests/README.md](tests/README.md) for detailed test documentation.
 │   │   │   ├── MainMenuLayout.tsx
 │   │   │   ├── TwoColumnLayout.tsx
 │   │   │   └── index.ts
-│   │   ├── ui/                     # Shadcn components (40+)
 │   │   ├── AnimatedBackground.tsx  # Canvas particle system
 │   │   ├── Logo.tsx                # Animated logo
 │   │   ├── GlitchText.tsx          # Glitch effect text
@@ -290,7 +292,7 @@ See [tests/README.md](tests/README.md) for detailed test documentation.
 │   ├── theme/
 │   │   └── mui-theme.ts            # Material-UI theme
 │   ├── App.tsx                     # Main app component
-│   └── index.css                   # Theme and global styles
+│   └── main.css                    # Global styles
 ├── tests/
 │   ├── background.spec.ts          # Background tests
 │   ├── navigation.spec.ts          # Navigation tests

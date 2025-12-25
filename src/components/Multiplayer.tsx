@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Refresh } from '@mui/icons-material'
+import { IconButton, Box, Stack } from '@mui/material'
 import { PageContainer } from './atoms/PageContainer'
 import { BackButton } from './atoms/BackButton'
 import { ContentCard } from './atoms/ContentCard'
@@ -10,7 +11,6 @@ import { Server } from '@/types'
 import { generateServers } from '@/utils'
 import { MultiplayerProps } from './props'
 import { handleServerRefresh, handleServerJoin } from '@/handlers'
-import { Button } from '@/components/ui/button'
 
 export function Multiplayer({ onBack }: MultiplayerProps) {
   const [servers, setServers] = useState<Server[]>([])
@@ -36,40 +36,39 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
     <PageContainer>
       <BackButton onBack={onBack} />
       <ContentCard>
-        <div className="flex flex-row justify-between items-start mb-8">
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 4 }}>
           <PageHeader title="Multiplayer" subtitle="Join active battles worldwide" />
-          <Button
-            size="icon"
-            variant="outline"
+          <IconButton
             onClick={handleRefresh}
             disabled={loading}
-            className="h-14 w-14"
+            size="large"
+            sx={{ width: 56, height: 56 }}
           >
             <Refresh
               sx={{ fontSize: 28 }}
               className={loading ? 'animate-spin' : ''}
             />
-          </Button>
-        </div>
+          </IconButton>
+        </Box>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          <div className="lg:col-span-8">
-            <ServerList
-              servers={servers}
-              selectedServer={selectedServer}
-              onSelectServer={setSelectedServer}
-              searchQuery={searchQuery}
-              onSearchChange={setSearchQuery}
-              onRefresh={handleRefresh}
-            />
-          </div>
-          <div className="lg:col-span-4">
-            <ServerInfoPanel
-              server={selectedServerData}
-              onJoin={handleJoin}
-            />
-          </div>
-        </div>
+        <Box sx={{ 
+          display: 'grid', 
+          gridTemplateColumns: { xs: '1fr', lg: '2fr 1fr' }, 
+          gap: 3 
+        }}>
+          <ServerList
+            servers={servers}
+            selectedServer={selectedServer}
+            onSelectServer={setSelectedServer}
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+            onRefresh={handleRefresh}
+          />
+          <ServerInfoPanel
+            server={selectedServerData}
+            onJoin={handleJoin}
+          />
+        </Box>
       </ContentCard>
     </PageContainer>
   )
