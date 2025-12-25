@@ -31,7 +31,7 @@ export function PullToRefresh({
             initial={{ opacity: 0, y: -20 }}
             animate={{ 
               opacity: isRefreshing ? 1 : Math.max(0.3, progress),
-              y: Math.min(pullDistance * 0.3, 40)
+              y: Math.min(pullDistance * 0.5, 60)
             }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.2 }}
@@ -91,7 +91,7 @@ export function PullToRefresh({
         }}
         className="relative"
         style={{
-          transform: showIndicator ? `translateY(${Math.min(pullDistance * 0.2, 20)}px)` : undefined,
+          transform: showIndicator ? `translateY(${Math.min(pullDistance * 0.6, 80)}px)` : undefined,
           transition: isRefreshing || !isPulling ? 'transform 0.3s cubic-bezier(0.22, 1, 0.36, 1)' : 'none',
         }}
       >
