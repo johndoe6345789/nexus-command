@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material'
-import { ChartLine, Lightning, Database, Bug } from '@phosphor-icons/react'
+import { ShowChart, FlashOn, Storage, BugReport } from '@mui/icons-material'
 import { motion } from 'framer-motion'
 import { StatCard } from '../atoms/StatCard'
 import { SystemStats } from '@/types'
@@ -19,16 +19,16 @@ export function OverviewTab({ systemStats }: OverviewTabProps) {
     >
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-          <StatCard icon={ChartLine} iconColor="oklch(0.75 0.20 220)" label="FPS" value={systemStats.fps} />
+          <StatCard icon={ShowChart} iconColor="oklch(0.75 0.20 220)" label="FPS" value={systemStats.fps} />
         </Grid>
         <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-          <StatCard icon={Lightning} iconColor="#4ade80" label="Ping" value={`${systemStats.ping}ms`} />
+          <StatCard icon={FlashOn} iconColor="#4ade80" label="Ping" value={`${systemStats.ping}ms`} />
         </Grid>
         <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-          <StatCard icon={Database} iconColor="#fbbf24" label="Memory" value={systemStats.memoryUsage} />
+          <StatCard icon={Storage} iconColor="#fbbf24" label="Memory" value={systemStats.memoryUsage} />
         </Grid>
         <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-          <StatCard icon={Bug} iconColor="#8b5cf6" label="Draw Calls" value={systemStats.drawCalls} />
+          <StatCard icon={BugReport} iconColor="#8b5cf6" label="Draw Calls" value={systemStats.drawCalls} />
         </Grid>
       </Grid>
     </motion.div>

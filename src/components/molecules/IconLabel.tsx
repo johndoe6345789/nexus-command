@@ -1,11 +1,10 @@
 import { Stack, StackProps, Chip } from '@mui/material'
-import { Text, Icon } from '../atoms'
-import { Icon as PhosphorIcon } from '@phosphor-icons/react'
+import { Text } from '../atoms'
+import { SvgIconComponent } from '@mui/icons-material'
 
 interface IconLabelProps extends Omit<StackProps, 'children'> {
-  icon: PhosphorIcon
+  icon: SvgIconComponent
   iconSize?: number
-  iconWeight?: 'thin' | 'light' | 'regular' | 'bold' | 'fill' | 'duotone'
   iconColor?: string
   label: string
   value?: string | number
@@ -13,9 +12,8 @@ interface IconLabelProps extends Omit<StackProps, 'children'> {
 }
 
 export function IconLabel({ 
-  icon, 
+  icon: IconComponent, 
   iconSize = 24,
-  iconWeight = 'bold',
   iconColor = 'oklch(0.75 0.20 220)',
   label,
   value,
@@ -25,7 +23,7 @@ export function IconLabel({
   return (
     <Stack direction="row" alignItems="center" justifyContent="space-between" {...props}>
       <Stack direction="row" alignItems="center" spacing={1}>
-        <Icon icon={icon} size={iconSize} weight={iconWeight} style={{ color: iconColor }} />
+        <IconComponent sx={{ fontSize: iconSize, color: iconColor }} />
         <Text variant="h5" sx={{ color: iconColor }}>
           {label}
         </Text>

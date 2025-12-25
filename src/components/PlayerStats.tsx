@@ -1,4 +1,4 @@
-import { Trophy, Crosshair, Target, Skull } from '@phosphor-icons/react'
+import { EmojiEvents, GpsFixed, MyLocation, Dangerous } from '@mui/icons-material'
 import { motion } from 'framer-motion'
 import { useKV } from '@github/spark/hooks'
 import { useState } from 'react'
@@ -52,7 +52,7 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
         <PageHeader
           title="Profile"
           subtitle={`${playerName} • Level 42 • Elite Rank`}
-          icon={Trophy}
+          icon={EmojiEvents}
           iconColor="oklch(0.70 0.18 35)"
         />
 
@@ -63,7 +63,7 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
             transition={{ delay: 0.1 }}
           >
             <StatCard
-              icon={Crosshair}
+              icon={GpsFixed}
               iconColor="oklch(0.75 0.20 220)"
               label="K/D Ratio"
               value={kd}
@@ -76,7 +76,7 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
             transition={{ delay: 0.2 }}
           >
             <StatCard
-              icon={Trophy}
+              icon={EmojiEvents}
               iconColor="oklch(0.70 0.18 35)"
               label="Win Rate"
               value={`${winRate}%`}
@@ -89,7 +89,7 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
             transition={{ delay: 0.3 }}
           >
             <StatCard
-              icon={Target}
+              icon={MyLocation}
               iconColor="#4ade80"
               label="Accuracy"
               value={`${stats.accuracy}%`}
@@ -102,7 +102,7 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
             transition={{ delay: 0.4 }}
           >
             <StatCard
-              icon={Skull}
+              icon={Dangerous}
               iconColor="#f87171"
               label="Headshots"
               value={stats.headshots}

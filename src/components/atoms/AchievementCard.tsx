@@ -2,18 +2,18 @@ import { Achievement } from '@/types'
 import { AchievementBadge } from '@/components/atoms/AchievementBadge'
 import { Box, Typography, LinearProgress, Paper } from '@mui/material'
 import { 
-  Crosshair,
-  Fire,
-  Lightning,
-  Skull,
-  Target,
-  Medal,
+  GpsFixed,
+  Whatshot,
+  FlashOn,
+  Dangerous,
+  MyLocation,
+  EmojiEvents,
   Rocket,
-  Globe,
-  Crown,
-  ArrowUp,
-  LockKey,
-} from '@phosphor-icons/react'
+  Public,
+  EmojiEventsOutlined,
+  TrendingUp,
+  Lock,
+} from '@mui/icons-material'
 
 interface AchievementCardProps {
   achievement: Achievement
@@ -21,16 +21,16 @@ interface AchievementCardProps {
 }
 
 const iconMap: Record<string, React.ComponentType<any>> = {
-  crosshair: Crosshair,
-  fire: Fire,
-  lightning: Lightning,
-  skull: Skull,
-  target: Target,
-  medal: Medal,
+  crosshair: GpsFixed,
+  fire: Whatshot,
+  lightning: FlashOn,
+  skull: Dangerous,
+  target: MyLocation,
+  medal: EmojiEvents,
   rocket: Rocket,
-  globe: Globe,
-  crown: Crown,
-  'arrow-up': ArrowUp,
+  globe: Public,
+  crown: EmojiEventsOutlined,
+  'arrow-up': TrendingUp,
 }
 
 const rarityGlow = {
@@ -41,7 +41,7 @@ const rarityGlow = {
 }
 
 export function AchievementCard({ achievement, className }: AchievementCardProps) {
-  const IconComponent = iconMap[achievement.icon] || Medal
+  const IconComponent = iconMap[achievement.icon] || EmojiEvents
   const isUnlocked = achievement.unlockedAt !== undefined
   const progress = achievement.progress ?? 0
   const maxProgress = achievement.maxProgress ?? 1
@@ -86,9 +86,9 @@ export function AchievementCard({ achievement, className }: AchievementCardProps
             }}
           >
             {isUnlocked ? (
-              <IconComponent size={24} weight="duotone" style={{ color: 'oklch(0.95 0.14 230)' }} />
+              <IconComponent sx={{ fontSize: 24, color: 'oklch(0.95 0.14 230)' }} />
             ) : (
-              <LockKey size={24} weight="duotone" style={{ color: 'oklch(0.65 0.08 250)' }} />
+              <Lock sx={{ fontSize: 24, color: 'oklch(0.65 0.08 250)' }} />
             )}
           </Box>
 

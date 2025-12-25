@@ -1,19 +1,16 @@
 import { Button as MuiButton, ButtonProps as MuiButtonProps } from '@mui/material'
-import { Icon } from '../atoms'
-import { Icon as PhosphorIcon } from '@phosphor-icons/react'
+import { SvgIconComponent } from '@mui/icons-material'
 import { motion } from 'framer-motion'
 
 interface ActionButtonProps extends MuiButtonProps {
-  icon?: PhosphorIcon
+  icon?: SvgIconComponent
   iconPosition?: 'start' | 'end'
-  iconWeight?: 'thin' | 'light' | 'regular' | 'bold' | 'fill' | 'duotone'
   animated?: boolean
 }
 
 export function ActionButton({ 
-  icon, 
+  icon: IconComponent, 
   iconPosition = 'start', 
-  iconWeight = 'bold',
   animated = true,
   children,
   ...props 
@@ -21,8 +18,8 @@ export function ActionButton({
   const ButtonContent = (
     <MuiButton 
       {...props}
-      startIcon={icon && iconPosition === 'start' ? <Icon icon={icon} weight={iconWeight} size={20} /> : undefined}
-      endIcon={icon && iconPosition === 'end' ? <Icon icon={icon} weight={iconWeight} size={20} /> : undefined}
+      startIcon={IconComponent && iconPosition === 'start' ? <IconComponent sx={{ fontSize: 20 }} /> : undefined}
+      endIcon={IconComponent && iconPosition === 'end' ? <IconComponent sx={{ fontSize: 20 }} /> : undefined}
     >
       {children}
     </MuiButton>

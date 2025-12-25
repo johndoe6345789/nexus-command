@@ -4,9 +4,9 @@ import {
   Info, 
   CheckCircle, 
   Warning, 
-  XCircle, 
-  Trophy 
-} from '@phosphor-icons/react'
+  Cancel, 
+  EmojiEvents 
+} from '@mui/icons-material'
 
 interface AlertItemProps {
   alert: Alert
@@ -19,11 +19,11 @@ export function AlertItem({ alert, onRead, onDismiss }: AlertItemProps) {
     info: { Icon: Info, color: 'oklch(0.65 0.18 230)' },
     success: { Icon: CheckCircle, color: 'oklch(0.65 0.18 150)' },
     warning: { Icon: Warning, color: 'oklch(0.70 0.18 80)' },
-    error: { Icon: XCircle, color: 'oklch(0.65 0.20 15)' },
-    achievement: { Icon: Trophy, color: 'oklch(0.70 0.20 45)' },
+    error: { Icon: Cancel, color: 'oklch(0.65 0.20 15)' },
+    achievement: { Icon: EmojiEvents, color: 'oklch(0.70 0.20 45)' },
   }
 
-  const { Icon, color } = iconConfig[alert.type]
+  const { Icon: IconComponent, color } = iconConfig[alert.type]
 
   const handleClick = () => {
     if (!alert.read) {
@@ -69,7 +69,7 @@ export function AlertItem({ alert, onRead, onDismiss }: AlertItemProps) {
       )}
       
       <Box sx={{ flexShrink: 0, mt: 0.25, color }}>
-        <Icon size={20} weight="duotone" />
+        <IconComponent sx={{ fontSize: 20 }} />
       </Box>
 
       <Box sx={{ flex: 1, minWidth: 0 }}>
@@ -99,7 +99,7 @@ export function AlertItem({ alert, onRead, onDismiss }: AlertItemProps) {
               },
             }}
           >
-            <XCircle size={16} weight="fill" />
+            <Cancel sx={{ fontSize: 16 }} />
           </IconButton>
         </Box>
         <Typography 

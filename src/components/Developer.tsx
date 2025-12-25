@@ -1,4 +1,4 @@
-import { Code } from '@phosphor-icons/react'
+import { Code } from '@mui/icons-material'
 import { AnimatePresence } from 'framer-motion'
 import { useKV } from '@github/spark/hooks'
 import { useState } from 'react'

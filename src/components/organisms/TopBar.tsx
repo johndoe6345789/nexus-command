@@ -17,7 +17,7 @@ import {
   Chip,
   Paper,
 } from '@mui/material'
-import { Bell, Trophy, X } from '@phosphor-icons/react'
+import { Notifications, EmojiEvents, Close } from '@mui/icons-material'
 import { AlertItem } from '@/components/atoms/AlertItem'
 import { AchievementCard } from '@/components/atoms/AchievementCard'
 import { PullToRefresh } from '@/components/atoms/PullToRefresh'
@@ -171,7 +171,7 @@ export function TopBar({ className }: TopBarProps) {
                 }
               }}
             >
-              <Bell size={24} weight={unreadCount > 0 ? 'fill' : 'regular'} />
+              <Notifications sx={{ fontSize: 24 }} />
             </Badge>
           </IconButton>
 
@@ -189,7 +189,7 @@ export function TopBar({ className }: TopBarProps) {
               },
             }}
           >
-            <Trophy size={24} weight="duotone" />
+            <EmojiEvents sx={{ fontSize: 24 }} />
             <Typography 
               component="span"
               sx={{ 
@@ -249,7 +249,7 @@ export function TopBar({ className }: TopBarProps) {
                 <Tab 
                   label={
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      <Bell size={16} />
+                      <Notifications sx={{ fontSize: 16 }} />
                       Alerts
                       {unreadCount > 0 && (
                         <Chip 
@@ -265,7 +265,7 @@ export function TopBar({ className }: TopBarProps) {
                 <Tab 
                   label={
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      <Trophy size={16} />
+                      <EmojiEvents sx={{ fontSize: 16 }} />
                       Achievements
                       <Typography 
                         sx={{ 
@@ -287,7 +287,7 @@ export function TopBar({ className }: TopBarProps) {
                   '&:hover': { bgcolor: 'oklch(0.20 0.03 250)' },
                 }}
               >
-                <X size={20} />
+                <Close sx={{ fontSize: 20 }} />
               </IconButton>
             </Box>
           </Box>
@@ -332,7 +332,7 @@ export function TopBar({ className }: TopBarProps) {
                         textAlign: 'center',
                       }}
                     >
-                      <Bell size={48} weight="thin" style={{ color: 'oklch(0.35 0.05 250)', marginBottom: 16 }} />
+                      <Notifications sx={{ fontSize: 48, color: 'oklch(0.35 0.05 250)', mb: 2, opacity: 0.3 }} />
                       <Typography sx={{ fontSize: '14px', color: 'oklch(0.55 0.05 250)' }}>
                         No alerts yet
                       </Typography>

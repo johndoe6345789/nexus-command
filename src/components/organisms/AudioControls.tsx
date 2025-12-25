@@ -1,6 +1,6 @@
 import { Stack } from '@mui/material'
 import { VolumeSlider } from '../molecules'
-import { SpeakerHigh } from '@phosphor-icons/react'
+import { VolumeUp } from '@mui/icons-material'
 
 interface AudioControlsProps {
   masterVolume: number
@@ -23,22 +23,19 @@ export function AudioControls({
     <Stack spacing={6}>
       <VolumeSlider
         label="Master Volume"
-        icon={SpeakerHigh}
-        iconWeight="bold"
+        icon={VolumeUp}
         value={masterVolume}
         onChange={onMasterVolumeChange}
       />
       <VolumeSlider
         label="Music Volume"
-        icon={SpeakerHigh}
-        iconWeight="duotone"
+        icon={VolumeUp}
         value={musicVolume}
         onChange={onMusicVolumeChange}
       />
       <VolumeSlider
         label="SFX Volume"
-        icon={SpeakerHigh}
-        iconWeight="fill"
+        icon={VolumeUp}
         value={sfxVolume}
         onChange={onSfxVolumeChange}
       />

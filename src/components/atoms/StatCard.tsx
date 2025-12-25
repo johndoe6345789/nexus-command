@@ -1,8 +1,8 @@
 import { Card, CardContent, Stack, Box, Typography } from '@mui/material'
-import { Icon } from '@phosphor-icons/react'
+import { SvgIconComponent } from '@mui/icons-material'
 
 interface StatCardProps {
-  icon: Icon
+  icon: SvgIconComponent
   iconColor: string
   label: string
   value: string | number
@@ -22,7 +22,7 @@ export function StatCard({ icon: IconComponent, iconColor, label, value, delay =
               opacity: 0.2,
             }}
           >
-            <IconComponent size={40} weight="bold" color={iconColor} />
+            <IconComponent sx={{ fontSize: 40, color: iconColor }} />
           </Box>
           <Box>
             <Typography variant="body2" color="text.secondary">

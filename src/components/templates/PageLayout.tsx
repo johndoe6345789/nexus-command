@@ -1,6 +1,6 @@
 import { Box, BoxProps } from '@mui/material'
 import { ActionButton, MoleculePageHeader } from '../molecules'
-import { ArrowLeft } from '@phosphor-icons/react'
+import { ArrowBack } from '@mui/icons-material'
 import { ReactNode } from 'react'
 
 interface PageLayoutProps extends BoxProps {
@@ -25,7 +25,7 @@ export function PageLayout({
         {onBack && (
           <ActionButton
             variant="outlined"
-            icon={ArrowLeft}
+            icon={ArrowBack}
             onClick={onBack}
             sx={{ mb: 4 }}
           >

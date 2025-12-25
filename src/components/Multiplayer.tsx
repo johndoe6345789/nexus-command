@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { ArrowsClockwise } from '@phosphor-icons/react'
+import { Refresh } from '@mui/icons-material'
 import { PageContainer } from './atoms/PageContainer'
 import { BackButton } from './atoms/BackButton'
 import { ContentCard } from './atoms/ContentCard'
@@ -45,9 +45,8 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
             disabled={loading}
             className="h-14 w-14"
           >
-            <ArrowsClockwise
-              size={28}
-              weight="bold"
+            <Refresh
+              sx={{ fontSize: 28 }}
               className={loading ? 'animate-spin' : ''}
             />
           </Button>

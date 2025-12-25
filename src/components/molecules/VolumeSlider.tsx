@@ -1,11 +1,10 @@
 import { Box, Slider as MuiSlider, SliderProps, Chip } from '@mui/material'
 import { IconLabel } from './IconLabel'
-import { Icon as PhosphorIcon } from '@phosphor-icons/react'
+import { SvgIconComponent } from '@mui/icons-material'
 
 interface VolumeSliderProps extends Omit<SliderProps, 'onChange'> {
   label: string
-  icon: PhosphorIcon
-  iconWeight?: 'thin' | 'light' | 'regular' | 'bold' | 'fill' | 'duotone'
+  icon: SvgIconComponent
   value: number
   onChange: (value: number) => void
 }
@@ -13,7 +12,6 @@ interface VolumeSliderProps extends Omit<SliderProps, 'onChange'> {
 export function VolumeSlider({ 
   label, 
   icon, 
-  iconWeight = 'bold',
   value, 
   onChange,
   ...props 
@@ -30,7 +28,6 @@ export function VolumeSlider({
       <IconLabel
         icon={icon}
         iconSize={28}
-        iconWeight={iconWeight}
         iconColor="#7EC4FF"
         label={label}
         value={`${value}%`}

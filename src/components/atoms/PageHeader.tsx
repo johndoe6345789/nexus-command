@@ -1,11 +1,11 @@
 import { Box, Typography, Stack } from '@mui/material'
 import { motion } from 'framer-motion'
-import { Icon } from '@phosphor-icons/react'
+import { SvgIconComponent } from '@mui/icons-material'
 
 interface PageHeaderProps {
   title: string
   subtitle: string
-  icon?: Icon
+  icon?: SvgIconComponent
   iconColor?: string
 }
 
@@ -25,7 +25,7 @@ export function PageHeader({ title, subtitle, icon: IconComponent, iconColor }: 
           </Typography>
         </Box>
         {IconComponent && (
-          <IconComponent size={80} weight="duotone" color={iconColor || 'oklch(0.75 0.20 220)'} />
+          <IconComponent sx={{ fontSize: 80, color: iconColor || 'oklch(0.75 0.20 220)' }} />
         )}
       </Stack>
     </motion.div>

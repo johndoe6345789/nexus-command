@@ -1,5 +1,5 @@
 import { Card, CardContent, Stack, Typography, Button, TextField, Grid, Chip, Box } from '@mui/material'
-import { Cube, Planet, Tree, Mountains, Building, Shuffle, Download, Play, ArrowsClockwise } from '@phosphor-icons/react'
+import { Category, Public, Park, Terrain, Business, Shuffle, Download, PlayArrow, Refresh } from '@mui/icons-material'
 import { useState, useRef, useEffect } from 'react'
 import { toast } from 'sonner'
 import { useKV } from '@github/spark/hooks'
@@ -29,12 +29,12 @@ interface ProceduralGenPanelProps {
 }
 
 const generationTypes: GenerationOption[] = [
-  { id: 'arena', name: 'Arena Map', icon: Building, color: 'oklch(0.75 0.20 220)', description: 'Generate combat arena layouts' },
-  { id: 'terrain', name: 'Terrain', icon: Mountains, color: '#4ade80', description: 'Generate heightmap-based landscapes' },
-  { id: 'structures', name: 'Structures', icon: Building, color: 'oklch(0.75 0.20 220)', description: 'Create buildings and architecture' },
-  { id: 'vegetation', name: 'Vegetation', icon: Tree, color: '#22c55e', description: 'Spawn trees and plants' },
-  { id: 'planets', name: 'Planets', icon: Planet, color: '#8b5cf6', description: 'Generate celestial bodies' },
-  { id: 'meshes', name: 'Custom Meshes', icon: Cube, color: '#f59e0b', description: 'Procedural 3D geometry' },
+  { id: 'arena', name: 'Arena Map', icon: Business, color: 'oklch(0.75 0.20 220)', description: 'Generate combat arena layouts' },
+  { id: 'terrain', name: 'Terrain', icon: Terrain, color: '#4ade80', description: 'Generate heightmap-based landscapes' },
+  { id: 'structures', name: 'Structures', icon: Business, color: 'oklch(0.75 0.20 220)', description: 'Create buildings and architecture' },
+  { id: 'vegetation', name: 'Vegetation', icon: Park, color: '#22c55e', description: 'Spawn trees and plants' },
+  { id: 'planets', name: 'Planets', icon: Public, color: '#8b5cf6', description: 'Generate celestial bodies' },
+  { id: 'meshes', name: 'Custom Meshes', icon: Category, color: '#f59e0b', description: 'Procedural 3D geometry' },
 ]
 
 export function ProceduralGenPanel({
@@ -330,7 +330,7 @@ export function ProceduralGenPanel({
     <Card>
       <CardContent sx={{ p: 4 }}>
         <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 4 }}>
-          <Cube size={32} weight="duotone" color="#f59e0b" />
+          <Category sx={{ fontSize: 32, color: '#f59e0b' }} />
           <Typography variant="h4">Procedural Map Generation</Typography>
         </Stack>
 
@@ -350,7 +350,7 @@ export function ProceduralGenPanel({
                         key={type.id}
                         variant={isSelected ? 'contained' : 'outlined'}
                         onClick={() => setSelectedType(type.id)}
-                        startIcon={<Icon size={20} />}
+                        startIcon={<Icon sx={{ fontSize: 20 }} />}
                         sx={{
                           textTransform: 'none',
                           fontWeight: 600,
@@ -390,7 +390,7 @@ export function ProceduralGenPanel({
                   <Button
                     variant="outlined"
                     onClick={handleRandomSeed}
-                    startIcon={<Shuffle size={20} />}
+                    startIcon={<Shuffle sx={{ fontSize: 20 }} />}
                     sx={{ textTransform: 'none', whiteSpace: 'nowrap' }}
                   >
                     Random
@@ -427,7 +427,7 @@ export function ProceduralGenPanel({
                   size="large"
                   onClick={handleGenerate}
                   disabled={isGenerating}
-                  startIcon={<Play size={20} weight="fill" />}
+                  startIcon={<PlayArrow sx={{ fontSize: 20 }} />}
                   sx={{
                     flex: 1,
                     textTransform: 'none',
@@ -442,7 +442,7 @@ export function ProceduralGenPanel({
                     variant="outlined"
                     size="large"
                     onClick={handleRegenerate}
-                    startIcon={<ArrowsClockwise size={20} />}
+                    startIcon={<Refresh sx={{ fontSize: 20 }} />}
                     sx={{
                       textTransform: 'none',
                       fontWeight: 600,
@@ -456,7 +456,7 @@ export function ProceduralGenPanel({
                   size="large"
                   onClick={handleExport}
                   disabled={!currentMapData}
-                  startIcon={<Download size={20} />}
+                  startIcon={<Download sx={{ fontSize: 20 }} />}
                   sx={{
                     textTransform: 'none',
                     fontWeight: 600,

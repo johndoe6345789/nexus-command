@@ -1,4 +1,4 @@
-import { Monitor, SpeakerHigh, GameController, User } from '@phosphor-icons/react'
+import { Monitor, VolumeUp, SportsEsports, Person } from '@mui/icons-material'
 import { motion } from 'framer-motion'
 import { useKV } from '@github/spark/hooks'
 import { useState } from 'react'
@@ -42,19 +42,19 @@ export function Settings({ onBack }: SettingsProps) {
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="grid w-full grid-cols-4 mb-6">
               <TabsTrigger value="graphics" className="gap-2">
-                <Monitor size={20} weight="bold" />
+                <Monitor sx={{ fontSize: 20 }} />
                 <span className="hidden sm:inline">Graphics</span>
               </TabsTrigger>
               <TabsTrigger value="audio" className="gap-2">
-                <SpeakerHigh size={20} weight="bold" />
+                <VolumeUp sx={{ fontSize: 20 }} />
                 <span className="hidden sm:inline">Audio</span>
               </TabsTrigger>
               <TabsTrigger value="controls" className="gap-2">
-                <GameController size={20} weight="bold" />
+                <SportsEsports sx={{ fontSize: 20 }} />
                 <span className="hidden sm:inline">Controls</span>
               </TabsTrigger>
               <TabsTrigger value="profile" className="gap-2">
-                <User size={20} weight="bold" />
+                <Person sx={{ fontSize: 20 }} />
                 <span className="hidden sm:inline">Profile</span>
               </TabsTrigger>
             </TabsList>
