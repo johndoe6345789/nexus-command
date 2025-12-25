@@ -24,6 +24,7 @@ export function MainMenuLayout({
         alignItems: 'center',
         justifyContent: 'center',
         padding: 4,
+        pt: { xs: 10, sm: 12 },
       }}
       {...props}
     >
