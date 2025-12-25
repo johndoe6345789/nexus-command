@@ -1,5 +1,5 @@
 import { Box, Tabs, Tab, useMediaQuery, useTheme } from '@mui/material'
-import { ChartLine, Gear, Lightning, Terminal, Eye, Cube, CircleNotch } from '@phosphor-icons/react'
+import { ChartLine, Gear, Lightning, Terminal, Eye, Cube, CircleNotch, Bell } from '@phosphor-icons/react'
 import { useRef, useEffect } from 'react'
 
 interface DeveloperTabsProps {
@@ -88,6 +88,11 @@ export function DeveloperTabs({ activeTab, onTabChange }: DeveloperTabsProps) {
         <Tab 
           icon={<CircleNotch size={isMobile ? 20 : 24} />} 
           label={isTablet ? undefined : "Loading"}
+          iconPosition="start"
+        />
+        <Tab 
+          icon={<Bell size={isMobile ? 20 : 24} />} 
+          label={isTablet ? undefined : "Notifications"}
           iconPosition="start"
         />
       </Tabs>

@@ -3,6 +3,7 @@ import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import { muiTheme } from './theme/mui-theme'
 import { AnimatedBackground } from './components/AnimatedBackground'
+import { TopBar } from './components/organisms/TopBar'
 import { MainMenu } from './components/MainMenu'
 import { SinglePlayer } from './components/SinglePlayer'
 import { Multiplayer } from './components/Multiplayer'
@@ -13,9 +14,12 @@ import { Toaster } from '@/components/ui/sonner'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Screen } from '@/types'
 import { handleNavigate } from '@/handlers'
+import { useWelcomeAlerts } from '@/hooks/use-welcome-alerts'
 
 function App() {
   const [currentScreen, setCurrentScreen] = useState<Screen>('main')
+  
+  useWelcomeAlerts()
 
   const handleNav = (screen: string) => {
     const newScreen = handleNavigate(screen)
@@ -34,7 +38,9 @@ function App() {
       <div className="relative w-full min-h-screen overflow-hidden">
         <AnimatedBackground />
         
-        <div className="relative z-10">
+        <TopBar />
+        
+        <div className="relative z-10 pt-16">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentScreen}

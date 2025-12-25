@@ -15,6 +15,7 @@ import { ConsoleTab } from './organisms/ConsoleTab'
 import { RenderStatsTab } from './organisms/RenderStatsTab'
 import { ProceduralGenTab } from './organisms/ProceduralGenTab'
 import { LoadingTab } from './organisms/LoadingTab'
+import { NotificationTester } from './organisms/NotificationTester'
 import { SystemStats } from '@/types'
 import { handleConsoleCommand } from '@/utils'
 import { DeveloperProps } from './props'
@@ -143,6 +144,8 @@ export function Developer({ onBack }: DeveloperProps) {
           )}
 
           {activeTab === 6 && <LoadingTab />}
+
+          {activeTab === 7 && <NotificationTester />}
         </AnimatePresence>
       </ContentCard>
     </PageContainer>
