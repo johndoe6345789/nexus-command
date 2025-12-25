@@ -26,10 +26,12 @@ export function GenerationProgressPopup({
           style={{
             position: 'fixed',
             top: 24,
-            left: '50%',
-            transform: 'translateX(-50%)',
+            left: 0,
+            right: 0,
             zIndex: 9999,
-            width: 'min(500px, calc(100vw - 48px))',
+            display: 'flex',
+            justifyContent: 'center',
+            padding: '0 24px',
           }}
         >
           <Card
@@ -38,6 +40,8 @@ export function GenerationProgressPopup({
               backdropFilter: 'blur(20px)',
               border: '1px solid oklch(0.55 0.12 230 / 0.3)',
               boxShadow: '0 8px 32px oklch(0 0 0 / 0.6)',
+              width: '100%',
+              maxWidth: '500px',
             }}
           >
             <CardContent sx={{ p: 3 }}>
