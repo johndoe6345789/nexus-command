@@ -56,14 +56,14 @@ export function AchievementCard({ achievement, className }: AchievementCardProps
         overflow: 'hidden',
         borderRadius: 2,
         border: '1px solid',
-        borderColor: isUnlocked ? 'oklch(0.40 0.10 250)' : 'oklch(0.25 0.04 250)',
-        bgcolor: 'oklch(0.15 0.02 250)',
-        opacity: isUnlocked ? 1 : 0.6,
+        borderColor: isUnlocked ? 'oklch(0.50 0.12 230)' : 'oklch(0.30 0.05 250)',
+        bgcolor: isUnlocked ? 'oklch(0.22 0.03 250)' : 'oklch(0.18 0.02 250)',
+        opacity: isUnlocked ? 1 : 0.7,
         boxShadow: isUnlocked ? rarityGlow[achievement.rarity] : 'none',
         transition: 'all 0.3s ease',
         width: '100%',
         '&:hover': isUnlocked ? {
-          borderColor: 'oklch(0.55 0.12 230)',
+          borderColor: 'oklch(0.65 0.14 230)',
         } : {},
       }}
     >
@@ -79,15 +79,15 @@ export function AchievementCard({ achievement, className }: AchievementCardProps
               alignItems: 'center',
               justifyContent: 'center',
               background: isUnlocked
-                ? 'linear-gradient(135deg, oklch(0.35 0.08 250), oklch(0.25 0.06 250))'
-                : 'linear-gradient(135deg, oklch(0.20 0.03 250), oklch(0.15 0.02 250))',
+                ? 'linear-gradient(135deg, oklch(0.42 0.10 250), oklch(0.32 0.08 250))'
+                : 'linear-gradient(135deg, oklch(0.25 0.04 250), oklch(0.20 0.03 250))',
               transition: 'all 0.3s ease',
             }}
           >
             {isUnlocked ? (
-              <IconComponent size={24} weight="duotone" style={{ color: 'oklch(0.75 0.12 230)' }} />
+              <IconComponent size={24} weight="duotone" style={{ color: 'oklch(0.85 0.14 230)' }} />
             ) : (
-              <LockKey size={24} weight="duotone" style={{ color: 'oklch(0.40 0.05 250)' }} />
+              <LockKey size={24} weight="duotone" style={{ color: 'oklch(0.50 0.06 250)' }} />
             )}
           </Box>
 
@@ -111,7 +111,7 @@ export function AchievementCard({ achievement, className }: AchievementCardProps
               variant="body2" 
               sx={{ 
                 fontSize: '12px',
-                color: 'oklch(0.70 0.03 250)',
+                color: 'oklch(0.80 0.04 250)',
                 lineHeight: 1.6,
               }}
             >
@@ -127,7 +127,7 @@ export function AchievementCard({ achievement, className }: AchievementCardProps
                   display: 'block',
                   mt: 1,
                   fontSize: '10px',
-                  color: 'oklch(0.75 0.10 45)',
+                  color: 'oklch(0.82 0.12 45)',
                   fontWeight: 600,
                 }}
               >
@@ -138,10 +138,10 @@ export function AchievementCard({ achievement, className }: AchievementCardProps
             {maxProgress > 1 && !isUnlocked && (
               <Box sx={{ mt: 1.5 }}>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
-                  <Typography sx={{ fontSize: '10px', color: 'oklch(0.65 0.05 250)' }}>
+                  <Typography sx={{ fontSize: '10px', color: 'oklch(0.75 0.06 250)' }}>
                     Progress
                   </Typography>
-                  <Typography sx={{ fontSize: '10px', color: 'oklch(0.65 0.05 250)' }}>
+                  <Typography sx={{ fontSize: '10px', color: 'oklch(0.75 0.06 250)' }}>
                     {progress}/{maxProgress}
                   </Typography>
                 </Box>
@@ -151,7 +151,7 @@ export function AchievementCard({ achievement, className }: AchievementCardProps
                   sx={{ 
                     height: 6,
                     borderRadius: 3,
-                    bgcolor: 'oklch(0.25 0.04 250)',
+                    bgcolor: 'oklch(0.30 0.05 250)',
                   }}
                 />
               </Box>
@@ -164,7 +164,7 @@ export function AchievementCard({ achievement, className }: AchievementCardProps
                   display: 'block',
                   mt: 1,
                   fontSize: '10px',
-                  color: 'oklch(0.55 0.05 250)',
+                  color: 'oklch(0.65 0.06 250)',
                 }}
               >
                 Unlocked {new Date(achievement.unlockedAt).toLocaleDateString()}
