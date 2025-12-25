@@ -68,7 +68,7 @@ export function Developer({ onBack }: DeveloperProps) {
       <GenerationProgressPopup
         isVisible={isGenerating}
         progress={generationProgress}
-        label="Generating map..."
+        label={generationType ? `Generating ${generationType}...` : "Generating..."}
         type={generationType}
       />
       
