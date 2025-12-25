@@ -1,0 +1,74 @@
+name: 🤖 Bot-Generated Task
+description: Automatically created task by the issue bot
+title: "[BOT] "
+labels: ["bot-created", "needs-review"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 🤖 Automated Task
+        This issue was automatically created by the issue bot.
+        
+  - type: textarea
+    id: description
+    attributes:
+      label: Task Description
+      description: What needs to be done?
+      placeholder: Describe the task...
+    validations:
+      required: true
+      
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: What is the priority of this task?
+      options:
+        - Low
+        - Medium
+        - High
+        - Critical
+      default: 1
+    validations:
+      required: true
+      
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: What category does this task fall under?
+      options:
+        - Feature
+        - Bug Fix
+        - Documentation
+        - Refactoring
+        - Testing
+        - CI/CD
+        - Security
+        - Performance
+      default: 0
+    validations:
+      required: true
+      
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: What conditions must be met for this task to be complete?
+      placeholder: |
+        - [ ] Criterion 1
+        - [ ] Criterion 2
+        - [ ] Criterion 3
+    validations:
+      required: false
+      
+  - type: checkboxes
+    id: ready
+    attributes:
+      label: Task Status
+      description: Mark when ready to be converted to a PR
+      options:
+        - label: Ready for implementation
+          required: false
+        - label: Approved by maintainer
+          required: false

@@ -1,7 +1,8 @@
 import { Box, Alert, AlertTitle, Button, Paper, Typography } from "@mui/material";
 import { Warning, Refresh } from "@mui/icons-material";
+import { FallbackProps } from "react-error-boundary";
 
-export const ErrorFallback = ({ error, resetErrorBoundary }) => {
+export const ErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
   // In development, rethrow to get better error messages
   if (process.env.NODE_ENV === 'development') throw error;
 

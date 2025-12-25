@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  transpilePackages: ['@github/spark', 'three'],
+  transpilePackages: ['three'],
   output: 'export',  // Enable static export
 }
 

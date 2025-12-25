@@ -1,0 +1,152 @@
+name: Issue Lifecycle Management
+
+on:
+  issues:
+    types: [opened, labeled, unlabeled, closed]
+  issue_comment:
+    types: [created]
+
+permissions:
+  issues: write
+  pull-requests: read
+
+jobs:
+  manage-lifecycle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Auto-label bot issues
+        if: |
+          github.event.action == 'opened' &&
+          startsWith(github.event.issue.title, '[BOT]')
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              labels: ['bot-created', 'needs-review']
+            });
+
+      - name: Request approval for bot issues
+        if: |
+          github.event.action == 'opened' &&
+          contains(github.event.issue.labels.*.name, 'bot-created')
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `🤖 **Bot-Generated Issue**
+              
+              This issue was automatically created. Please review and:
+              1. Add the \`approved\` label if you want this converted to a PR
+              2. Close the issue if it's not needed
+              3. Edit the issue to refine requirements before approval
+              
+              Once approved, a PR will be automatically created for implementation.`
+            });
+
+      - name: Notify on approval
+        if: |
+          github.event.action == 'labeled' &&
+          github.event.label.name == 'approved' &&
+          contains(github.event.issue.labels.*.name, 'bot-created')
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `✅ **Issue Approved!**
+              
+              This issue has been approved for implementation. A pull request will be created automatically.
+              
+              Please wait for the PR to be created...`
+            });
+
+      - name: Handle stale bot issues
+        if: github.event.action == 'opened'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Find bot issues that are older than 7 days without approval
+            const sevenDaysAgo = new Date();
+            sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+            
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: 'bot-created,needs-review',
+              state: 'open'
+            });
+            
+            for (const issue of issues) {
+              const createdAt = new Date(issue.created_at);
+              if (createdAt < sevenDaysAgo) {
+                // Add stale label
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue.number,
+                  labels: ['stale']
+                });
+                
+                // Comment on stale issue
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue.number,
+                  body: `⚠️ This bot-generated issue has been open for 7 days without approval.
+                  
+                  Please review and either:
+                  - Add the \`approved\` label to proceed with implementation
+                  - Close the issue if it's no longer needed
+                  
+                  Issues marked as stale for 7 more days will be automatically closed.`
+                });
+              }
+            }
+
+      - name: Close very stale issues
+        if: github.event.action == 'opened'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Find bot issues that have been stale for 7+ days
+            const fourteenDaysAgo = new Date();
+            fourteenDaysAgo.setDate(fourteenDaysAgo.getDate() - 14);
+            
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: 'bot-created,stale',
+              state: 'open'
+            });
+            
+            for (const issue of issues) {
+              const createdAt = new Date(issue.created_at);
+              if (createdAt < fourteenDaysAgo) {
+                // Close the issue
+                await github.rest.issues.update({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue.number,
+                  state: 'closed',
+                  state_reason: 'not_planned'
+                });
+                
+                // Comment on closed issue
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue.number,
+                  body: `🚫 This bot-generated issue has been automatically closed due to inactivity (14 days without approval).
+                  
+                  If you still want to implement this, please reopen the issue and add the \`approved\` label.`
+                });
+              }
+            }

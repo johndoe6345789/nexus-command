@@ -1,0 +1,129 @@
+name: Deploy to Environment
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+      version:
+        description: 'Docker image tag to deploy (e.g., latest, v1.0.0)'
+        required: true
+        default: 'latest'
+        type: string
+
+permissions:
+  contents: read
+  packages: read
+  deployments: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.event.inputs.environment }}
+      url: ${{ steps.deploy.outputs.url }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create deployment
+        id: deployment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const deployment = await github.rest.repos.createDeployment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: context.sha,
+              environment: '${{ github.event.inputs.environment }}',
+              auto_merge: false,
+              required_contexts: [],
+              description: 'Deploying ${{ github.event.inputs.version }} to ${{ github.event.inputs.environment }}'
+            });
+            return deployment.data.id;
+
+      - name: Set deployment status to in progress
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: ${{ steps.deployment.outputs.result }},
+              state: 'in_progress',
+              description: 'Deployment in progress'
+            });
+
+      - name: Simulate deployment
+        id: deploy
+        run: |
+          # This is a placeholder for actual deployment logic
+          # In a real scenario, you would:
+          # 1. Pull the Docker image from GHCR
+          # 2. Deploy to your infrastructure (k8s, ECS, VM, etc.)
+          # 3. Run health checks
+          
+          echo "🚀 Deploying ghcr.io/${{ github.repository }}:${{ github.event.inputs.version }}"
+          echo "📍 Environment: ${{ github.event.inputs.environment }}"
+          
+          # Simulate deployment time
+          sleep 5
+          
+          # Set output URL (replace with actual deployment URL)
+          if [ "${{ github.event.inputs.environment }}" = "production" ]; then
+            echo "url=https://nexus-command.example.com" >> $GITHUB_OUTPUT
+          else
+            echo "url=https://staging.nexus-command.example.com" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Health check
+        run: |
+          echo "🏥 Running health checks..."
+          # In a real scenario, you would check your deployment:
+          # curl -f ${{ steps.deploy.outputs.url }}/health || exit 1
+          sleep 2
+          echo "✅ Health checks passed"
+
+      - name: Set deployment status to success
+        if: success()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: ${{ steps.deployment.outputs.result }},
+              state: 'success',
+              description: 'Deployment successful',
+              environment_url: '${{ steps.deploy.outputs.url }}'
+            });
+
+      - name: Set deployment status to failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: ${{ steps.deployment.outputs.result }},
+              state: 'failure',
+              description: 'Deployment failed'
+            });
+
+      - name: Notify deployment result
+        if: always()
+        run: |
+          if [ "${{ job.status }}" = "success" ]; then
+            echo "✅ Successfully deployed to ${{ github.event.inputs.environment }}"
+            echo "🔗 URL: ${{ steps.deploy.outputs.url }}"
+          else
+            echo "❌ Deployment to ${{ github.event.inputs.environment }} failed"
+          fi

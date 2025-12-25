@@ -1,0 +1,122 @@
+name: Convert Issue to PR
+
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  issues: write
+  pull-requests: write
+  contents: write
+
+jobs:
+  convert-to-pr:
+    runs-on: ubuntu-latest
+    if: |
+      github.event.label.name == 'approved' &&
+      contains(github.event.issue.labels.*.name, 'bot-created')
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Create branch and PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const issueNumber = issue.number;
+            const issueTitle = issue.title;
+            const issueBody = issue.body || '';
+            
+            // Create a branch name from the issue
+            const branchName = `bot/issue-${issueNumber}`;
+            
+            // Get the default branch
+            const { data: repo } = await github.rest.repos.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            });
+            const defaultBranch = repo.default_branch;
+            
+            // Get the latest commit SHA from default branch
+            const { data: ref } = await github.rest.git.getRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: `heads/${defaultBranch}`
+            });
+            
+            // Create a new branch
+            try {
+              await github.rest.git.createRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: `refs/heads/${branchName}`,
+                sha: ref.object.sha
+              });
+              console.log(`Created branch: ${branchName}`);
+            } catch (error) {
+              if (error.status === 422) {
+                console.log(`Branch ${branchName} already exists`);
+              } else {
+                throw error;
+              }
+            }
+            
+            // Create a pull request
+            const prBody = `Resolves #${issueNumber}
+            
+            ## 🤖 Auto-generated PR from Issue
+            
+            This PR was automatically created from an approved bot-generated issue.
+            
+            ### Original Issue
+            ${issueBody}
+            
+            ### Implementation Notes
+            Please implement the changes as described in the issue. Once implementation is complete, request a review.
+            
+            ---
+            **Note:** This PR contains only the branch creation. Actual implementation should be committed to this branch.`;
+            
+            try {
+              const { data: pr } = await github.rest.pulls.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: issueTitle.replace('[BOT] ', ''),
+                body: prBody,
+                head: branchName,
+                base: defaultBranch
+              });
+              
+              // Add labels to PR
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: pr.number,
+                labels: ['bot-generated', 'needs-implementation']
+              });
+              
+              // Comment on the original issue
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                body: `✅ This issue has been converted to PR #${pr.number}\n\nThe PR is ready for implementation. Please commit your changes to the \`${branchName}\` branch.`
+              });
+              
+              console.log(`Created PR #${pr.number} from issue #${issueNumber}`);
+            } catch (error) {
+              console.error('Error creating PR:', error);
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                body: `❌ Failed to create PR automatically. Error: ${error.message}\n\nPlease create the PR manually.`
+              });
+            }

@@ -1,0 +1,143 @@
+name: Auto-Create Issues from Backlog
+
+on:
+  schedule:
+    # Run daily at 9 AM UTC
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+    inputs:
+      task_type:
+        description: 'Type of task to create'
+        required: true
+        default: 'maintenance'
+        type: choice
+        options:
+          - maintenance
+          - documentation
+          - testing
+          - refactoring
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  create-issues:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check for existing bot issues
+        id: check-issues
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: 'bot-created',
+              state: 'open'
+            });
+            
+            const openBotIssues = issues.data.length;
+            console.log(`Found ${openBotIssues} open bot-created issues`);
+            
+            // Only create new issues if we have less than 5 open bot issues
+            return openBotIssues < 5;
+
+      - name: Create maintenance issue
+        if: steps.check-issues.outputs.result == 'true' && (github.event.inputs.task_type == 'maintenance' || github.event_name == 'schedule')
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const taskTypes = [
+              {
+                title: '[BOT] Review and update dependencies',
+                body: `## 🤖 Automated Maintenance Task
+                
+                ### Task Description
+                Review and update project dependencies to their latest stable versions.
+                
+                ### Priority
+                Medium
+                
+                ### Category
+                Maintenance
+                
+                ### Acceptance Criteria
+                - [ ] Review npm audit report
+                - [ ] Update dependencies to latest stable versions
+                - [ ] Ensure all tests pass after updates
+                - [ ] Update package-lock.json
+                
+                ### Notes
+                This is an automated task created by the issue bot. Please review and approve before implementation.`,
+                labels: ['bot-created', 'needs-review', 'maintenance']
+              },
+              {
+                title: '[BOT] Improve test coverage',
+                body: `## 🤖 Automated Testing Task
+                
+                ### Task Description
+                Identify areas with low test coverage and add additional tests.
+                
+                ### Priority
+                Medium
+                
+                ### Category
+                Testing
+                
+                ### Acceptance Criteria
+                - [ ] Identify components with <80% coverage
+                - [ ] Add unit tests for untested code paths
+                - [ ] Ensure all new tests pass
+                - [ ] Update test documentation
+                
+                ### Notes
+                This is an automated task created by the issue bot. Please review and approve before implementation.`,
+                labels: ['bot-created', 'needs-review', 'testing']
+              }
+            ];
+            
+            // Randomly select a task
+            const task = taskTypes[Math.floor(Math.random() * taskTypes.length)];
+            
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: task.title,
+              body: task.body,
+              labels: task.labels
+            });
+
+      - name: Create documentation issue
+        if: steps.check-issues.outputs.result == 'true' && github.event.inputs.task_type == 'documentation'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '[BOT] Update API documentation',
+              body: `## 🤖 Automated Documentation Task
+              
+              ### Task Description
+              Review and update API documentation to ensure accuracy and completeness.
+              
+              ### Priority
+              Low
+              
+              ### Category
+              Documentation
+              
+              ### Acceptance Criteria
+              - [ ] Review all public APIs
+              - [ ] Update JSDoc comments
+              - [ ] Update README if needed
+              - [ ] Verify examples work correctly
+              
+              ### Notes
+              This is an automated task created by the issue bot. Please review and approve before implementation.`,
+              labels: ['bot-created', 'needs-review', 'documentation']
+            });

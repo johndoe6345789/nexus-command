@@ -1,7 +1,7 @@
 import { Card, CardContent, Stack, Typography, Button, TextField, Grid, Chip, Box } from '@mui/material'
 import { Category, Public, Park, Terrain, Business, Shuffle, Download, PlayArrow, Refresh } from '@mui/icons-material'
 import { useState, useRef, useEffect } from 'react'
-import { useKV } from '@github/spark/hooks'
+import { useKV } from '@/hooks/useKV'
 
 interface GenerationOption {
   id: string
@@ -291,7 +291,7 @@ export function ProceduralGenPanel({
 
     setCurrentMapData(mapData)
     
-    setGenerationHistory((current) => [mapData, ...(current || [])].slice(0, 10))
+    setGenerationHistory([mapData, ...(generationHistory || [])].slice(0, 10))
     
     await new Promise(resolve => setTimeout(resolve, 3000))
     
