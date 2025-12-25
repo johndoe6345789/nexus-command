@@ -40,7 +40,7 @@ function App() {
         
         <TopBar />
         
-        <div className="relative z-10 pt-16">
+        <div className="relative z-10 pt-14 sm:pt-16">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentScreen}

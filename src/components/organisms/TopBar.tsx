@@ -111,7 +111,14 @@ export function TopBar({ className }: TopBarProps) {
           borderBottom: '1px solid oklch(0.25 0.04 250)',
         }}
       >
-        <Toolbar sx={{ maxWidth: '1280px', width: '100%', mx: 'auto', px: 3 }}>
+        <Toolbar sx={{ 
+          maxWidth: '1280px', 
+          width: '100%', 
+          mx: 'auto', 
+          px: 3,
+          minHeight: { xs: 56, sm: 64 },
+          gap: 1,
+        }}>
           <Typography 
             variant="h6" 
             component="h1"
@@ -133,6 +140,7 @@ export function TopBar({ className }: TopBarProps) {
             }}
             sx={{ 
               color: 'oklch(0.85 0.03 250)',
+              p: 1.5,
               '&:hover': { 
                 bgcolor: 'oklch(0.20 0.03 250)',
               },
@@ -142,6 +150,14 @@ export function TopBar({ className }: TopBarProps) {
               badgeContent={unreadCount > 99 ? '99+' : unreadCount} 
               color="error"
               invisible={unreadCount === 0}
+              sx={{
+                '& .MuiBadge-badge': {
+                  fontSize: '10px',
+                  fontWeight: 700,
+                  minWidth: '18px',
+                  height: '18px',
+                }
+              }}
             >
               <Bell size={24} weight={unreadCount > 0 ? 'fill' : 'regular'} />
             </Badge>
@@ -155,6 +171,7 @@ export function TopBar({ className }: TopBarProps) {
             sx={{ 
               color: 'oklch(0.85 0.03 250)',
               position: 'relative',
+              p: 1.5,
               '&:hover': { 
                 bgcolor: 'oklch(0.20 0.03 250)',
               },
@@ -162,16 +179,20 @@ export function TopBar({ className }: TopBarProps) {
           >
             <Trophy size={24} weight="duotone" />
             <Typography 
+              component="span"
               sx={{ 
                 position: 'absolute',
-                bottom: 4,
-                right: 4,
+                bottom: 6,
+                right: 6,
                 fontSize: '9px',
                 fontWeight: 700,
+                lineHeight: 1,
                 color: 'oklch(0.70 0.12 230)',
                 bgcolor: 'oklch(0.12 0.02 250)',
                 px: 0.5,
-                borderRadius: 1,
+                py: 0.25,
+                borderRadius: 0.5,
+                pointerEvents: 'none',
               }}
             >
               {unlockedAchievements}/{totalAchievements}
@@ -192,8 +213,8 @@ export function TopBar({ className }: TopBarProps) {
             backdropFilter: 'blur(40px)',
             border: '1px solid oklch(0.25 0.04 250)',
             borderRight: 'none',
-            mt: 8,
-            height: 'calc(100vh - 64px)',
+            mt: { xs: 7, sm: 8 },
+            height: { xs: 'calc(100vh - 56px)', sm: 'calc(100vh - 64px)' },
           },
         }}
       >
