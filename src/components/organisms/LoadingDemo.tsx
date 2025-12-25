@@ -92,8 +92,8 @@ export function LoadingDemo() {
                 >
                   <Spinner 
                     size={50}
-                    variant="loader"
-                    label="Loader"
+                    variant="ring"
+                    label="Ring"
                     color="oklch(0.65 0.25 230)"
                   />
                 </Box>
@@ -112,8 +112,8 @@ export function LoadingDemo() {
                 >
                   <Spinner 
                     size={50}
-                    variant="refresh"
-                    label="Refresh"
+                    variant="pulse"
+                    label="Pulse"
                     color="oklch(0.75 0.25 150)"
                   />
                 </Box>
@@ -172,8 +172,8 @@ export function LoadingDemo() {
                 >
                   <Spinner 
                     size={50}
-                    variant="disc"
-                    label="Disc"
+                    variant="bars"
+                    label="Bars"
                     color="oklch(0.70 0.22 190)"
                   />
                 </Box>
@@ -188,10 +188,10 @@ export function LoadingDemo() {
               Different Sizes
             </Typography>
             <Stack direction="row" spacing={4} justifyContent="center" alignItems="center">
-              <Spinner size={30} variant="loader" color="oklch(0.65 0.25 230)" />
-              <Spinner size={40} variant="loader" color="oklch(0.65 0.25 230)" />
-              <Spinner size={60} variant="loader" color="oklch(0.65 0.25 230)" />
-              <Spinner size={80} variant="loader" color="oklch(0.65 0.25 230)" />
+              <Spinner size={30} variant="ring" color="oklch(0.65 0.25 230)" />
+              <Spinner size={40} variant="ring" color="oklch(0.65 0.25 230)" />
+              <Spinner size={60} variant="ring" color="oklch(0.65 0.25 230)" />
+              <Spinner size={80} variant="ring" color="oklch(0.65 0.25 230)" />
             </Stack>
           </Box>
         </Stack>
