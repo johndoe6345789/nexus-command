@@ -1,19 +1,24 @@
 import { Trophy, Crosshair, Target, Skull } from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
 import { useKV } from '@github/spark/hooks'
+import { useState } from 'react'
 import { PageContainer } from './atoms/PageContainer'
 import { BackButton } from './atoms/BackButton'
 import { ContentCard } from './atoms/ContentCard'
 import { PageHeader } from './atoms/PageHeader'
 import { StatCard } from './atoms/StatCard'
 import { MatchHistoryCard } from './molecules/MatchHistoryCard'
+import { PullToRefresh } from './atoms/PullToRefresh'
 import { MatchResult } from '@/types'
 import { calculateKD, calculateWinRate } from '@/utils'
 import { PlayerStatsProps } from './props'
 import { Card, CardContent } from '@/components/ui/card'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import { toast } from 'sonner'
 
 export function PlayerStats({ onBack }: PlayerStatsProps) {
   const [playerName] = useKV<string>('player-name', 'Operator')
+  const [refreshKey, setRefreshKey] = useState(0)
 
   const stats = {
     kills: 1247,
@@ -33,6 +38,12 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
     { map: 'Nexus Core', mode: 'DOM', result: 'Defeat' as const, score: '12-15', date: '1d ago' },
     { map: 'Meridian City', mode: 'TDM', result: 'Victory' as const, score: '31-9', date: '1d ago' },
   ]
+
+  const handleRefreshMatches = async () => {
+    await new Promise(resolve => setTimeout(resolve, 800))
+    setRefreshKey(prev => prev + 1)
+    toast.success('Match history refreshed')
+  }
 
   return (
     <PageContainer>
@@ -104,12 +115,20 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
+            className="lg:col-span-2"
           >
             <Card>
-              <CardContent className="p-6 space-y-3">
-                {recentMatches.map((match, index) => (
-                  <MatchHistoryCard key={index} {...match} />
-                ))}
+              <CardContent className="p-6">
+                <h3 className="text-lg font-bold mb-4 font-[family-name:var(--font-heading)]">Recent Matches</h3>
+                <PullToRefresh onRefresh={handleRefreshMatches}>
+                  <ScrollArea className="h-[400px]">
+                    <div key={refreshKey} className="space-y-3 pr-4">
+                      {recentMatches.map((match, index) => (
+                        <MatchHistoryCard key={index} {...match} />
+                      ))}
+                    </div>
+                  </ScrollArea>
+                </PullToRefresh>
               </CardContent>
             </Card>
           </motion.div>

@@ -20,9 +20,11 @@ import {
 import { Bell, Trophy, X } from '@phosphor-icons/react'
 import { AlertItem } from '@/components/atoms/AlertItem'
 import { AchievementCard } from '@/components/atoms/AchievementCard'
+import { PullToRefresh } from '@/components/atoms/PullToRefresh'
 import { Alert, Achievement } from '@/types'
 import { ACHIEVEMENT_DEFINITIONS } from '@/constants'
 import { useKV } from '@github/spark/hooks'
+import { toast } from 'sonner'
 
 interface TopBarProps {
   className?: string
@@ -82,6 +84,16 @@ export function TopBar({ className }: TopBarProps) {
 
   const handleDeleteAll = () => {
     setAlerts([])
+  }
+
+  const handleRefreshAlerts = async () => {
+    await new Promise(resolve => setTimeout(resolve, 800))
+    toast.success('Alerts refreshed')
+  }
+
+  const handleRefreshAchievements = async () => {
+    await new Promise(resolve => setTimeout(resolve, 800))
+    toast.success('Achievements refreshed')
   }
 
   const sortedAlerts = [...(alerts ?? [])].sort((a, b) => {
@@ -307,84 +319,88 @@ export function TopBar({ className }: TopBarProps) {
                 </>
               )}
 
-              <Box sx={{ flexGrow: 1, overflow: 'auto', p: 2 }}>
-                {sortedAlerts.length === 0 ? (
-                  <Box 
-                    sx={{ 
-                      display: 'flex', 
-                      flexDirection: 'column', 
-                      alignItems: 'center', 
-                      justifyContent: 'center',
-                      py: 8,
-                      textAlign: 'center',
-                    }}
-                  >
-                    <Bell size={48} weight="thin" style={{ color: 'oklch(0.35 0.05 250)', marginBottom: 16 }} />
-                    <Typography sx={{ fontSize: '14px', color: 'oklch(0.55 0.05 250)' }}>
-                      No alerts yet
-                    </Typography>
-                  </Box>
-                ) : (
-                  <List sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-                    {sortedAlerts.map(alert => (
-                      <ListItem key={alert.id} sx={{ p: 0 }}>
-                        <AlertItem
-                          alert={alert}
-                          onRead={handleMarkAsRead}
-                          onDismiss={handleDismissAlert}
-                        />
-                      </ListItem>
-                    ))}
-                  </List>
-                )}
-              </Box>
+              <PullToRefresh onRefresh={handleRefreshAlerts}>
+                <Box sx={{ flexGrow: 1, overflow: 'auto', p: 2 }}>
+                  {sortedAlerts.length === 0 ? (
+                    <Box 
+                      sx={{ 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        alignItems: 'center', 
+                        justifyContent: 'center',
+                        py: 8,
+                        textAlign: 'center',
+                      }}
+                    >
+                      <Bell size={48} weight="thin" style={{ color: 'oklch(0.35 0.05 250)', marginBottom: 16 }} />
+                      <Typography sx={{ fontSize: '14px', color: 'oklch(0.55 0.05 250)' }}>
+                        No alerts yet
+                      </Typography>
+                    </Box>
+                  ) : (
+                    <List sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+                      {sortedAlerts.map(alert => (
+                        <ListItem key={alert.id} sx={{ p: 0 }}>
+                          <AlertItem
+                            alert={alert}
+                            onRead={handleMarkAsRead}
+                            onDismiss={handleDismissAlert}
+                          />
+                        </ListItem>
+                      ))}
+                    </List>
+                  )}
+                </Box>
+              </PullToRefresh>
             </Box>
           </TabPanel>
 
           <TabPanel value={activeTab} index={1}>
-            <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', overflow: 'auto', p: 2 }}>
-              <Paper 
-                elevation={0}
-                sx={{ 
-                  mb: 2, 
-                  p: 2, 
-                  bgcolor: 'oklch(0.30 0.06 250)',
-                  border: '1px solid oklch(0.45 0.08 250)',
-                }}
-              >
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
-                  <Typography sx={{ fontSize: '14px', color: 'oklch(0.92 0.05 250)', fontWeight: 600 }}>
-                    Progress
-                  </Typography>
-                  <Typography 
-                    sx={{ 
-                      fontFamily: 'var(--font-heading)',
-                      fontWeight: 700,
-                      color: 'oklch(0.98 0.01 250)',
-                    }}
-                  >
-                    {Math.round((unlockedAchievements / totalAchievements) * 100)}%
-                  </Typography>
-                </Box>
-                <LinearProgress 
-                  variant="determinate" 
-                  value={(unlockedAchievements / totalAchievements) * 100}
+            <PullToRefresh onRefresh={handleRefreshAchievements}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', overflow: 'auto', p: 2 }}>
+                <Paper 
+                  elevation={0}
                   sx={{ 
-                    height: 6,
-                    borderRadius: 3,
-                    bgcolor: 'oklch(0.42 0.08 250)',
+                    mb: 2, 
+                    p: 2, 
+                    bgcolor: 'oklch(0.30 0.06 250)',
+                    border: '1px solid oklch(0.45 0.08 250)',
                   }}
-                />
-              </Paper>
+                >
+                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
+                    <Typography sx={{ fontSize: '14px', color: 'oklch(0.92 0.05 250)', fontWeight: 600 }}>
+                      Progress
+                    </Typography>
+                    <Typography 
+                      sx={{ 
+                        fontFamily: 'var(--font-heading)',
+                        fontWeight: 700,
+                        color: 'oklch(0.98 0.01 250)',
+                      }}
+                    >
+                      {Math.round((unlockedAchievements / totalAchievements) * 100)}%
+                    </Typography>
+                  </Box>
+                  <LinearProgress 
+                    variant="determinate" 
+                    value={(unlockedAchievements / totalAchievements) * 100}
+                    sx={{ 
+                      height: 6,
+                      borderRadius: 3,
+                      bgcolor: 'oklch(0.42 0.08 250)',
+                    }}
+                  />
+                </Paper>
 
-              <List sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-                {sortedAchievements.map(achievement => (
-                  <ListItem key={achievement.id} sx={{ p: 0 }}>
-                    <AchievementCard achievement={achievement} />
-                  </ListItem>
-                ))}
-              </List>
-            </Box>
+                <List sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+                  {sortedAchievements.map(achievement => (
+                    <ListItem key={achievement.id} sx={{ p: 0 }}>
+                      <AchievementCard achievement={achievement} />
+                    </ListItem>
+                  ))}
+                </List>
+              </Box>
+            </PullToRefresh>
           </TabPanel>
         </Box>
       </Drawer>

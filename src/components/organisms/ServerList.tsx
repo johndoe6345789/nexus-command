@@ -4,6 +4,7 @@ import { Server } from '@/types'
 import { filterServers } from '@/utils'
 import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { PullToRefresh } from '@/components/atoms/PullToRefresh'
 
 interface ServerListProps {
   servers: Server[]
@@ -11,6 +12,7 @@ interface ServerListProps {
   onSelectServer: (id: string) => void
   searchQuery: string
   onSearchChange: (query: string) => void
+  onRefresh?: () => Promise<void> | void
 }
 
 export function ServerList({
@@ -19,6 +21,7 @@ export function ServerList({
   onSelectServer,
   searchQuery,
   onSearchChange,
+  onRefresh,
 }: ServerListProps) {
   const filteredServers = filterServers(servers, searchQuery)
 
@@ -42,19 +45,21 @@ export function ServerList({
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
       >
-        <ScrollArea className="h-[600px]">
-          <div className="space-y-3 pr-4">
-            {filteredServers.map((server, index) => (
-              <ServerCard
-                key={server.id}
-                {...server}
-                selected={selectedServer === server.id}
-                onSelect={onSelectServer}
-                delay={0.3 + index * 0.05}
-              />
-            ))}
-          </div>
-        </ScrollArea>
+        <PullToRefresh onRefresh={onRefresh || (() => {})} enabled={!!onRefresh}>
+          <ScrollArea className="h-[600px]">
+            <div className="space-y-3 pr-4">
+              {filteredServers.map((server, index) => (
+                <ServerCard
+                  key={server.id}
+                  {...server}
+                  selected={selectedServer === server.id}
+                  onSelect={onSelectServer}
+                  delay={0.3 + index * 0.05}
+                />
+              ))}
+            </div>
+          </ScrollArea>
+        </PullToRefresh>
       </motion.div>
     </>
   )

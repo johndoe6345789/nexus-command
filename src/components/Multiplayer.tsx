@@ -22,8 +22,8 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
     setServers(generateServers())
   }, [])
 
-  const handleRefresh = () => {
-    handleServerRefresh(setLoading, setServers)
+  const handleRefresh = async () => {
+    await handleServerRefresh(setLoading, setServers)
   }
 
   const handleJoin = () => {
@@ -61,6 +61,7 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
               onSelectServer={setSelectedServer}
               searchQuery={searchQuery}
               onSearchChange={setSearchQuery}
+              onRefresh={handleRefresh}
             />
           </div>
           <div className="lg:col-span-4">
