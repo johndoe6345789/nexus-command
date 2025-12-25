@@ -8,7 +8,7 @@ interface UsePullToRefreshOptions {
 
 export function usePullToRefresh({
   onRefresh,
-  threshold = 80,
+  threshold = 120,
   enabled = true,
 }: UsePullToRefreshOptions) {
   const [isPulling, setIsPulling] = useState(false)
@@ -43,7 +43,7 @@ export function usePullToRefresh({
         if (distance > 0) {
           e.preventDefault()
           setIsPulling(true)
-          setPullDistance(Math.min(distance, threshold * 1.5))
+          setPullDistance(Math.min(distance, threshold * 2))
         }
       }
     }
@@ -96,7 +96,7 @@ export function usePullToRefresh({
 
         if (distance > 5) {
           setIsPulling(true)
-          setPullDistance(Math.min(distance * 0.5, threshold * 1.5))
+          setPullDistance(Math.min(distance * 0.8, threshold * 2))
         }
       }
     }
@@ -146,7 +146,7 @@ export function usePullToRefresh({
         
         if (overscrollAccumulator.current > 10) {
           setIsPulling(true)
-          const distance = Math.min(overscrollAccumulator.current * 0.8, threshold * 1.5)
+          const distance = Math.min(overscrollAccumulator.current * 1.2, threshold * 2)
           setPullDistance(distance)
           
           if (distance >= threshold) {
