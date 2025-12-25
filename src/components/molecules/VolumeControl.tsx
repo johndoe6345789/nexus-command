@@ -1,5 +1,6 @@
-import { Box, Stack, Typography, Slider, Chip } from '@mui/material'
 import { SpeakerHigh } from '@phosphor-icons/react'
+import { Slider } from '@/components/ui/slider'
+import { Badge } from '@/components/ui/badge'
 
 interface VolumeControlProps {
   label: string
@@ -10,35 +11,23 @@ interface VolumeControlProps {
 
 export function VolumeControl({ label, value, onChange, iconWeight = 'bold' }: VolumeControlProps) {
   return (
-    <Box
-      sx={{
-        p: 3,
-        borderRadius: '12px',
-        background: 'rgba(74, 158, 255, 0.05)',
-        border: '1px solid rgba(74, 158, 255, 0.2)',
-      }}
-    >
-      <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 3 }}>
-        <Typography
-          variant="h5"
-          sx={{
-            color: '#7EC4FF',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 1,
-          }}
-        >
+    <div className="p-4 rounded-xl bg-[oklch(0.75_0.20_220/0.05)] border border-[oklch(0.75_0.20_220/0.2)]">
+      <div className="flex justify-between items-center mb-4">
+        <div className="flex items-center gap-2 text-[oklch(0.75_0.20_220)]">
           <SpeakerHigh size={28} weight={iconWeight} />
-          {label}
-        </Typography>
-        <Chip label={`${value}%`} color="primary" />
-      </Stack>
+          <h5 className="font-heading text-lg font-semibold">{label}</h5>
+        </div>
+        <Badge variant="secondary" className="text-sm font-bold">
+          {value}%
+        </Badge>
+      </div>
       <Slider
-        value={value}
-        onChange={(_, newValue) => onChange(newValue as number)}
+        value={[value]}
+        onValueChange={(values) => onChange(values[0])}
         max={100}
-        valueLabelDisplay="auto"
+        step={1}
+        className="w-full"
       />
-    </Box>
+    </div>
   )
 }

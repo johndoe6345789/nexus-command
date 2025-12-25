@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { Stack, Box, IconButton } from '@mui/material'
 import { ArrowsClockwise } from '@phosphor-icons/react'
 import { PageContainer } from './atoms/PageContainer'
 import { BackButton } from './atoms/BackButton'
@@ -11,6 +10,7 @@ import { Server } from '@/types'
 import { generateServers } from '@/utils'
 import { MultiplayerProps } from './props'
 import { handleServerRefresh, handleServerJoin } from '@/handlers'
+import { Button } from '@/components/ui/button'
 
 export function Multiplayer({ onBack }: MultiplayerProps) {
   const [servers, setServers] = useState<Server[]>([])
@@ -36,29 +36,25 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
     <PageContainer>
       <BackButton onBack={onBack} />
       <ContentCard>
-        <Stack direction="row" justifyContent="space-between" alignItems="flex-start" sx={{ mb: 6 }}>
+        <div className="flex flex-row justify-between items-start mb-8">
           <PageHeader title="Multiplayer" subtitle="Join active battles worldwide" />
-          <IconButton
-            size="large"
+          <Button
+            size="icon"
+            variant="outline"
             onClick={handleRefresh}
             disabled={loading}
-            sx={{
-              border: 1,
-              borderColor: 'divider',
-              width: 56,
-              height: 56,
-            }}
+            className="h-14 w-14"
           >
             <ArrowsClockwise
               size={28}
               weight="bold"
               className={loading ? 'animate-spin' : ''}
             />
-          </IconButton>
-        </Stack>
+          </Button>
+        </div>
 
-        <Stack direction={{ xs: 'column', lg: 'row' }} spacing={4}>
-          <Box sx={{ flex: 2, minWidth: 0 }}>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div className="lg:col-span-8">
             <ServerList
               servers={servers}
               selectedServer={selectedServer}
@@ -66,14 +62,14 @@ export function Multiplayer({ onBack }: MultiplayerProps) {
               searchQuery={searchQuery}
               onSearchChange={setSearchQuery}
             />
-          </Box>
-          <Box sx={{ flex: 1, minWidth: 300 }}>
+          </div>
+          <div className="lg:col-span-4">
             <ServerInfoPanel
               server={selectedServerData}
               onJoin={handleJoin}
             />
-          </Box>
-        </Stack>
+          </div>
+        </div>
       </ContentCard>
     </PageContainer>
   )

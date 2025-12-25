@@ -1,4 +1,3 @@
-import { Card, CardContent, TextField, Stack, Tabs, Tab, Button } from '@mui/material'
 import { Monitor, SpeakerHigh, GameController, User } from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
 import { useKV } from '@github/spark/hooks'
@@ -10,6 +9,11 @@ import { PageHeader } from './atoms/PageHeader'
 import { VolumeControl } from './molecules/VolumeControl'
 import { DebugToggle } from './molecules/DebugToggle'
 import { SettingsProps } from './props'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Card, CardContent } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 
 export function Settings({ onBack }: SettingsProps) {
   const [graphicsQuality, setGraphicsQuality] = useKV<string>('graphics-quality', 'high')
@@ -22,7 +26,7 @@ export function Settings({ onBack }: SettingsProps) {
   const [vsync, setVsync] = useKV<boolean>('vsync', false)
   const [antiAliasing, setAntiAliasing] = useKV<boolean>('anti-aliasing', true)
   const [motionBlur, setMotionBlur] = useKV<boolean>('motion-blur', false)
-  const [activeTab, setActiveTab] = useState(0)
+  const [activeTab, setActiveTab] = useState('graphics')
 
   return (
     <PageContainer maxWidth="1200px">
@@ -35,50 +39,42 @@ export function Settings({ onBack }: SettingsProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <Tabs
-            value={activeTab}
-            onChange={(_, newValue) => setActiveTab(newValue)}
-            sx={{ mb: 4 }}
-          >
-            <Tab
-              icon={<Monitor size={20} weight="bold" />}
-              iconPosition="start"
-              label="Graphics"
-            />
-            <Tab
-              icon={<SpeakerHigh size={20} weight="bold" />}
-              iconPosition="start"
-              label="Audio"
-            />
-            <Tab
-              icon={<GameController size={20} weight="bold" />}
-              iconPosition="start"
-              label="Controls"
-            />
-            <Tab
-              icon={<User size={20} weight="bold" />}
-              iconPosition="start"
-              label="Profile"
-            />
-          </Tabs>
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <TabsList className="grid w-full grid-cols-4 mb-6">
+              <TabsTrigger value="graphics" className="gap-2">
+                <Monitor size={20} weight="bold" />
+                <span className="hidden sm:inline">Graphics</span>
+              </TabsTrigger>
+              <TabsTrigger value="audio" className="gap-2">
+                <SpeakerHigh size={20} weight="bold" />
+                <span className="hidden sm:inline">Audio</span>
+              </TabsTrigger>
+              <TabsTrigger value="controls" className="gap-2">
+                <GameController size={20} weight="bold" />
+                <span className="hidden sm:inline">Controls</span>
+              </TabsTrigger>
+              <TabsTrigger value="profile" className="gap-2">
+                <User size={20} weight="bold" />
+                <span className="hidden sm:inline">Profile</span>
+              </TabsTrigger>
+            </TabsList>
 
-          {activeTab === 0 && (
-            <Card>
-              <CardContent sx={{ p: 4 }}>
-                <Stack spacing={4}>
-                  <Stack direction="row" spacing={2}>
+            <TabsContent value="graphics">
+              <Card>
+                <CardContent className="p-6 space-y-6">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                     {['low', 'medium', 'high', 'ultra'].map((quality) => (
                       <Button
                         key={quality}
-                        variant={graphicsQuality === quality ? 'contained' : 'outlined'}
+                        variant={graphicsQuality === quality ? 'default' : 'outline'}
                         onClick={() => setGraphicsQuality(quality)}
-                        sx={{ flex: 1, height: '56px' }}
+                        className="h-14 font-heading"
                       >
                         {quality.charAt(0).toUpperCase() + quality.slice(1)}
                       </Button>
                     ))}
-                  </Stack>
-                  <Stack spacing={2}>
+                  </div>
+                  <div className="space-y-3">
                     <DebugToggle
                       title="V-Sync"
                       description="Synchronize frame rate with display"
@@ -97,16 +93,14 @@ export function Settings({ onBack }: SettingsProps) {
                       checked={motionBlur ?? false}
                       onChange={setMotionBlur}
                     />
-                  </Stack>
-                </Stack>
-              </CardContent>
-            </Card>
-          )}
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
 
-          {activeTab === 1 && (
-            <Card>
-              <CardContent sx={{ p: 4 }}>
-                <Stack spacing={6}>
+            <TabsContent value="audio">
+              <Card>
+                <CardContent className="p-6 space-y-8">
                   <VolumeControl
                     label="Master Volume"
                     value={masterVolume ?? 80}
@@ -125,15 +119,13 @@ export function Settings({ onBack }: SettingsProps) {
                     onChange={setSfxVolume}
                     iconWeight="fill"
                   />
-                </Stack>
-              </CardContent>
-            </Card>
-          )}
+                </CardContent>
+              </Card>
+            </TabsContent>
 
-          {activeTab === 2 && (
-            <Card>
-              <CardContent sx={{ p: 4 }}>
-                <Stack spacing={6}>
+            <TabsContent value="controls">
+              <Card>
+                <CardContent className="p-6 space-y-8">
                   <VolumeControl
                     label="Mouse Sensitivity"
                     value={mouseSensitivity ?? 50}
@@ -146,26 +138,26 @@ export function Settings({ onBack }: SettingsProps) {
                     checked={invertY ?? false}
                     onChange={setInvertY}
                   />
-                </Stack>
-              </CardContent>
-            </Card>
-          )}
+                </CardContent>
+              </Card>
+            </TabsContent>
 
-          {activeTab === 3 && (
-            <Card>
-              <CardContent sx={{ p: 4 }}>
-                <Stack spacing={4}>
-                  <TextField
-                    label="Display Name"
-                    value={playerName}
-                    onChange={(e) => setPlayerName(e.target.value)}
-                    fullWidth
-                    variant="outlined"
-                  />
-                </Stack>
-              </CardContent>
-            </Card>
-          )}
+            <TabsContent value="profile">
+              <Card>
+                <CardContent className="p-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="player-name" className="text-base">Display Name</Label>
+                    <Input
+                      id="player-name"
+                      value={playerName}
+                      onChange={(e) => setPlayerName(e.target.value)}
+                      className="h-12 text-base"
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
         </motion.div>
       </ContentCard>
     </PageContainer>

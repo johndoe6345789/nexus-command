@@ -1,4 +1,5 @@
-import { Box, Typography, Switch, FormControlLabel } from '@mui/material'
+import { Label } from '@/components/ui/label'
+import { Switch } from '@/components/ui/switch'
 
 interface DebugToggleProps {
   title: string
@@ -9,23 +10,20 @@ interface DebugToggleProps {
 
 export function DebugToggle({ title, description, checked, onChange }: DebugToggleProps) {
   return (
-    <FormControlLabel
-      control={
-        <Switch
-          checked={checked}
-          onChange={(e) => onChange(e.target.checked)}
-        />
-      }
-      label={
-        <Box>
-          <Typography variant="h6">{title}</Typography>
-          <Typography variant="body2" color="text.secondary">
-            {description}
-          </Typography>
-        </Box>
-      }
-      labelPlacement="start"
-      sx={{ justifyContent: 'space-between', ml: 0 }}
-    />
+    <div className="flex items-center justify-between space-x-4 py-2">
+      <div className="flex-1">
+        <Label htmlFor={title} className="text-base font-semibold cursor-pointer">
+          {title}
+        </Label>
+        <p className="text-sm text-muted-foreground mt-0.5">
+          {description}
+        </p>
+      </div>
+      <Switch
+        id={title}
+        checked={checked}
+        onCheckedChange={onChange}
+      />
+    </div>
   )
 }

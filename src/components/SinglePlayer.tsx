@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Grid } from '@mui/material'
 import { PageContainer } from './atoms/PageContainer'
 import { BackButton } from './atoms/BackButton'
 import { ContentCard } from './atoms/ContentCard'
@@ -25,15 +24,15 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
       <BackButton onBack={onBack} />
       <ContentCard>
         <PageHeader title="Campaign" subtitle="Select your battlefield and difficulty" />
-        <Grid container spacing={4}>
-          <Grid size={{ xs: 12, lg: 8 }}>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div className="lg:col-span-8">
             <MapSelectionGrid
               maps={maps}
               selectedMap={selectedMap}
               onSelectMap={setSelectedMap}
             />
-          </Grid>
-          <Grid size={{ xs: 12, lg: 4 }}>
+          </div>
+          <div className="lg:col-span-4">
             <MissionControlPanel
               difficulties={difficulties}
               selectedDifficulty={difficulty}
@@ -43,8 +42,8 @@ export function SinglePlayer({ onBack }: SinglePlayerProps) {
               onStart={handleStart}
               loading={loading}
             />
-          </Grid>
-        </Grid>
+          </div>
+        </div>
       </ContentCard>
     </PageContainer>
   )

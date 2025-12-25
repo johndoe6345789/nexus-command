@@ -1,6 +1,8 @@
-import { Card, CardContent, Box, Typography, Stack, Chip } from '@mui/material'
 import { MapTrifold } from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
+import { Card, CardContent } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { cn } from '@/lib/utils'
 
 interface MapCardProps {
   id: string
@@ -20,39 +22,25 @@ export function MapCard({ id, name, terrain, players, selected, onSelect, delay 
       transition={{ delay }}
     >
       <Card
-        sx={{
-          cursor: 'pointer',
-          border: selected ? '2px solid' : '1px solid',
-          borderColor: selected ? 'primary.main' : 'divider',
-          bgcolor: 'background.paper',
-          backgroundImage: selected
-            ? 'linear-gradient(135deg, oklch(0.75 0.20 220 / 0.05), oklch(0.70 0.18 35 / 0.05))'
-            : 'none',
-          transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
-        }}
+        className={cn(
+          'cursor-pointer transition-all duration-300 hover:shadow-lg',
+          selected 
+            ? 'border-2 border-primary bg-gradient-to-br from-[oklch(0.75_0.20_220/0.05)] to-[oklch(0.70_0.18_35/0.05)]' 
+            : 'border-border hover:border-primary/50'
+        )}
         onClick={() => onSelect(id)}
       >
-        <CardContent>
-          <Box
-            sx={{
-              aspectRatio: '16/9',
-              background: 'linear-gradient(135deg, oklch(0.75 0.20 220 / 0.2), oklch(0.70 0.18 35 / 0.2))',
-              borderRadius: 2,
-              mb: 2,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <MapTrifold size={64} weight="duotone" style={{ opacity: 0.6 }} />
-          </Box>
-          <Typography variant="h5" sx={{ mb: 1 }}>
+        <CardContent className="p-4">
+          <div className="aspect-video bg-gradient-to-br from-[oklch(0.75_0.20_220/0.2)] to-[oklch(0.70_0.18_35/0.2)] rounded-lg mb-3 flex items-center justify-center">
+            <MapTrifold size={64} weight="duotone" className="opacity-60" />
+          </div>
+          <h5 className="font-heading text-lg font-bold mb-2 text-foreground">
             {name}
-          </Typography>
-          <Stack direction="row" spacing={1}>
-            <Chip label={terrain} size="small" />
-            <Chip label={players} size="small" variant="outlined" />
-          </Stack>
+          </h5>
+          <div className="flex gap-2">
+            <Badge variant="secondary">{terrain}</Badge>
+            <Badge variant="outline">{players}</Badge>
+          </div>
         </CardContent>
       </Card>
     </motion.div>

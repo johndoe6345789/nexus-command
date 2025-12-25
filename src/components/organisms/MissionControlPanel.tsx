@@ -1,7 +1,9 @@
-import { Card, CardContent, Typography, Stack, Box, Button, CircularProgress } from '@mui/material'
 import { Play } from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
 import { DifficultySelector } from '../molecules/DifficultySelector'
+import { Card, CardContent } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Loader2 } from 'lucide-react'
 
 interface Difficulty {
   id: string
@@ -37,46 +39,55 @@ export function MissionControlPanel({
       transition={{ delay: 0.3 }}
     >
       <Card>
-        <CardContent sx={{ p: 4 }}>
-          <Typography variant="h4" sx={{ mb: 3 }}>
+        <CardContent className="p-6 space-y-6">
+          <h3 className="font-heading text-2xl font-bold text-foreground">
             Difficulty
-          </Typography>
+          </h3>
           <DifficultySelector
             difficulties={difficulties}
             selected={selectedDifficulty}
             onSelect={onSelectDifficulty}
           />
 
-          <Box sx={{ pt: 3, mb: 4, mt: 4, borderTop: 1, borderColor: 'divider' }}>
+          <div className="pt-4 border-t border-border">
             <Button
-              variant="contained"
-              size="large"
-              fullWidth
+              size="lg"
               onClick={onStart}
               disabled={!selectedMap || loading}
-              startIcon={loading ? <CircularProgress size={20} /> : <Play size={24} weight="fill" />}
-              sx={{ height: '64px', fontSize: '1.25rem' }}
+              className="w-full h-16 text-lg font-heading gap-2"
             >
-              {loading ? 'Loading...' : 'Start Mission'}
+              {loading ? (
+                <>
+                  <Loader2 className="h-6 w-6 animate-spin" />
+                  Loading...
+                </>
+              ) : (
+                <>
+                  <Play size={24} weight="fill" />
+                  Start Mission
+                </>
+              )}
             </Button>
-          </Box>
+          </div>
 
           {selectedMap && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
+              className="space-y-2 text-sm text-muted-foreground"
             >
-              <Stack spacing={1} sx={{ fontSize: '0.875rem', color: 'text.secondary' }}>
-                <Typography variant="body2">
-                  <strong>Map:</strong> {mapName}
-                </Typography>
-                <Typography variant="body2">
-                  <strong>Difficulty:</strong> {selectedDifficultyData?.label}
-                </Typography>
-                <Typography variant="body2">
-                  <strong>AI Bots:</strong> Enabled
-                </Typography>
-              </Stack>
+              <div className="flex justify-between">
+                <span>Map:</span>
+                <span className="font-semibold text-foreground">{mapName}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Difficulty:</span>
+                <span className="font-semibold text-foreground">{selectedDifficultyData?.label}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>AI Bots:</span>
+                <span className="font-semibold text-foreground">Enabled</span>
+              </div>
             </motion.div>
           )}
         </CardContent>

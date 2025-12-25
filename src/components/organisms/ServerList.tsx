@@ -1,8 +1,9 @@
-import { Stack, TextField } from '@mui/material'
 import { motion } from 'framer-motion'
 import { ServerCard } from '../molecules/ServerCard'
 import { Server } from '@/types'
 import { filterServers } from '@/utils'
+import { Input } from '@/components/ui/input'
+import { ScrollArea } from '@/components/ui/scroll-area'
 
 interface ServerListProps {
   servers: Server[]
@@ -28,12 +29,11 @@ export function ServerList({
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
       >
-        <TextField
+        <Input
           placeholder="Search servers or maps..."
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
-          fullWidth
-          sx={{ mb: 3 }}
+          className="mb-4 h-12"
         />
       </motion.div>
 
@@ -42,17 +42,19 @@ export function ServerList({
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
       >
-        <Stack spacing={2} sx={{ maxHeight: '600px', overflowY: 'auto', pr: 1 }}>
-          {filteredServers.map((server, index) => (
-            <ServerCard
-              key={server.id}
-              {...server}
-              selected={selectedServer === server.id}
-              onSelect={onSelectServer}
-              delay={0.3 + index * 0.05}
-            />
-          ))}
-        </Stack>
+        <ScrollArea className="h-[600px]">
+          <div className="space-y-3 pr-4">
+            {filteredServers.map((server, index) => (
+              <ServerCard
+                key={server.id}
+                {...server}
+                selected={selectedServer === server.id}
+                onSelect={onSelectServer}
+                delay={0.3 + index * 0.05}
+              />
+            ))}
+          </div>
+        </ScrollArea>
       </motion.div>
     </>
   )

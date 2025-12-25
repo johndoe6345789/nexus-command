@@ -1,6 +1,9 @@
-import { Card, CardContent, Stack, Box, Typography, Chip, LinearProgress } from '@mui/material'
 import { Users, WifiHigh } from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
+import { Card, CardContent } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Progress } from '@/components/ui/progress'
+import { cn } from '@/lib/utils'
 
 interface ServerCardProps {
   id: string
@@ -36,49 +39,49 @@ export function ServerCard({
       transition={{ delay }}
     >
       <Card
-        sx={{
-          cursor: 'pointer',
-          border: selected ? '2px solid' : '1px solid',
-          borderColor: selected ? 'primary.main' : 'divider',
-          bgcolor: 'background.paper',
-          backgroundImage: selected
-            ? 'linear-gradient(135deg, oklch(0.75 0.20 220 / 0.05), oklch(0.70 0.18 35 / 0.05))'
-            : 'none',
-          transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
-        }}
+        className={cn(
+          'cursor-pointer transition-all duration-300 hover:shadow-lg',
+          selected 
+            ? 'border-2 border-primary bg-gradient-to-br from-[oklch(0.75_0.20_220/0.05)] to-[oklch(0.70_0.18_35/0.05)]' 
+            : 'border-border hover:border-primary/50'
+        )}
         onClick={() => onSelect(id)}
       >
-        <CardContent>
-          <Stack direction="row" justifyContent="space-between" alignItems="center">
-            <Box sx={{ flex: 1 }}>
-              <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 1 }}>
-                <Typography variant="h6">{name}</Typography>
-                <Chip
-                  icon={<WifiHigh size={14} weight="bold" />}
-                  label={`${ping}ms`}
-                  size="small"
-                  color={ping < 50 ? 'primary' : 'default'}
-                />
-              </Stack>
-              <Stack direction="row" spacing={1} alignItems="center" sx={{ color: 'text.secondary', fontSize: '0.875rem' }}>
-                <Typography variant="body2">{map}</Typography>
-                <Typography variant="body2">•</Typography>
-                <Typography variant="body2">{mode}</Typography>
-                <Typography variant="body2">•</Typography>
-                <Chip label={region} size="small" variant="outlined" />
-              </Stack>
-            </Box>
-            <Stack direction="row" alignItems="center" spacing={1} sx={{ color: 'text.secondary' }}>
+        <CardContent className="p-4">
+          <div className="flex justify-between items-center">
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-3 mb-2">
+                <h6 className="font-heading text-base font-bold text-foreground truncate">
+                  {name}
+                </h6>
+                <Badge 
+                  variant={ping < 50 ? 'default' : 'secondary'}
+                  className="flex items-center gap-1 flex-shrink-0"
+                >
+                  <WifiHigh size={14} weight="bold" />
+                  {ping}ms
+                </Badge>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground flex-wrap">
+                <span>{map}</span>
+                <span>•</span>
+                <span>{mode}</span>
+                <span>•</span>
+                <Badge variant="outline" className="text-xs">
+                  {region}
+                </Badge>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 text-muted-foreground ml-4 flex-shrink-0">
               <Users size={24} weight="bold" />
-              <Typography variant="h6">
+              <span className="font-heading text-lg font-bold text-foreground">
                 {players}/{maxPlayers}
-              </Typography>
-            </Stack>
-          </Stack>
-          <LinearProgress
-            variant="determinate"
-            value={(players / maxPlayers) * 100}
-            sx={{ mt: 2, height: 6, borderRadius: 1 }}
+              </span>
+            </div>
+          </div>
+          <Progress 
+            value={(players / maxPlayers) * 100} 
+            className="mt-3 h-2"
           />
         </CardContent>
       </Card>

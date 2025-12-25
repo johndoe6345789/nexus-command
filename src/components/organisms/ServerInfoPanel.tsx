@@ -1,6 +1,7 @@
-import { Card, CardContent, Typography, Stack, Box, Button } from '@mui/material'
 import { Plug } from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
+import { Card, CardContent } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 
 interface Server {
   id: string
@@ -25,59 +26,57 @@ export function ServerInfoPanel({ server, onJoin }: ServerInfoPanelProps) {
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.3 }}
     >
-      <Card sx={{ position: 'sticky', top: 32 }}>
-        <CardContent sx={{ p: 4 }}>
-          <Typography variant="h4" sx={{ mb: 3 }}>
+      <Card className="sticky top-8">
+        <CardContent className="p-6 space-y-6">
+          <h3 className="font-heading text-2xl font-bold text-foreground">
             Server Info
-          </Typography>
+          </h3>
           {server ? (
-            <Stack spacing={2} sx={{ mb: 4 }}>
-              <Stack direction="row" justifyContent="space-between">
-                <Typography color="text.secondary">Name:</Typography>
-                <Typography fontWeight="bold">{server.name}</Typography>
-              </Stack>
-              <Stack direction="row" justifyContent="space-between">
-                <Typography color="text.secondary">Map:</Typography>
-                <Typography fontWeight="bold">{server.map}</Typography>
-              </Stack>
-              <Stack direction="row" justifyContent="space-between">
-                <Typography color="text.secondary">Mode:</Typography>
-                <Typography fontWeight="bold">{server.mode}</Typography>
-              </Stack>
-              <Stack direction="row" justifyContent="space-between">
-                <Typography color="text.secondary">Region:</Typography>
-                <Typography fontWeight="bold">{server.region}</Typography>
-              </Stack>
-              <Stack direction="row" justifyContent="space-between">
-                <Typography color="text.secondary">Players:</Typography>
-                <Typography fontWeight="bold">
+            <div className="space-y-3 text-sm">
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Name:</span>
+                <span className="font-semibold text-foreground">{server.name}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Map:</span>
+                <span className="font-semibold text-foreground">{server.map}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Mode:</span>
+                <span className="font-semibold text-foreground">{server.mode}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Region:</span>
+                <span className="font-semibold text-foreground">{server.region}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Players:</span>
+                <span className="font-semibold text-foreground">
                   {server.players}/{server.maxPlayers}
-                </Typography>
-              </Stack>
-              <Stack direction="row" justifyContent="space-between">
-                <Typography color="text.secondary">Ping:</Typography>
-                <Typography fontWeight="bold">{server.ping}ms</Typography>
-              </Stack>
-            </Stack>
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Ping:</span>
+                <span className="font-semibold text-foreground">{server.ping}ms</span>
+              </div>
+            </div>
           ) : (
-            <Typography color="text.secondary" sx={{ mb: 4 }}>
+            <p className="text-sm text-muted-foreground">
               Select a server to view details
-            </Typography>
+            </p>
           )}
 
-          <Box sx={{ pt: 3, borderTop: 1, borderColor: 'divider' }}>
+          <div className="pt-4 border-t border-border">
             <Button
-              variant="contained"
-              size="large"
-              fullWidth
+              size="lg"
               onClick={onJoin}
               disabled={!server}
-              startIcon={<Plug size={24} weight="bold" />}
-              sx={{ height: '64px', fontSize: '1.25rem' }}
+              className="w-full h-16 text-lg font-heading gap-2"
             >
+              <Plug size={24} weight="bold" />
               Join Server
             </Button>
-          </Box>
+          </div>
         </CardContent>
       </Card>
     </motion.div>

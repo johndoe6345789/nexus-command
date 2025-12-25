@@ -1,4 +1,4 @@
-import { Box, Stack, Typography, Chip } from '@mui/material'
+import { Badge } from '@/components/ui/badge'
 
 interface MatchHistoryCardProps {
   map: string
@@ -10,41 +10,33 @@ interface MatchHistoryCardProps {
 
 export function MatchHistoryCard({ map, mode, result, score, date }: MatchHistoryCardProps) {
   return (
-    <Box
-      sx={{
-        p: 2,
-        borderRadius: 2,
-        bgcolor: 'secondary.main',
-        opacity: 0.5,
-        '&:hover': {
-          opacity: 0.7,
-        },
-        transition: 'opacity 0.3s',
-      }}
-    >
-      <Stack direction="row" justifyContent="space-between" alignItems="center">
-        <Box>
-          <Typography variant="h6" fontWeight="bold">
+    <div className="p-3 rounded-lg bg-secondary/50 hover:bg-secondary/70 transition-all duration-300">
+      <div className="flex justify-between items-center">
+        <div>
+          <h6 className="font-heading text-base font-bold text-foreground mb-1">
             {map}
-          </Typography>
-          <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 0.5 }}>
-            <Chip label={mode} size="small" variant="outlined" />
-            <Typography variant="body2" color="text.secondary">
+          </h6>
+          <div className="flex items-center gap-2">
+            <Badge variant="outline" className="text-xs">
+              {mode}
+            </Badge>
+            <span className="text-sm text-muted-foreground">
               {date}
-            </Typography>
-          </Stack>
-        </Box>
-        <Box sx={{ textAlign: 'right' }}>
-          <Chip
-            label={result}
-            color={result === 'Victory' ? 'primary' : 'error'}
-            sx={{ mb: 1 }}
-          />
-          <Typography variant="body2" color="text.secondary">
+            </span>
+          </div>
+        </div>
+        <div className="text-right">
+          <Badge 
+            variant={result === 'Victory' ? 'default' : 'destructive'}
+            className="mb-1"
+          >
+            {result}
+          </Badge>
+          <p className="text-sm text-muted-foreground">
             {score}
-          </Typography>
-        </Box>
-      </Stack>
-    </Box>
+          </p>
+        </div>
+      </div>
+    </div>
   )
 }

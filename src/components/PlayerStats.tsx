@@ -1,4 +1,3 @@
-import { Card, CardContent, Stack, Grid } from '@mui/material'
 import { Trophy, Crosshair, Target, Skull } from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
 import { useKV } from '@github/spark/hooks'
@@ -11,6 +10,7 @@ import { MatchHistoryCard } from './molecules/MatchHistoryCard'
 import { MatchResult } from '@/types'
 import { calculateKD, calculateWinRate } from '@/utils'
 import { PlayerStatsProps } from './props'
+import { Card, CardContent } from '@/components/ui/card'
 
 export function PlayerStats({ onBack }: PlayerStatsProps) {
   const [playerName] = useKV<string>('player-name', 'Operator')
@@ -45,87 +45,75 @@ export function PlayerStats({ onBack }: PlayerStatsProps) {
           iconColor="oklch(0.70 0.18 35)"
         />
 
-        <Grid container spacing={3} sx={{ mb: 4 }}>
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-            >
-              <StatCard
-                icon={Crosshair}
-                iconColor="oklch(0.75 0.20 220)"
-                label="K/D Ratio"
-                value={kd}
-              />
-            </motion.div>
-          </Grid>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+          >
+            <StatCard
+              icon={Crosshair}
+              iconColor="oklch(0.75 0.20 220)"
+              label="K/D Ratio"
+              value={kd}
+            />
+          </motion.div>
 
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-            >
-              <StatCard
-                icon={Trophy}
-                iconColor="oklch(0.70 0.18 35)"
-                label="Win Rate"
-                value={`${winRate}%`}
-              />
-            </motion.div>
-          </Grid>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            <StatCard
+              icon={Trophy}
+              iconColor="oklch(0.70 0.18 35)"
+              label="Win Rate"
+              value={`${winRate}%`}
+            />
+          </motion.div>
 
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-            >
-              <StatCard
-                icon={Target}
-                iconColor="#4ade80"
-                label="Accuracy"
-                value={`${stats.accuracy}%`}
-              />
-            </motion.div>
-          </Grid>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            <StatCard
+              icon={Target}
+              iconColor="#4ade80"
+              label="Accuracy"
+              value={`${stats.accuracy}%`}
+            />
+          </motion.div>
 
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-            >
-              <StatCard
-                icon={Skull}
-                iconColor="#f87171"
-                label="Headshots"
-                value={stats.headshots}
-              />
-            </motion.div>
-          </Grid>
-        </Grid>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+          >
+            <StatCard
+              icon={Skull}
+              iconColor="#f87171"
+              label="Headshots"
+              value={stats.headshots}
+            />
+          </motion.div>
+        </div>
 
-        <Grid container spacing={4}>
-          <Grid size={{ xs: 12, lg: 6 }}>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-            >
-              <Card>
-                <CardContent sx={{ p: 4 }}>
-                  <Stack spacing={2}>
-                    {recentMatches.map((match, index) => (
-                      <MatchHistoryCard key={index} {...match} />
-                    ))}
-                  </Stack>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </Grid>
-        </Grid>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+          >
+            <Card>
+              <CardContent className="p-6 space-y-3">
+                {recentMatches.map((match, index) => (
+                  <MatchHistoryCard key={index} {...match} />
+                ))}
+              </CardContent>
+            </Card>
+          </motion.div>
+        </div>
       </ContentCard>
     </PageContainer>
   )
