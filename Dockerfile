@@ -1,21 +1,20 @@
 # Multi-stage build for Next.js static export
-FROM node:20-alpine AS base
+FROM node:20-alpine AS builder
 
-# Install dependencies only when needed
-FROM base AS deps
 WORKDIR /app
 
 # Copy package files
 COPY package.json package-lock.json* ./
-RUN npm ci --legacy-peer-deps
 
-# Build the application
-FROM base AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
+# Install dependencies using npm with --ignore-scripts to avoid the exit handler bug
+RUN npm install --legacy-peer-deps --ignore-scripts && \
+    npm rebuild
+
+# Copy application files
 COPY . .
 
 # Build Next.js app (static export)
+ENV NODE_ENV=production
 RUN npm run build
 
 # Production image - serve static files with nginx
