@@ -24,7 +24,6 @@ import { PullToRefresh } from '@/components/atoms/PullToRefresh'
 import { Alert, Achievement } from '@/types'
 import { ACHIEVEMENT_DEFINITIONS } from '@/constants'
 import { useKV } from '@github/spark/hooks'
-import { toast } from 'sonner'
 
 interface TopBarProps {
   className?: string
@@ -88,12 +87,10 @@ export function TopBar({ className }: TopBarProps) {
 
   const handleRefreshAlerts = async () => {
     await new Promise(resolve => setTimeout(resolve, 800))
-    toast.success('Alerts refreshed')
   }
 
   const handleRefreshAchievements = async () => {
     await new Promise(resolve => setTimeout(resolve, 800))
-    toast.success('Achievements refreshed')
   }
 
   const sortedAlerts = [...(alerts ?? [])].sort((a, b) => {

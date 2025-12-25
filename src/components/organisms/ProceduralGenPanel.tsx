@@ -1,7 +1,6 @@
 import { Card, CardContent, Stack, Typography, Button, TextField, Grid, Chip, Box } from '@mui/material'
 import { Category, Public, Park, Terrain, Business, Shuffle, Download, PlayArrow, Refresh } from '@mui/icons-material'
 import { useState, useRef, useEffect } from 'react'
-import { toast } from 'sonner'
 import { useKV } from '@github/spark/hooks'
 
 interface GenerationOption {
@@ -305,7 +304,6 @@ export function ProceduralGenPanel({
 
   const handleExport = () => {
     if (!currentMapData) {
-      toast.error('Generate a map first')
       return
     }
 
@@ -315,7 +313,6 @@ export function ProceduralGenPanel({
     }
 
     navigator.clipboard.writeText(JSON.stringify(exportData, null, 2))
-    toast.success('Map data exported to clipboard')
   }
 
   const handleRegenerate = () => {

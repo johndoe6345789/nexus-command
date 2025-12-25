@@ -10,7 +10,6 @@ import { Multiplayer } from './components/Multiplayer'
 import { Settings } from './components/Settings'
 import { PlayerStats } from './components/PlayerStats'
 import { Developer } from './components/Developer'
-import { Toaster } from '@/components/ui/sonner'
 import { Screen } from '@/types'
 import { handleNavigate } from '@/handlers'
 import { useWelcomeAlerts } from '@/hooks/use-welcome-alerts'
@@ -49,8 +48,6 @@ function App() {
           {currentScreen === 'stats' && <PlayerStats onBack={handleBack} />}
           {currentScreen === 'developer' && <Developer onBack={handleBack} />}
         </Box>
-
-        <Toaster position="top-center" />
       </Box>
     </ThemeProvider>
   )

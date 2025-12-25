@@ -3,7 +3,6 @@ import { useRef, useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowsClockwise } from '@phosphor-icons/react'
 import { usePullToRefresh } from '@/hooks/use-pull-to-refresh'
-import { toast } from 'sonner'
 
 interface ConsolePanelProps {
   output: string[]
@@ -29,7 +28,6 @@ export function ConsolePanel({ output, input, onInputChange, onSubmit }: Console
   const handleRefresh = async () => {
     await new Promise(resolve => setTimeout(resolve, 600))
     setRefreshKey(prev => prev + 1)
-    toast.success('Console refreshed')
   }
 
   const { isPulling, isRefreshing, pullDistance, progress, scrollableRef } = 

@@ -1,9 +1,7 @@
-import { Play } from '@phosphor-icons/react'
+import { Play, CircleNotch } from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
 import { DifficultySelector } from '../molecules/DifficultySelector'
-import { Card, CardContent } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Loader2 } from 'lucide-react'
+import { Paper, Button } from '@mui/material'
 
 interface Difficulty {
   id: string
@@ -38,8 +36,8 @@ export function MissionControlPanel({
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.3 }}
     >
-      <Card>
-        <CardContent className="p-6 space-y-6">
+      <Paper sx={{ p: 3 }}>
+        <div className="space-y-6">
           <h3 className="font-heading text-2xl font-bold text-foreground">
             Difficulty
           </h3>
@@ -51,14 +49,16 @@ export function MissionControlPanel({
 
           <div className="pt-4 border-t border-border">
             <Button
-              size="lg"
+              size="large"
               onClick={onStart}
               disabled={!selectedMap || loading}
-              className="w-full h-16 text-lg font-heading gap-2"
+              fullWidth
+              variant="contained"
+              sx={{ height: '64px', fontSize: '1.125rem', fontFamily: 'var(--font-heading)', gap: 1 }}
             >
               {loading ? (
                 <>
-                  <Loader2 className="h-6 w-6 animate-spin" />
+                  <CircleNotch size={24} className="animate-spin" />
                   Loading...
                 </>
               ) : (
@@ -90,8 +90,8 @@ export function MissionControlPanel({
               </div>
             </motion.div>
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </Paper>
     </motion.div>
   )
 }

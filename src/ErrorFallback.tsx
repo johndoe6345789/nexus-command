@@ -1,40 +1,44 @@
-import { Alert, AlertTitle, AlertDescription } from "./components/ui/alert";
-import { Button } from "./components/ui/button";
-
-import { AlertTriangleIcon, RefreshCwIcon } from "lucide-react";
+import { Box, Alert, AlertTitle, Button, Paper, Typography } from "@mui/material";
+import { Warning, Refresh } from "@mui/icons-material";
 
 export const ErrorFallback = ({ error, resetErrorBoundary }) => {
-  // When encountering an error in the development mode, rethrow it and don't display the boundary.
-  // The parent UI will take care of showing a more helpful dialog.
   if (import.meta.env.DEV) throw error;
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        <Alert variant="destructive" className="mb-6">
-          <AlertTriangleIcon />
+    <Box sx={{ 
+      minHeight: '100vh', 
+      bgcolor: 'background.default', 
+      display: 'flex', 
+      alignItems: 'center', 
+      justifyContent: 'center', 
+      p: 2 
+    }}>
+      <Box sx={{ width: '100%', maxWidth: 'md' }}>
+        <Alert severity="error" sx={{ mb: 3 }} icon={<Warning />}>
           <AlertTitle>This spark has encountered a runtime error</AlertTitle>
-          <AlertDescription>
-            Something unexpected happened while running the application. The error details are shown below. Contact the spark author and let them know about this issue.
-          </AlertDescription>
+          Something unexpected happened while running the application. The error details are shown below. Contact the spark author and let them know about this issue.
         </Alert>
         
-        <div className="bg-card border rounded-lg p-4 mb-6">
-          <h3 className="font-semibold text-sm text-muted-foreground mb-2">Error Details:</h3>
-          <pre className="text-xs text-destructive bg-muted/50 p-3 rounded border overflow-auto max-h-32">
-            {error.message}
-          </pre>
-        </div>
+        <Paper sx={{ p: 2, mb: 3 }}>
+          <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+            Error Details:
+          </Typography>
+          <Paper variant="outlined" sx={{ p: 2, bgcolor: 'action.hover', maxHeight: '8rem', overflow: 'auto' }}>
+            <Typography variant="caption" component="pre" color="error">
+              {error.message}
+            </Typography>
+          </Paper>
+        </Paper>
         
         <Button 
           onClick={resetErrorBoundary} 
-          className="w-full"
-          variant="outline"
+          fullWidth
+          variant="outlined"
+          startIcon={<Refresh />}
         >
-          <RefreshCwIcon />
           Try Again
         </Button>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
