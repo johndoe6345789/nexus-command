@@ -294,7 +294,6 @@ export function ProceduralGenPanel({
     
     setGenerationHistory((current) => [mapData, ...(current || [])].slice(0, 10))
     
-    toast.success(`Generated ${selectedType} with seed: ${actualSeed}`)
     onGenerationEnd()
   }
 
