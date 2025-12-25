@@ -1,14 +1,13 @@
+import { Typography } from '@mui/material'
 import { motion } from 'framer-motion'
 import { ReactNode } from 'react'
-import { cn } from '@/lib/utils'
 
 interface TextProps {
   variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'body1' | 'body2' | 'caption'
   align?: 'left' | 'center' | 'right'
-  color?: string
+  color?: 'primary' | 'secondary' | 'text.secondary' | string
   animated?: boolean
   gradient?: boolean
-  className?: string
   sx?: Record<string, any>
   children: ReactNode
 }
@@ -20,39 +19,19 @@ export function Text({
   variant = 'body1',
   align = 'left',
   color,
-  className,
-  sx,
+  sx = {},
 }: TextProps) {
-  const variantClasses = {
-    h1: 'text-5xl font-bold font-heading',
-    h2: 'text-4xl font-bold font-heading',
-    h3: 'text-3xl font-bold font-heading',
-    h4: 'text-2xl font-bold font-heading',
-    h5: 'text-xl font-semibold font-heading',
-    h6: 'text-lg font-semibold font-heading',
-    body1: 'text-base',
-    body2: 'text-sm',
-    caption: 'text-xs',
+  const gradientStyle = gradient ? {
+    background: 'linear-gradient(90deg, #6495ff, #ff9664)',
+    WebkitBackgroundClip: 'text',
+    WebkitTextFillColor: 'transparent',
+    backgroundClip: 'text',
+  } : {}
+
+  const combinedSx = {
+    ...gradientStyle,
+    ...sx,
   }
-
-  const alignClasses = {
-    left: 'text-left',
-    center: 'text-center',
-    right: 'text-right',
-  }
-
-  const gradientStyle = gradient ? 
-    'bg-gradient-to-r from-[oklch(0.75_0.20_220)] to-[oklch(0.70_0.18_35)] bg-clip-text text-transparent' : ''
-
-  const colorClass = color === 'text.secondary' ? 'text-muted-foreground' : ''
-
-  const combinedClassName = cn(
-    variantClasses[variant],
-    alignClasses[align],
-    gradientStyle,
-    colorClass,
-    className
-  )
 
   if (animated) {
     return (
@@ -60,17 +39,17 @@ export function Text({
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className={combinedClassName}
-        style={sx}
       >
-        {children}
+        <Typography variant={variant} align={align} color={color} sx={combinedSx}>
+          {children}
+        </Typography>
       </motion.div>
     )
   }
 
   return (
-    <div className={combinedClassName} style={sx}>
+    <Typography variant={variant} align={align} color={color} sx={combinedSx}>
       {children}
-    </div>
+    </Typography>
   )
 }

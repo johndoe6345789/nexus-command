@@ -2,7 +2,8 @@ import { Box, Alert, AlertTitle, Button, Paper, Typography } from "@mui/material
 import { Warning, Refresh } from "@mui/icons-material";
 
 export const ErrorFallback = ({ error, resetErrorBoundary }) => {
-  if (import.meta.env.DEV) throw error;
+  // In development, rethrow to get better error messages
+  if (process.env.NODE_ENV === 'development') throw error;
 
   return (
     <Box sx={{ 
@@ -15,8 +16,8 @@ export const ErrorFallback = ({ error, resetErrorBoundary }) => {
     }}>
       <Box sx={{ width: '100%', maxWidth: 'md' }}>
         <Alert severity="error" sx={{ mb: 3 }} icon={<Warning />}>
-          <AlertTitle>This spark has encountered a runtime error</AlertTitle>
-          Something unexpected happened while running the application. The error details are shown below. Contact the spark author and let them know about this issue.
+          <AlertTitle>This application has encountered a runtime error</AlertTitle>
+          Something unexpected happened while running the application. The error details are shown below.
         </Alert>
         
         <Paper sx={{ p: 2, mb: 3 }}>
