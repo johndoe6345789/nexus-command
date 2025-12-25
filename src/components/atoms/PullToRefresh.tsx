@@ -31,7 +31,7 @@ export function PullToRefresh({
             initial={{ opacity: 0, y: -20 }}
             animate={{ 
               opacity: isRefreshing ? 1 : Math.max(0.3, progress),
-              y: Math.min(pullDistance * 0.5, 60)
+              y: Math.min(pullDistance * 0.5, 50)
             }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.2 }}
