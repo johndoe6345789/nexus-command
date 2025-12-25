@@ -26,12 +26,10 @@ export function GenerationProgressPopup({
           style={{
             position: 'fixed',
             top: 24,
-            left: 24,
-            right: 24,
+            left: '50%',
+            transform: 'translateX(-50%)',
             zIndex: 9999,
-            margin: '0 auto',
             width: 'min(500px, calc(100vw - 48px))',
-            maxWidth: '500px',
           }}
         >
           <Card
