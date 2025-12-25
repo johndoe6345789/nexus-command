@@ -27,7 +27,7 @@ export function GenerationProgressPopup({
       setShowCelebration(true)
       const timer = setTimeout(() => {
         setShowCelebration(false)
-      }, 2800)
+      }, 5000)
       return () => clearTimeout(timer)
     } else {
       setIsComplete(false)
