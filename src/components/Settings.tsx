@@ -1,19 +1,34 @@
-import { Monitor, VolumeUp, SportsEsports, Person } from '@mui/icons-material'
-import { motion } from 'framer-motion'
+import { 
+  Monitor, 
+  VolumeUp, 
+  SportsEsports, 
+  Person,
+  MusicNote,
+  Mic
+} from '@mui/icons-material'
+import { 
+  Box,
+  Card,
+  CardContent,
+  Tabs,
+  Tab,
+  Typography,
+  Button,
+  ButtonGroup,
+  Slider,
+  Switch,
+  TextField,
+  Stack,
+  FormControlLabel,
+  Divider
+} from '@mui/material'
 import { useKV } from '@github/spark/hooks'
 import { useState } from 'react'
 import { PageContainer } from './atoms/PageContainer'
 import { BackButton } from './atoms/BackButton'
 import { ContentCard } from './atoms/ContentCard'
 import { PageHeader } from './atoms/PageHeader'
-import { VolumeControl } from './molecules/VolumeControl'
-import { DebugToggle } from './molecules/DebugToggle'
 import { SettingsProps } from './props'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Card, CardContent } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 
 export function Settings({ onBack }: SettingsProps) {
   const [graphicsQuality, setGraphicsQuality] = useKV<string>('graphics-quality', 'high')
@@ -26,7 +41,11 @@ export function Settings({ onBack }: SettingsProps) {
   const [vsync, setVsync] = useKV<boolean>('vsync', false)
   const [antiAliasing, setAntiAliasing] = useKV<boolean>('anti-aliasing', true)
   const [motionBlur, setMotionBlur] = useKV<boolean>('motion-blur', false)
-  const [activeTab, setActiveTab] = useState('graphics')
+  const [activeTab, setActiveTab] = useState(0)
+
+  const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
+    setActiveTab(newValue)
+  }
 
   return (
     <PageContainer maxWidth="1200px">
@@ -34,131 +53,219 @@ export function Settings({ onBack }: SettingsProps) {
       <ContentCard>
         <PageHeader title="Settings" subtitle="Configure your experience" />
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-        >
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-4 mb-6">
-              <TabsTrigger value="graphics" className="gap-2">
-                <Monitor sx={{ fontSize: 20 }} />
-                <span className="hidden sm:inline">Graphics</span>
-              </TabsTrigger>
-              <TabsTrigger value="audio" className="gap-2">
-                <VolumeUp sx={{ fontSize: 20 }} />
-                <span className="hidden sm:inline">Audio</span>
-              </TabsTrigger>
-              <TabsTrigger value="controls" className="gap-2">
-                <SportsEsports sx={{ fontSize: 20 }} />
-                <span className="hidden sm:inline">Controls</span>
-              </TabsTrigger>
-              <TabsTrigger value="profile" className="gap-2">
-                <Person sx={{ fontSize: 20 }} />
-                <span className="hidden sm:inline">Profile</span>
-              </TabsTrigger>
-            </TabsList>
+        <Box sx={{ mt: 3 }}>
+          <Tabs 
+            value={activeTab} 
+            onChange={handleTabChange}
+            variant="fullWidth"
+            sx={{ mb: 3 }}
+          >
+            <Tab icon={<Monitor />} label="Graphics" />
+            <Tab icon={<VolumeUp />} label="Audio" />
+            <Tab icon={<SportsEsports />} label="Controls" />
+            <Tab icon={<Person />} label="Profile" />
+          </Tabs>
 
-            <TabsContent value="graphics">
-              <Card>
-                <CardContent className="p-6 space-y-6">
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                    {['low', 'medium', 'high', 'ultra'].map((quality) => (
-                      <Button
-                        key={quality}
-                        variant={graphicsQuality === quality ? 'default' : 'outline'}
-                        onClick={() => setGraphicsQuality(quality)}
-                        className="h-14 font-heading"
-                      >
-                        {quality.charAt(0).toUpperCase() + quality.slice(1)}
-                      </Button>
-                    ))}
-                  </div>
-                  <div className="space-y-3">
-                    <DebugToggle
-                      title="V-Sync"
-                      description="Synchronize frame rate with display"
-                      checked={vsync ?? false}
-                      onChange={setVsync}
+          {activeTab === 0 && (
+            <Card>
+              <CardContent>
+                <Stack spacing={4}>
+                  <Box>
+                    <Typography variant="h6" gutterBottom>
+                      Graphics Quality
+                    </Typography>
+                    <ButtonGroup fullWidth variant="outlined" size="large">
+                      {['low', 'medium', 'high', 'ultra'].map((quality) => (
+                        <Button
+                          key={quality}
+                          variant={graphicsQuality === quality ? 'contained' : 'outlined'}
+                          onClick={() => setGraphicsQuality(quality)}
+                        >
+                          {quality.charAt(0).toUpperCase() + quality.slice(1)}
+                        </Button>
+                      ))}
+                    </ButtonGroup>
+                  </Box>
+                  
+                  <Divider />
+                  
+                  <Stack spacing={2}>
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          checked={vsync ?? false}
+                          onChange={(e) => setVsync(e.target.checked)}
+                        />
+                      }
+                      label={
+                        <Box>
+                          <Typography variant="body1" fontWeight="bold">V-Sync</Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            Synchronize frame rate with display
+                          </Typography>
+                        </Box>
+                      }
                     />
-                    <DebugToggle
-                      title="Anti-Aliasing"
-                      description="Smooth jagged edges"
-                      checked={antiAliasing ?? true}
-                      onChange={setAntiAliasing}
+                    
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          checked={antiAliasing ?? true}
+                          onChange={(e) => setAntiAliasing(e.target.checked)}
+                        />
+                      }
+                      label={
+                        <Box>
+                          <Typography variant="body1" fontWeight="bold">Anti-Aliasing</Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            Smooth jagged edges
+                          </Typography>
+                        </Box>
+                      }
                     />
-                    <DebugToggle
-                      title="Motion Blur"
-                      description="Add motion blur effect"
-                      checked={motionBlur ?? false}
-                      onChange={setMotionBlur}
+                    
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          checked={motionBlur ?? false}
+                          onChange={(e) => setMotionBlur(e.target.checked)}
+                        />
+                      }
+                      label={
+                        <Box>
+                          <Typography variant="body1" fontWeight="bold">Motion Blur</Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            Add motion blur effect
+                          </Typography>
+                        </Box>
+                      }
                     />
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
+                  </Stack>
+                </Stack>
+              </CardContent>
+            </Card>
+          )}
 
-            <TabsContent value="audio">
-              <Card>
-                <CardContent className="p-6 space-y-8">
-                  <VolumeControl
-                    label="Master Volume"
-                    value={masterVolume ?? 80}
-                    onChange={setMasterVolume}
-                    iconWeight="bold"
-                  />
-                  <VolumeControl
-                    label="Music Volume"
-                    value={musicVolume ?? 60}
-                    onChange={setMusicVolume}
-                    iconWeight="duotone"
-                  />
-                  <VolumeControl
-                    label="SFX Volume"
-                    value={sfxVolume ?? 90}
-                    onChange={setSfxVolume}
-                    iconWeight="fill"
-                  />
-                </CardContent>
-              </Card>
-            </TabsContent>
+          {activeTab === 1 && (
+            <Card>
+              <CardContent>
+                <Stack spacing={4}>
+                  <Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+                      <VolumeUp color="primary" />
+                      <Typography variant="h6">Master Volume</Typography>
+                      <Typography variant="body1" sx={{ ml: 'auto', fontWeight: 'bold' }}>
+                        {masterVolume}%
+                      </Typography>
+                    </Box>
+                    <Slider
+                      value={masterVolume ?? 80}
+                      onChange={(_e, value) => setMasterVolume(value as number)}
+                      min={0}
+                      max={100}
+                    />
+                  </Box>
+                  
+                  <Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+                      <MusicNote color="primary" />
+                      <Typography variant="h6">Music Volume</Typography>
+                      <Typography variant="body1" sx={{ ml: 'auto', fontWeight: 'bold' }}>
+                        {musicVolume}%
+                      </Typography>
+                    </Box>
+                    <Slider
+                      value={musicVolume ?? 60}
+                      onChange={(_e, value) => setMusicVolume(value as number)}
+                      min={0}
+                      max={100}
+                    />
+                  </Box>
+                  
+                  <Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+                      <Mic color="primary" />
+                      <Typography variant="h6">SFX Volume</Typography>
+                      <Typography variant="body1" sx={{ ml: 'auto', fontWeight: 'bold' }}>
+                        {sfxVolume}%
+                      </Typography>
+                    </Box>
+                    <Slider
+                      value={sfxVolume ?? 90}
+                      onChange={(_e, value) => setSfxVolume(value as number)}
+                      min={0}
+                      max={100}
+                    />
+                  </Box>
+                </Stack>
+              </CardContent>
+            </Card>
+          )}
 
-            <TabsContent value="controls">
-              <Card>
-                <CardContent className="p-6 space-y-8">
-                  <VolumeControl
-                    label="Mouse Sensitivity"
-                    value={mouseSensitivity ?? 50}
-                    onChange={setMouseSensitivity}
-                    iconWeight="bold"
+          {activeTab === 2 && (
+            <Card>
+              <CardContent>
+                <Stack spacing={4}>
+                  <Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+                      <SportsEsports color="primary" />
+                      <Typography variant="h6">Mouse Sensitivity</Typography>
+                      <Typography variant="body1" sx={{ ml: 'auto', fontWeight: 'bold' }}>
+                        {mouseSensitivity}%
+                      </Typography>
+                    </Box>
+                    <Slider
+                      value={mouseSensitivity ?? 50}
+                      onChange={(_e, value) => setMouseSensitivity(value as number)}
+                      min={0}
+                      max={100}
+                    />
+                  </Box>
+                  
+                  <Divider />
+                  
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={invertY ?? false}
+                        onChange={(e) => setInvertY(e.target.checked)}
+                      />
+                    }
+                    label={
+                      <Box>
+                        <Typography variant="body1" fontWeight="bold">Invert Y-Axis</Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          Invert vertical mouse movement
+                        </Typography>
+                      </Box>
+                    }
                   />
-                  <DebugToggle
-                    title="Invert Y-Axis"
-                    description="Invert vertical mouse movement"
-                    checked={invertY ?? false}
-                    onChange={setInvertY}
-                  />
-                </CardContent>
-              </Card>
-            </TabsContent>
+                </Stack>
+              </CardContent>
+            </Card>
+          )}
 
-            <TabsContent value="profile">
-              <Card>
-                <CardContent className="p-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="player-name" className="text-base">Display Name</Label>
-                    <Input
-                      id="player-name"
+          {activeTab === 3 && (
+            <Card>
+              <CardContent>
+                <Stack spacing={3}>
+                  <Box>
+                    <Typography variant="h6" gutterBottom>
+                      Display Name
+                    </Typography>
+                    <TextField
+                      fullWidth
                       value={playerName}
                       onChange={(e) => setPlayerName(e.target.value)}
-                      className="h-12 text-base"
+                      placeholder="Enter your name"
+                      variant="outlined"
                     />
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
-        </motion.div>
+                  </Box>
+                </Stack>
+              </CardContent>
+            </Card>
+          )}
+        </Box>
       </ContentCard>
     </PageContainer>
   )
