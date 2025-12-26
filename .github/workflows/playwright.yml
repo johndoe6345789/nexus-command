@@ -37,7 +37,7 @@ jobs:
         CI: true
     
     - name: Upload Playwright Report
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       if: always()
       with:
         name: playwright-report
@@ -46,7 +46,7 @@ jobs:
         compression-level: 9
     
     - name: Upload Test Screenshots
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       if: failure()
       with:
         name: test-screenshots
