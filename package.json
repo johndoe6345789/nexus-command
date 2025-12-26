@@ -8,7 +8,11 @@
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
-        "test": "playwright test",
+        "test": "npm run test:unit && npm run test:e2e",
+        "test:unit": "vitest run",
+        "test:unit:watch": "vitest",
+        "test:unit:ui": "vitest --ui",
+        "test:e2e": "playwright test",
         "test:headed": "playwright test --headed",
         "test:ui": "playwright test --ui",
         "test:debug": "playwright test --debug",
@@ -44,10 +48,12 @@
         "@types/node": "^22.10.2",
         "@types/react": "^19.0.10",
         "@types/react-dom": "^19.0.4",
+        "@vitest/ui": "^4.0.16",
         "eslint": "^9.39.2",
         "eslint-config-next": "^15.1.0",
         "postcss": "^8.4.49",
-        "typescript": "~5.7.2"
+        "typescript": "~5.7.2",
+        "vitest": "^4.0.16"
     },
     "workspaces": {
         "packages": [
