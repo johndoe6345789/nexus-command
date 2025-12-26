@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest'
 import {
   addAlert,
   unlockAchievement,
@@ -6,12 +6,17 @@ import {
   incrementAchievementProgress,
 } from '../notifications'
 
-// Mock console.log to avoid cluttering test output
-vi.spyOn(console, 'log').mockImplementation(() => {})
-
 describe('notifications', () => {
+  let consoleLogSpy: any
+
   beforeEach(() => {
-    vi.clearAllMocks()
+    // Mock console.log only for this test suite
+    consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
+  })
+
+  afterEach(() => {
+    // Restore console.log after each test
+    consoleLogSpy.mockRestore()
   })
 
   describe('addAlert', () => {

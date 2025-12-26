@@ -32,8 +32,8 @@ test.describe('Error Handling', () => {
     // Button should exist but mission start should be handled gracefully
     if (await startButton.isVisible()) {
       await startButton.click()
-      // Should not crash the application
-      await page.waitForTimeout(500)
+      // Verify the app doesn't crash - check that UI is still responsive
+      await expect(page.getByText('SELECT DIFFICULTY')).toBeVisible()
     }
   })
 
@@ -44,8 +44,8 @@ test.describe('Error Handling', () => {
     await input.fill('')
     await page.getByText('JOIN SERVER').click()
     
-    // Should handle empty input gracefully
-    await page.waitForTimeout(500)
+    // Should handle empty input gracefully - verify UI is still functional
+    await expect(page.getByText('AVAILABLE SERVERS')).toBeVisible()
   })
 
   test('should handle special characters in server address', async ({ page }) => {
@@ -55,8 +55,8 @@ test.describe('Error Handling', () => {
     await input.fill('test@#$%^&*()_+')
     await page.getByText('JOIN SERVER').click()
     
-    // Should handle special characters without crashing
-    await page.waitForTimeout(500)
+    // Should handle special characters without crashing - verify UI is still responsive
+    await expect(page.getByText('AVAILABLE SERVERS')).toBeVisible()
   })
 
   test('should maintain state after multiple screen transitions', async ({ page }) => {
@@ -174,8 +174,7 @@ test.describe('Accessibility Edge Cases', () => {
   test('should handle escape key on main menu', async ({ page }) => {
     await page.keyboard.press('Escape')
     
-    // Should not crash
-    await page.waitForTimeout(200)
+    // Should not crash - verify main menu is still visible
     await expect(page.getByText('ARENA COMMAND')).toBeVisible()
   })
 
@@ -183,16 +182,17 @@ test.describe('Accessibility Edge Cases', () => {
     await page.getByText('SINGLE PLAYER').click()
     await page.keyboard.press('Escape')
     
-    // Should not crash
-    await page.waitForTimeout(200)
+    // Should not crash - verify some content is still visible
+    const bodyText = await page.textContent('body')
+    expect(bodyText).toBeTruthy()
   })
 
   test('should handle enter key on focused button', async ({ page }) => {
     await page.keyboard.press('Tab')
     await page.keyboard.press('Enter')
     
-    // Should navigate to appropriate screen
-    await page.waitForTimeout(300)
+    // Should navigate to appropriate screen - verify content changed
+    await page.waitForLoadState('networkidle')
     const content = await page.textContent('body')
     expect(content).toBeTruthy()
   })
@@ -256,12 +256,13 @@ test.describe('Toast Notification Edge Cases', () => {
     await input.fill('server1.com')
     await page.getByText('JOIN SERVER').click()
     
-    await page.waitForTimeout(500)
+    // Wait for first toast to appear
+    await expect(page.locator('.sonner-toast').first()).toBeVisible()
     
     await input.fill('server2.com')
     await page.getByText('JOIN SERVER').click()
     
-    // Should handle multiple toasts without crashing
-    await page.waitForTimeout(500)
+    // Should handle multiple toasts without crashing - verify UI is still functional
+    await expect(page.getByText('AVAILABLE SERVERS')).toBeVisible()
   })
 })
