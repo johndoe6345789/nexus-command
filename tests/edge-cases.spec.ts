@@ -86,13 +86,16 @@ test.describe('Edge Cases', () => {
     
     // Select multiple difficulties in sequence
     await page.getByText('RECRUIT').click()
-    await page.waitForTimeout(100)
+    const recruitButton = page.locator('button').filter({ hasText: 'RECRUIT' })
+    await expect(recruitButton).toHaveClass(/glow-accent/)
     
     await page.getByText('VETERAN').click()
-    await page.waitForTimeout(100)
+    const veteranButton = page.locator('button').filter({ hasText: 'VETERAN' })
+    await expect(veteranButton).toHaveClass(/glow-accent/)
     
     await page.getByText('ELITE').click()
-    await page.waitForTimeout(100)
+    const eliteButton = page.locator('button').filter({ hasText: 'ELITE' })
+    await expect(eliteButton).toHaveClass(/glow-accent/)
     
     await page.getByText('NIGHTMARE').click()
     
@@ -242,8 +245,12 @@ test.describe('Toast Notification Edge Cases', () => {
       await page.getByText(difficulty).click()
       await page.getByText('START MISSION').click()
       
+      // Verify toast appears
       await expect(page.locator('.sonner-toast')).toBeVisible()
-      await page.waitForTimeout(3000) // Wait for toast to disappear
+      
+      // Wait for toast to disappear naturally or reload
+      await page.goto('/')
+      await page.getByText('SINGLE PLAYER').click()
     }
   })
 
