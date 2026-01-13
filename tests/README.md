@@ -78,7 +78,14 @@ Tests for utility functions and business logic:
 - ✅ `generateServers.test.ts` - Server generation (12 tests)
 - ✅ `notifications.test.ts` - Notification system (12 tests)
 
-**Total: 66 unit tests + 100+ E2E tests**
+### 7. Handler Tests (`src/handlers/__tests__/`)
+Tests for navigation and server actions:
+- ✅ `handleNavigate.test.ts` - Navigation validation and exit handling (4 tests)
+- ✅ `handleMissionStart.test.ts` - Loading state behavior (2 tests)
+- ✅ `handleServerRefresh.test.ts` - Server refresh flow (1 test)
+- ✅ `handleServerJoin.test.ts` - Join handling (2 tests)
+
+**Total: 75 unit tests + 100+ E2E tests**
 
 ## Running Tests
 
