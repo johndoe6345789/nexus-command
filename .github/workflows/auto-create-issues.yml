@@ -26,11 +26,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Check for existing bot issues
         id: check-issues
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const issues = await github.rest.issues.listForRepo({
@@ -48,7 +48,7 @@ jobs:
 
       - name: Create maintenance issue
         if: steps.check-issues.outputs.result == 'true' && (github.event.inputs.task_type == 'maintenance' || github.event_name == 'schedule')
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const taskTypes = [
@@ -113,7 +113,7 @@ jobs:
 
       - name: Create documentation issue
         if: steps.check-issues.outputs.result == 'true' && github.event.inputs.task_type == 'documentation'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             await github.rest.issues.create({
