@@ -16,7 +16,7 @@ This document summarizes the test coverage improvements made to the Nexus Comman
 - **Configuration**: `vitest.config.ts` with path aliases and proper excludes
 - **Package.json scripts**: Added separate commands for unit and E2E tests
 
-### 2. Unit Tests Added (66 tests)
+### 2. Unit Tests Added (75 tests)
 
 #### `src/utils/__tests__/calculateKD.test.ts` (8 tests)
 Tests for K/D ratio calculation function:
@@ -101,6 +101,35 @@ Tests for notification system:
 
 **Coverage**: 100% of notification functions
 
+#### `src/handlers/__tests__/handleNavigate.test.ts` (4 tests)
+Tests for navigation handling:
+- Valid screen navigation
+- Invalid screen fallback with warning
+- Exit confirmation handling
+- Exit cancel handling
+
+**Coverage**: Navigation handler behavior
+
+#### `src/handlers/__tests__/handleMissionStart.test.ts` (2 tests)
+Tests for mission start handling:
+- No-op when no map selected
+- Loading state toggles on mission start
+
+**Coverage**: Mission start handler behavior
+
+#### `src/handlers/__tests__/handleServerRefresh.test.ts` (1 test)
+Tests for server refresh handling:
+- Loading state and server regeneration flow
+
+**Coverage**: Server refresh handler behavior
+
+#### `src/handlers/__tests__/handleServerJoin.test.ts` (2 tests)
+Tests for server join handling:
+- No-op when no server selected
+- Safe handling when server selected
+
+**Coverage**: Server join handler behavior
+
 ### 3. Additional E2E Tests
 
 #### `tests/edge-cases.spec.ts` (20+ tests)
@@ -132,9 +161,9 @@ Added comprehensive edge case testing:
 - **Utility Functions**: 100% coverage (calculateKD, calculateWinRate, filterServers, generateServers, handleConsoleCommand)
 - **Notification System**: 100% coverage (addAlert, unlockAchievement, updateAchievementProgress, incrementAchievementProgress)
 - **Console Commands**: 100% coverage (help, clear, stats, unknown commands)
-- **Total Unit Tests**: 66
+- **Total Unit Tests**: 75
 - **Total E2E Tests**: 100+
-- **Total Test Files**: 12 (6 unit + 6 E2E)
+- **Total Test Files**: 16 (10 unit + 6 E2E)
 
 ## Test Commands
 
@@ -167,6 +196,7 @@ npm run test:e2e
 ## Components with >80% Coverage ✅
 
 - ✅ Utils (calculateKD, calculateWinRate, filterServers, handleConsoleCommand, generateServers, notifications)
+- ✅ Handlers (handleNavigate, handleMissionStart, handleServerRefresh, handleServerJoin)
 - ✅ Main navigation flows
 - ✅ Screen transitions and animations
 - ✅ User input handling
@@ -187,7 +217,7 @@ npm run test:e2e
 ## Conclusion
 
 The project now has comprehensive test coverage with:
-- **66 unit tests** covering all utility functions and business logic
+- **75 unit tests** covering utility functions and handler logic
 - **100+ E2E tests** covering user interactions and UI
 - **100% coverage** of utility functions
 - **Proper test infrastructure** for ongoing development
