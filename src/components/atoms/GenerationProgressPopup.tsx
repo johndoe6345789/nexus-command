@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { Card, CardContent, Stack, Typography, LinearProgress, Box, Chip } from '@mui/material'
 import { Cube, Trophy, Lightning, Star, CheckCircle, Sparkle, Medal, Target } from '@phosphor-icons/react'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 
 interface GenerationProgressPopupProps {
   isVisible: boolean
@@ -45,7 +45,7 @@ export function GenerationProgressPopup({
     })
   })
 
-  const isComplete = progress >= 100 && isVisible
+  const isComplete = useMemo(() => progress >= 100 && isVisible, [progress, isVisible])
 
   useEffect(() => {
     // Clear any existing timeout
