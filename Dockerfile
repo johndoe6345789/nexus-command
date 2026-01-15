@@ -7,8 +7,7 @@ WORKDIR /app
 COPY package.json package-lock.json* ./
 
 # Install dependencies using npm with --ignore-scripts to avoid the exit handler bug
-RUN npm install --legacy-peer-deps --ignore-scripts && \
-    npm rebuild
+RUN npm install --legacy-peer-deps --ignore-scripts
 
 # Copy application files
 COPY . .
