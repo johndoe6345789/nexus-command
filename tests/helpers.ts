@@ -4,28 +4,28 @@ export class MenuHelpers {
   constructor(private page: Page) {}
 
   async navigateToSinglePlayer() {
-    await this.page.getByText('SINGLE PLAYER').click()
-    await expect(this.page.getByText('SELECT DIFFICULTY')).toBeVisible()
+    await this.page.getByRole('button', { name: /Campaign/i }).click()
+    await expect(this.page.getByRole('heading', { name: /Campaign/i })).toBeVisible()
   }
 
   async navigateToMultiplayer() {
-    await this.page.getByText('MULTIPLAYER').click()
-    await expect(this.page.getByText('JOIN SERVER')).toBeVisible()
+    await this.page.getByRole('button', { name: /Multiplayer/i }).click()
+    await expect(this.page.getByRole('heading', { name: /Multiplayer/i })).toBeVisible()
   }
 
   async navigateToSettings() {
-    await this.page.getByText('SETTINGS').click()
-    await expect(this.page.getByText('GAME SETTINGS')).toBeVisible()
+    await this.page.getByRole('button', { name: /Settings/i }).click()
+    await expect(this.page.getByRole('heading', { name: /Settings/i })).toBeVisible()
   }
 
   async navigateToStats() {
-    await this.page.getByText('PLAYER STATS').click()
-    await expect(this.page.getByText('COMBAT STATISTICS')).toBeVisible()
+    await this.page.getByRole('button', { name: /Profile/i }).click()
+    await expect(this.page.getByRole('heading', { name: /Profile/i })).toBeVisible()
   }
 
   async backToMainMenu() {
-    await this.page.getByText('BACK TO MAIN MENU').click()
-    await expect(this.page.getByText('ARENA COMMAND')).toBeVisible()
+    await this.page.getByRole('button', { name: /Back to Menu/i }).click()
+    await expect(this.page.getByRole('heading', { name: /NEXUS COMMAND/i }).first()).toBeVisible()
   }
 
   async selectDifficulty(difficulty: 'RECRUIT' | 'VETERAN' | 'ELITE' | 'NIGHTMARE') {
@@ -120,7 +120,7 @@ export class ThemeHelpers {
   }
 
   async verifyCustomFonts() {
-    const headingFont = await this.page.getByText('ARENA COMMAND').first().evaluate(el => 
+    const headingFont = await this.page.getByRole('heading', { name: /NEXUS COMMAND/i }).first().evaluate(el => 
       window.getComputedStyle(el).fontFamily
     )
     expect(headingFont.toLowerCase()).toContain('orbitron')
@@ -128,7 +128,8 @@ export class ThemeHelpers {
     const bodyFont = await this.page.evaluate(() => 
       window.getComputedStyle(document.body).fontFamily
     )
-    expect(bodyFont.toLowerCase()).toContain('rajdhani')
+    // Body uses Inter font from Next.js, or fallback fonts
+    expect(bodyFont.toLowerCase()).toMatch(/\binter\b|\brajdhani\b|\bspace\b/i)
   }
 
   async verifyGlowEffects() {

@@ -17,17 +17,13 @@ export function MainMenuLayout({
   return (
     <Box
       sx={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
         p: 4,
-        pt: { xs: 10, sm: 12 },
+        pt: { xs: 2, sm: 3 },
       }}
       {...props}
     >
       <Box sx={{ width: '100%', maxWidth: 1200 }}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 10 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 6 }}>
           <Logo size={100} showText={true} animate={true} />
           <Typography variant="body1" align="center" color="text.secondary" sx={{ mt: 3 }}>
             {tagline}
