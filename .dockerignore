@@ -18,6 +18,9 @@ test-results
 playwright-report
 blob-report
 playwright/.cache
+vitest.config.ts
+playwright.config.ts
+tests
 
 # Next.js
 .next
