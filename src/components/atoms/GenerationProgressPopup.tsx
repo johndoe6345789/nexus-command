@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { Card, CardContent, Stack, Typography, LinearProgress, Box, Chip } from '@mui/material'
 import { Cube, Trophy, Lightning, Star, CheckCircle, Sparkle, Medal, Target } from '@phosphor-icons/react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 interface GenerationProgressPopupProps {
   isVisible: boolean
@@ -19,6 +19,7 @@ export function GenerationProgressPopup({
   seed
 }: GenerationProgressPopupProps) {
   const [showCelebration, setShowCelebration] = useState(false)
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
   const [particleData] = useState(() => {
     return Array.from({ length: 20 }, (_, i) => {
       const isLeft = i % 2 === 0
@@ -47,16 +48,30 @@ export function GenerationProgressPopup({
   const isComplete = progress >= 100 && isVisible
 
   useEffect(() => {
+    // Clear any existing timeout
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+      timeoutRef.current = null
+    }
+
     if (isComplete) {
-      // Use a microtask to avoid synchronous setState in effect
-      Promise.resolve().then(() => setShowCelebration(true))
-      const timer = setTimeout(() => {
-        setShowCelebration(false)
-      }, 5000)
-      return () => clearTimeout(timer)
+      // Schedule state updates to avoid synchronous setState in effect
+      timeoutRef.current = setTimeout(() => {
+        setShowCelebration(true)
+        timeoutRef.current = setTimeout(() => {
+          setShowCelebration(false)
+        }, 5000)
+      }, 0)
     } else {
-      // Use a microtask to avoid synchronous setState in effect
-      Promise.resolve().then(() => setShowCelebration(false))
+      timeoutRef.current = setTimeout(() => {
+        setShowCelebration(false)
+      }, 0)
+    }
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
     }
   }, [isComplete])
 
