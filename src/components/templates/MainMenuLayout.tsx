@@ -17,12 +17,11 @@ export function MainMenuLayout({
   return (
     <Box
       sx={{
-        minHeight: '100vh',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         p: 4,
-        pt: { xs: 10, sm: 12 },
+        pt: { xs: 4, sm: 6 },
       }}
       {...props}
     >
