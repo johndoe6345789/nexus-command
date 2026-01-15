@@ -52,7 +52,7 @@
         "@vitest/coverage-v8": "^4.0.17",
         "@vitest/ui": "^4.0.16",
         "eslint": "^9.39.2",
-        "eslint-config-next": "^16.1.1",
+        "eslint-config-next": "^16.1.2",
         "postcss": "^8.4.49",
         "typescript": "~5.9.0",
         "vitest": "^4.0.17"
