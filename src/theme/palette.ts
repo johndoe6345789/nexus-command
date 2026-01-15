@@ -14,7 +14,7 @@ export const palette = {
   },
   background: {
     default: '#0A0B14',
-    paper: 'rgba(18, 20, 31, 0.7)',
+    paper: 'rgba(18, 20, 31, 0.5)',
   },
   text: {
     primary: '#FAFAFA',
