@@ -49,6 +49,9 @@ next-env.d.ts
 build/
 *.tsbuildinfo
 
+# Coverage reports
+coverage/
+
 # Docker
 *.tar.gz
 docker-compose.override.yml

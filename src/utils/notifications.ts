@@ -4,6 +4,24 @@ import { Alert, Achievement, AlertType } from '@/types'
 const alertsStore: Alert[] = []
 const achievementsStore: Achievement[] = []
 
+// Helper functions for testing
+export function _clearStores(): void {
+  alertsStore.length = 0
+  achievementsStore.length = 0
+}
+
+export function _addAchievementToStore(achievement: Achievement): void {
+  achievementsStore.push(achievement)
+}
+
+export function _getAchievementsStore(): Achievement[] {
+  return achievementsStore
+}
+
+export function _getAlertsStore(): Alert[] {
+  return alertsStore
+}
+
 export async function addAlert(
   type: AlertType,
   title: string,
