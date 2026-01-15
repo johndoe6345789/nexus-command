@@ -76,7 +76,7 @@ Tests for utility functions and business logic:
 - ✅ `filterServers.test.ts` - Server filtering logic (10 tests)
 - ✅ `handleConsoleCommand.test.ts` - Console command handling (15 tests)
 - ✅ `generateServers.test.ts` - Server generation (12 tests)
-- ✅ `notifications.test.ts` - Notification system (12 tests)
+- ✅ `notifications.test.ts` - Notification system (21 tests)
 
 ### 7. Handler Tests (`src/handlers/__tests__/`)
 Tests for navigation and server actions:
@@ -85,7 +85,12 @@ Tests for navigation and server actions:
 - ✅ `handleServerRefresh.test.ts` - Server refresh flow (1 test)
 - ✅ `handleServerJoin.test.ts` - Join handling (2 tests)
 
-**Total: 75 unit tests + 100+ E2E tests**
+### 8. Canvas Library Tests (`src/lib/canvas/__tests__/`)
+Tests for canvas rendering utilities:
+- ✅ `hexagon.test.ts` - Hexagon creation, update, and drawing (14 tests)
+- ✅ `particle.test.ts` - Particle physics and connections (21 tests)
+
+**Total: 119 unit tests + 100+ E2E tests**
 
 ## Running Tests
 
@@ -107,6 +112,11 @@ npm run test:unit:watch
 ### Run unit tests with UI
 ```bash
 npm run test:unit:ui
+```
+
+### Run unit tests with coverage report
+```bash
+npm run test:coverage
 ```
 
 ### Run E2E tests only
@@ -256,12 +266,16 @@ Current test coverage focuses on:
 - ✅ Notification system
 
 ### Coverage Statistics
-- **Unit Tests**: 66 tests covering utility functions, handlers, and business logic
+- **Unit Tests**: 119 tests covering utility functions, handlers, canvas library, and business logic
 - **E2E Tests**: 100+ tests covering UI, interactions, styling, and edge cases
-- **Total Test Files**: 12 (6 unit test files + 6 E2E test files)
+- **Total Test Files**: 15 (9 unit test files + 6 E2E test files)
+- **Statement Coverage**: 100%
+- **Branch Coverage**: 97.91%
 
-### Components with >80% Coverage
+### Components with 100% Coverage
 - ✅ Utils (calculateKD, calculateWinRate, filterServers, handleConsoleCommand, generateServers, notifications)
+- ✅ Handlers (handleNavigate, handleMissionStart, handleServerRefresh, handleServerJoin)
+- ✅ Canvas Library (hexagon, particle)
 - ✅ Main navigation flows
 - ✅ Screen transitions and animations
 - ✅ User input handling
