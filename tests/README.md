@@ -1,8 +1,26 @@
-# Arena Command - Playwright Tests
+# NEXUS COMMAND - Playwright Tests
 
 ## Overview
 
-Comprehensive end-to-end test suite for the Arena Command game menu system using Playwright.
+Comprehensive end-to-end test suite for the Nexus Command game menu system using Playwright.
+
+## Recent Improvements (2026-01-15)
+
+### Enhanced Test Quality
+- ✅ **Semantic Selectors**: Replaced brittle `getByText()` with robust `getByRole()` selectors
+- ✅ **Accessibility Testing**: Added comprehensive accessibility tests for keyboard navigation and ARIA
+- ✅ **Layout Verification**: New tests verify logo positioning and panel transparency
+- ✅ **Better Waiting**: Using `waitForLoadState('networkidle')` instead of hardcoded timeouts
+- ✅ **Updated Text References**: Fixed all "ARENA COMMAND" → "NEXUS COMMAND" references
+- ✅ **Flexible Matchers**: Using regex patterns for text matching instead of exact strings
+
+### New Test File: `layout.spec.ts`
+Comprehensive tests for the new layout improvements:
+- Logo positioning near top without scroll
+- Panel transparency verification
+- Responsive design testing
+- Accessibility compliance
+- Proper heading hierarchy
 
 ## Test Coverage
 
