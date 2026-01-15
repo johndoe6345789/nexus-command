@@ -1,6 +1,6 @@
 import { Card, CardContent, Stack, Typography, Button, TextField, Grid, Chip, Box } from '@mui/material'
 import { Category, Public, Park, Terrain, Business, Shuffle, Download, PlayArrow, Refresh } from '@mui/icons-material'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { useKV } from '@/hooks/useKV'
 
 interface GenerationOption {
@@ -49,47 +49,6 @@ export function ProceduralGenPanel({
   const [generationHistory, setGenerationHistory] = useKV<MapData[]>('map-generation-history', [])
   const [currentMapData, setCurrentMapData] = useState<MapData | null>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
-
-  useEffect(() => {
-    if (currentMapData && canvasRef.current) {
-      renderMap(canvasRef.current, currentMapData)
-    }
-  }, [currentMapData])
-
-  const renderMap = (canvas: HTMLCanvasElement, mapData: MapData) => {
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
-
-    const width = canvas.width
-    const height = canvas.height
-    
-    ctx.fillStyle = '#0a0a0f'
-    ctx.fillRect(0, 0, width, height)
-
-    const seedNum = parseInt(mapData.seed) || 12345
-    const random = seededRandom(seedNum)
-
-    switch (mapData.type) {
-      case 'arena':
-        renderArenaMap(ctx, width, height, random, mapData.complexity)
-        break
-      case 'terrain':
-        renderTerrainMap(ctx, width, height, random, mapData.complexity)
-        break
-      case 'structures':
-        renderStructuresMap(ctx, width, height, random, mapData.complexity)
-        break
-      case 'vegetation':
-        renderVegetationMap(ctx, width, height, random, mapData.complexity)
-        break
-      case 'planets':
-        renderPlanetMap(ctx, width, height, random, mapData.complexity)
-        break
-      case 'meshes':
-        renderMeshMap(ctx, width, height, random, mapData.complexity)
-        break
-    }
-  }
 
   const seededRandom = (seed: number) => {
     let value = seed
@@ -269,6 +228,47 @@ export function ProceduralGenPanel({
       ctx.stroke()
     }
   }
+
+  const renderMap = useCallback((canvas: HTMLCanvasElement, mapData: MapData) => {
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    const width = canvas.width
+    const height = canvas.height
+    
+    ctx.fillStyle = '#0a0a0f'
+    ctx.fillRect(0, 0, width, height)
+
+    const seedNum = parseInt(mapData.seed) || 12345
+    const random = seededRandom(seedNum)
+
+    switch (mapData.type) {
+      case 'arena':
+        renderArenaMap(ctx, width, height, random, mapData.complexity)
+        break
+      case 'terrain':
+        renderTerrainMap(ctx, width, height, random, mapData.complexity)
+        break
+      case 'structures':
+        renderStructuresMap(ctx, width, height, random, mapData.complexity)
+        break
+      case 'vegetation':
+        renderVegetationMap(ctx, width, height, random, mapData.complexity)
+        break
+      case 'planets':
+        renderPlanetMap(ctx, width, height, random, mapData.complexity)
+        break
+      case 'meshes':
+        renderMeshMap(ctx, width, height, random, mapData.complexity)
+        break
+    }
+  }, [])
+
+  useEffect(() => {
+    if (currentMapData && canvasRef.current) {
+      renderMap(canvasRef.current, currentMapData)
+    }
+  }, [currentMapData, renderMap])
 
   const handleGenerate = async () => {
     const actualSeed = seed || Math.floor(Math.random() * 1000000).toString()

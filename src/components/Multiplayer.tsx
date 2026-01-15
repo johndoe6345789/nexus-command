@@ -13,14 +13,10 @@ import { MultiplayerProps } from './props'
 import { handleServerRefresh, handleServerJoin } from '@/handlers'
 
 export function Multiplayer({ onBack }: MultiplayerProps) {
-  const [servers, setServers] = useState<Server[]>([])
+  const [servers, setServers] = useState<Server[]>(() => generateServers())
   const [selectedServer, setSelectedServer] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
-
-  useEffect(() => {
-    setServers(generateServers())
-  }, [])
 
   const handleRefresh = async () => {
     await handleServerRefresh(setLoading, setServers)

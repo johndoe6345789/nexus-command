@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { Card, CardContent, Stack, Typography, LinearProgress, Box, Chip } from '@mui/material'
 import { Cube, Trophy, Lightning, Star, CheckCircle, Sparkle, Medal, Target } from '@phosphor-icons/react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 
 interface GenerationProgressPopupProps {
   isVisible: boolean
@@ -18,24 +18,62 @@ export function GenerationProgressPopup({
   type,
   seed
 }: GenerationProgressPopupProps) {
-  const [isComplete, setIsComplete] = useState(false)
   const [showCelebration, setShowCelebration] = useState(false)
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const [particleData] = useState(() => {
+    return Array.from({ length: 20 }, (_, i) => {
+      const isLeft = i % 2 === 0
+      return {
+        isLeft,
+        startX: isLeft ? -100 : 100,
+        endX: (Math.random() - 0.5) * 400,
+        endY: -120 + Math.random() * 80,
+        delay: Math.random() * 0.3,
+        duration: 1.5 + Math.random() * 0.8,
+        rotate: Math.random() * 720 - 360,
+        iconType: i % 4,
+        // Icon-specific random values
+        starSize: 20 + Math.random() * 20,
+        starColor: `oklch(${0.70 + Math.random() * 0.15} ${0.20 + Math.random() * 0.15} ${180 + Math.random() * 100})`,
+        sparkleSize: 16 + Math.random() * 16,
+        sparkleColor: `oklch(${0.70 + Math.random() * 0.15} ${0.20 + Math.random() * 0.15} ${40 + Math.random() * 60})`,
+        trophySize: 18 + Math.random() * 14,
+        trophyColor: `oklch(${0.75 + Math.random() * 0.1} ${0.25} ${45 + Math.random() * 20})`,
+        medalSize: 18 + Math.random() * 14,
+        medalColor: `oklch(${0.70 + Math.random() * 0.15} ${0.22} ${270 + Math.random() * 40})`,
+      }
+    })
+  })
+
+  const isComplete = useMemo(() => progress >= 100 && isVisible, [progress, isVisible])
 
   useEffect(() => {
-    if (progress >= 100 && isVisible) {
-      setIsComplete(true)
-      setShowCelebration(true)
-      const timer = setTimeout(() => {
-        setShowCelebration(false)
-      }, 5000)
-      return () => clearTimeout(timer)
-    } else {
-      setIsComplete(false)
-      setShowCelebration(false)
+    // Clear any existing timeout
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+      timeoutRef.current = null
     }
-  }, [progress, isVisible])
 
-  const particles = Array.from({ length: 20 }, (_, i) => i)
+    if (isComplete) {
+      // Schedule state updates to avoid synchronous setState in effect
+      timeoutRef.current = setTimeout(() => {
+        setShowCelebration(true)
+        timeoutRef.current = setTimeout(() => {
+          setShowCelebration(false)
+        }, 5000)
+      }, 0)
+    } else {
+      timeoutRef.current = setTimeout(() => {
+        setShowCelebration(false)
+      }, 0)
+    }
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [isComplete])
 
   return (
     <AnimatePresence>
@@ -58,34 +96,27 @@ export function GenerationProgressPopup({
         >
           {showCelebration && (
             <Box sx={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', pointerEvents: 'none', width: '100%', height: '200px', overflow: 'visible' }}>
-              {particles.map((i) => {
-                const isLeft = i % 2 === 0
-                const startX = isLeft ? -100 : 100
-                const endX = (Math.random() - 0.5) * 400
-                const endY = -120 + Math.random() * 80
-                const delay = Math.random() * 0.3
-                const duration = 1.5 + Math.random() * 0.8
-                
+              {particleData.map((particle, i) => {
                 return (
                   <motion.div
                     key={i}
                     initial={{ 
                       opacity: 0, 
                       y: 80, 
-                      x: startX,
+                      x: particle.startX,
                       scale: 0,
                       rotate: 0
                     }}
                     animate={{ 
                       opacity: [0, 1, 1, 0], 
-                      y: endY,
-                      x: endX,
+                      y: particle.endY,
+                      x: particle.endX,
                       scale: [0, 1.2, 1, 0.3],
-                      rotate: Math.random() * 720 - 360,
+                      rotate: particle.rotate,
                     }}
                     transition={{ 
-                      duration,
-                      delay,
+                      duration: particle.duration,
+                      delay: particle.delay,
                       ease: [0.22, 1, 0.36, 1]
                     }}
                     style={{
@@ -94,29 +125,29 @@ export function GenerationProgressPopup({
                       left: '50%',
                     }}
                   >
-                    {i % 4 === 0 ? (
+                    {particle.iconType === 0 ? (
                       <Star 
-                        size={20 + Math.random() * 20} 
+                        size={particle.starSize} 
                         weight="fill" 
-                        color={`oklch(${0.70 + Math.random() * 0.15} ${0.20 + Math.random() * 0.15} ${180 + Math.random() * 100})`}
+                        color={particle.starColor}
                       />
-                    ) : i % 4 === 1 ? (
+                    ) : particle.iconType === 1 ? (
                       <Sparkle 
-                        size={16 + Math.random() * 16} 
+                        size={particle.sparkleSize} 
                         weight="fill" 
-                        color={`oklch(${0.70 + Math.random() * 0.15} ${0.20 + Math.random() * 0.15} ${40 + Math.random() * 60})`}
+                        color={particle.sparkleColor}
                       />
-                    ) : i % 4 === 2 ? (
+                    ) : particle.iconType === 2 ? (
                       <Trophy 
-                        size={18 + Math.random() * 14} 
+                        size={particle.trophySize} 
                         weight="fill" 
-                        color={`oklch(${0.75 + Math.random() * 0.1} ${0.25} ${45 + Math.random() * 20})`}
+                        color={particle.trophyColor}
                       />
                     ) : (
                       <Medal 
-                        size={18 + Math.random() * 14} 
+                        size={particle.medalSize} 
                         weight="fill" 
-                        color={`oklch(${0.70 + Math.random() * 0.15} ${0.22} ${270 + Math.random() * 40})`}
+                        color={particle.medalColor}
                       />
                     )}
                   </motion.div>
