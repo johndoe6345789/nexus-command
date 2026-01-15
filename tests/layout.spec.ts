@@ -60,28 +60,34 @@ test.describe('Main Menu Layout', () => {
 
   test('should display all main menu buttons in grid', async ({ page }) => {
     // Campaign button
-    const campaignBtn = page.getByRole('button', { name: /Campaign.*Single player missions/i })
+    const campaignBtn = page.getByRole('button', { name: /Campaign/i })
     await expect(campaignBtn).toBeVisible()
+    await expect(campaignBtn).toContainText('Single player missions')
 
     // Multiplayer button
-    const multiplayerBtn = page.getByRole('button', { name: /Multiplayer.*Join online battles/i })
+    const multiplayerBtn = page.getByRole('button', { name: /Multiplayer/i })
     await expect(multiplayerBtn).toBeVisible()
+    await expect(multiplayerBtn).toContainText('Join online battles')
 
     // Profile button
-    const profileBtn = page.getByRole('button', { name: /Profile.*View your stats/i })
+    const profileBtn = page.getByRole('button', { name: /Profile/i })
     await expect(profileBtn).toBeVisible()
+    await expect(profileBtn).toContainText('View your stats')
 
     // Settings button
-    const settingsBtn = page.getByRole('button', { name: /Settings.*Configure your game/i })
+    const settingsBtn = page.getByRole('button', { name: /Settings/i })
     await expect(settingsBtn).toBeVisible()
+    await expect(settingsBtn).toContainText('Configure your game')
 
     // Developer button
-    const developerBtn = page.getByRole('button', { name: /Developer.*Developer tools/i })
+    const developerBtn = page.getByRole('button', { name: /Developer/i })
     await expect(developerBtn).toBeVisible()
+    await expect(developerBtn).toContainText('Developer tools')
 
     // Exit button
-    const exitBtn = page.getByRole('button', { name: /Exit.*Close application/i })
+    const exitBtn = page.getByRole('button', { name: /Exit/i })
     await expect(exitBtn).toBeVisible()
+    await expect(exitBtn).toContainText('Close application')
   })
 
   test('should display footer with version', async ({ page }) => {
@@ -128,7 +134,7 @@ test.describe('Panel Transparency', () => {
     expect(bgColor).not.toBeNull()
     // Background should be rgba with alpha < 1 for transparency
     if (bgColor && bgColor.startsWith('rgba')) {
-      const alphaMatch = bgColor.match(/rgba\([^,]+,[^,]+,[^,]+,\s*([\d.]+)\)/)
+      const alphaMatch = bgColor.match(/rgba\(\s*[\d.]+\s*,\s*[\d.]+\s*,\s*[\d.]+\s*,\s*([\d.]+)\s*\)/)
       if (alphaMatch) {
         const alpha = parseFloat(alphaMatch[1])
         expect(alpha).toBeLessThan(1) // Should be transparent

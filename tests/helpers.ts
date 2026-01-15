@@ -128,8 +128,8 @@ export class ThemeHelpers {
     const bodyFont = await this.page.evaluate(() => 
       window.getComputedStyle(document.body).fontFamily
     )
-    // Body uses Inter font from Next.js
-    expect(bodyFont.toLowerCase()).toMatch(/inter|rajdhani|space/i)
+    // Body uses Inter font from Next.js, or fallback fonts
+    expect(bodyFont.toLowerCase()).toMatch(/\binter\b|\brajdhani\b|\bspace\b/i)
   }
 
   async verifyGlowEffects() {
