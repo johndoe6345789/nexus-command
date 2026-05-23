@@ -1,0 +1,6 @@
+services:
+  nginx:
+    build: .
+    ports:
+      - "8721:80"
+    restart: unless-stopped
