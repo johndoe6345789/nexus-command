@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Box } from '@mui/material'
+import { APP_VERSION } from '@/constants'
 
 interface LogoProps {
   size?: number
@@ -25,7 +26,17 @@ export function Logo({ size = 80, showText = true, animate = true }: LogoProps) 
   }
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: { xs: 'column', sm: 'row' },
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: { xs: 1.5, sm: 3 },
+        textAlign: 'center',
+        overflow: 'visible',
+      }}
+    >
       <motion.div
         variants={iconVariants}
         initial={animate ? "initial" : false}
@@ -165,37 +176,84 @@ export function Logo({ size = 80, showText = true, animate = true }: LogoProps) 
           style={{
             display: 'flex',
             flexDirection: 'column',
-            gap: '4px',
+            gap: '6px',
+            width: 'fit-content',
+            overflow: 'visible',
           }}
         >
           <Box
-            component="span"
             sx={{
-              fontFamily: 'var(--font-heading)',
-              fontSize: size * 0.4,
-              fontWeight: 800,
-              letterSpacing: '-0.02em',
-              background: 'linear-gradient(90deg, oklch(0.65 0.12 230), oklch(0.58 0.10 40), oklch(0.65 0.12 230))',
-              backgroundClip: 'text',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              lineHeight: 1,
+              display: 'flex',
+              flexDirection: { xs: 'column', sm: 'row' },
+              alignItems: { xs: 'center', sm: 'flex-end' },
+              gap: { xs: 1, sm: 1.5 },
             }}
           >
-            NEXUS
-          </Box>
-          <Box
-            component="span"
-            sx={{
-              fontFamily: 'var(--font-heading)',
-              fontSize: size * 0.22,
-              fontWeight: 600,
-              letterSpacing: '0.15em',
-              color: 'text.secondary',
-              lineHeight: 1,
-            }}
-          >
-            COMMAND
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+              <Box
+                component="span"
+                sx={{
+                  display: 'block',
+                  fontFamily: 'var(--font-heading)',
+                  fontSize: { xs: `${size * 0.34}px`, sm: `${size * 0.4}px` },
+                  fontWeight: 800,
+                  letterSpacing: '-0.02em',
+                  background: 'linear-gradient(90deg, oklch(0.65 0.12 230), oklch(0.58 0.10 40), oklch(0.65 0.12 230))',
+                  backgroundClip: 'text',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  lineHeight: 1.08,
+                  paddingBlock: '0.08em',
+                  paddingInline: '0.04em',
+                  textShadow: '0 1px 18px rgba(0, 0, 0, 0.2)',
+                }}
+              >
+                NEXUS
+              </Box>
+              <Box
+                component="span"
+                sx={{
+                  display: 'block',
+                  fontFamily: 'var(--font-heading)',
+                  fontSize: { xs: `${size * 0.2}px`, sm: `${size * 0.22}px` },
+                  fontWeight: 600,
+                  letterSpacing: '0.15em',
+                  color: 'text.secondary',
+                  lineHeight: 1.18,
+                  paddingBlock: '0.08em',
+                  paddingInline: '0.08em',
+                  textShadow: '0 1px 16px rgba(0, 0, 0, 0.55)',
+                }}
+              >
+                COMMAND
+              </Box>
+            </Box>
+
+            <Box
+              component="span"
+              aria-label={`Hero version ${APP_VERSION}`}
+              sx={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                alignSelf: { xs: 'center', sm: 'flex-end' },
+                borderRadius: 999,
+                border: '1px solid rgba(136, 179, 217, 0.26)',
+                backgroundColor: 'rgba(8, 12, 22, 0.72)',
+                color: 'text.secondary',
+                fontFamily: "'Rajdhani', system-ui, sans-serif",
+                fontSize: { xs: `${size * 0.12}px`, sm: `${size * 0.14}px` },
+                fontWeight: 700,
+                letterSpacing: '0.08em',
+                lineHeight: 1,
+                px: 1.1,
+                py: 0.55,
+                mb: { xs: 0, sm: 0.35 },
+                boxShadow: '0 10px 24px rgba(0, 0, 0, 0.18)',
+              }}
+            >
+              {APP_VERSION}
+            </Box>
           </Box>
         </motion.div>
       )}

@@ -1,4 +1,3 @@
-export type { Screen } from './Screen'
 export type { Difficulty } from './Difficulty'
 export type { Map } from './Map'
 export type { DifficultyOption } from './DifficultyOption'

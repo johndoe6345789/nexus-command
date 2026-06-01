@@ -1,6 +1,13 @@
 import { useEffect, useRef } from 'react'
 import { CanvasRenderer } from '@/lib/canvas/renderer'
 
+const fixedLayerStyle = {
+  position: 'fixed',
+  inset: 0,
+  pointerEvents: 'none',
+  zIndex: -2,
+} as const
+
 export function AnimatedBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const rendererRef = useRef<CanvasRenderer | null>(null)
@@ -10,10 +17,18 @@ export function AnimatedBackground() {
     if (!canvas) return
 
     try {
+      const isMobile = window.innerWidth < 640
+      const isTablet = window.innerWidth < 1024
+
       rendererRef.current = new CanvasRenderer(canvas, {
-        particleCount: 80,
-        hexagonCount: 8,
-        connectionDistance: 150,
+        particleCount: isMobile ? 24 : isTablet ? 36 : 48,
+        hexagonCount: isMobile ? 2 : isTablet ? 3 : 4,
+        connectionDistance: isMobile ? 90 : isTablet ? 110 : 130,
+        particleColors: [
+          'rgba(91, 143, 199, 0.2)',
+          'rgba(201, 151, 88, 0.14)',
+          'rgba(136, 179, 217, 0.18)',
+        ],
       })
 
       rendererRef.current.start()
@@ -33,14 +48,43 @@ export function AnimatedBackground() {
 
   return (
     <>
-      <div className="fixed inset-0 bg-gradient-to-br from-[oklch(0.08_0.02_250)] via-[oklch(0.06_0.03_240)] to-[oklch(0.04_0.02_230)]" />
+      <div
+        style={{
+          ...fixedLayerStyle,
+          background:
+            'radial-gradient(circle at top, rgba(24, 34, 52, 0.2), transparent 28%), linear-gradient(180deg, rgba(10, 13, 22, 0.96) 0%, rgba(7, 10, 17, 0.94) 45%, rgba(5, 7, 12, 0.98) 100%)',
+        }}
+      />
       <canvas
         ref={canvasRef}
-        className="fixed inset-0 z-0"
-        style={{ mixBlendMode: 'screen' }}
+        style={{
+          ...fixedLayerStyle,
+          zIndex: -1,
+          opacity: 0.7,
+        }}
       />
-      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_oklch(0.12_0.05_230_/_0.2),transparent_50%)]" />
-      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_oklch(0.10_0.04_40_/_0.15),transparent_50%)]" />
+      <div
+        style={{
+          ...fixedLayerStyle,
+          background:
+            'radial-gradient(ellipse at top, rgba(91, 143, 199, 0.12), transparent 52%)',
+        }}
+      />
+      <div
+        style={{
+          ...fixedLayerStyle,
+          background:
+            'radial-gradient(ellipse at bottom right, rgba(201, 151, 88, 0.08), transparent 48%)',
+        }}
+      />
+      <div
+        style={{
+          ...fixedLayerStyle,
+          zIndex: -1,
+          background:
+            'linear-gradient(180deg, rgba(4, 6, 10, 0.18) 0%, rgba(4, 6, 10, 0.08) 28%, rgba(4, 6, 10, 0.3) 100%)',
+        }}
+      />
     </>
   )
 }

@@ -16,9 +16,9 @@ export function createParticle(
   return {
     x: Math.random() * canvasWidth,
     y: Math.random() * canvasHeight,
-    vx: (Math.random() - 0.5) * 0.3,
-    vy: (Math.random() - 0.5) * 0.3,
-    size: Math.random() * 2 + 1,
+    vx: (Math.random() - 0.5) * 0.18,
+    vy: (Math.random() - 0.5) * 0.18,
+    size: Math.random() * 1.6 + 0.8,
     opacity: Math.random() * 0.5 + 0.3,
     color: colors[Math.floor(Math.random() * colors.length)],
   }

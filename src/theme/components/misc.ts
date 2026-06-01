@@ -53,7 +53,11 @@ export const miscStyles = {
   MuiAppBar: {
     styleOverrides: {
       root: {
-        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.12)',
+        backgroundColor: 'rgba(7, 10, 18, 0.78)',
+        backdropFilter: 'blur(18px)',
+        WebkitBackdropFilter: 'blur(18px)',
+        borderBottom: '1px solid rgba(136, 179, 217, 0.12)',
+        boxShadow: '0 12px 40px rgba(0, 0, 0, 0.22)',
       },
     },
   },

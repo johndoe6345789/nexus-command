@@ -14,11 +14,11 @@ export const palette = {
   },
   background: {
     default: '#0A0B14',
-    paper: 'rgba(18, 20, 31, 0.5)',
+    paper: 'rgba(10, 14, 24, 0.78)',
   },
   text: {
     primary: '#FAFAFA',
-    secondary: '#B8BDCC',
+    secondary: '#D2D7E3',
     disabled: '#666B7D',
   },
   error: {

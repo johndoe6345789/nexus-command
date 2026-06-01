@@ -1,5 +1,7 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter'
 import { Inter, Rajdhani } from 'next/font/google'
+import { Providers } from './providers'
 import '../src/main.css'
 
 const inter = Inter({ 
@@ -21,6 +23,12 @@ export const metadata: Metadata = {
   description: 'A premium AAA-quality game menu system for a Quake 3 Arena clone',
 }
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+}
+
 export default function RootLayout({
   children,
 }: {
@@ -29,7 +37,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${rajdhani.variable}`}>
       <body>
-        {children}
+        <AppRouterCacheProvider options={{ enableCssLayer: true }}>
+          <Providers>{children}</Providers>
+        </AppRouterCacheProvider>
       </body>
     </html>
   )

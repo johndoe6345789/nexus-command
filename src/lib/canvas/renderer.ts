@@ -68,7 +68,7 @@ export class CanvasRenderer {
   }
 
   private clearCanvas(): void {
-    this.ctx.fillStyle = 'rgba(15, 15, 20, 0.1)'
+    this.ctx.fillStyle = 'rgba(7, 10, 16, 0.24)'
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height)
   }
 

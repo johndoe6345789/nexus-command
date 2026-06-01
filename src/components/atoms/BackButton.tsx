@@ -11,6 +11,9 @@ export function BackButton({ onBack }: BackButtonProps) {
       variant="outlined"
       startIcon={<ArrowBack />}
       onClick={onBack}
+      sx={{
+        mb: { xs: 2, sm: 3 },
+      }}
     >
       Back to Menu
     </Button>

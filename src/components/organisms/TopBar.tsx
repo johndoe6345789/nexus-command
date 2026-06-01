@@ -21,8 +21,9 @@ import { Notifications, EmojiEvents, Close, GitHub } from '@mui/icons-material'
 import { AlertItem } from '@/components/atoms/AlertItem'
 import { AchievementCard } from '@/components/atoms/AchievementCard'
 import { PullToRefresh } from '@/components/atoms/PullToRefresh'
+import { Logo } from '@/components/Logo'
 import { Alert, Achievement } from '@/types'
-import { ACHIEVEMENT_DEFINITIONS } from '@/constants'
+import { ACHIEVEMENT_DEFINITIONS, APP_VERSION } from '@/constants'
 import { useKV } from '@/hooks/useKV'
 
 interface TopBarProps {
@@ -34,6 +35,9 @@ interface TabPanelProps {
   value: number
   index: number
 }
+
+const mobileTopBarOffset = 'calc(72px + env(safe-area-inset-top, 0px))'
+const desktopTopBarOffset = '64px'
 
 function TabPanel({ children, value, index }: TabPanelProps) {
   return (
@@ -110,10 +114,124 @@ export function TopBar({ className }: TopBarProps) {
 
   return (
     <>
-      <AppBar position="fixed" className={className}>
-        <Toolbar sx={{ maxWidth: 1280, width: '100%', mx: 'auto', px: 3 }}>
-          <Typography variant="h6" component="h1" sx={{ flexGrow: 1 }}>
-            NEXUS COMMAND
+      <AppBar
+        position="fixed"
+        className={className}
+        sx={{
+          alignItems: 'center',
+          pt: 'env(safe-area-inset-top, 0px)',
+          pb: { xs: 0.5, sm: 0 },
+        }}
+      >
+        <Toolbar
+          sx={{
+            width: '100%',
+            boxSizing: 'border-box',
+            paddingLeft: { xs: 16, sm: 'clamp(20px, 2.4vw, 72px)' },
+            paddingRight: { xs: 16, sm: 'clamp(20px, 2.4vw, 72px)' },
+            columnGap: { xs: 4, sm: 1 },
+            minHeight: { xs: '72px', sm: '64px' },
+          }}
+        >
+          <Typography
+            variant="h6"
+            component="div"
+            role="heading"
+            aria-level={1}
+            sx={{
+              flexGrow: 1,
+              display: 'flex',
+              alignItems: 'center',
+              minHeight: '100%',
+              lineHeight: 1,
+              overflow: 'visible',
+              whiteSpace: 'nowrap',
+              paddingRight: { xs: 4, sm: 1 },
+              paddingTop: { xs: 4, sm: 2 },
+              paddingBottom: { xs: 4, sm: 2 },
+            }}
+          >
+            <Box
+              sx={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                minWidth: 0,
+                gap: { xs: 0.9, sm: 0.85 },
+              }}
+            >
+              <Box
+                sx={{
+                  display: { xs: 'none', sm: 'inline-flex' },
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: 28,
+                  height: 28,
+                  flexShrink: 0,
+                }}
+              >
+                <Logo size={28} showText={false} animate={false} />
+              </Box>
+
+              <Box
+                component="span"
+                sx={{
+                  display: 'inline-flex',
+                  alignItems: 'baseline',
+                  gap: { xs: 0.5, sm: 0.65 },
+                  minWidth: 0,
+                  fontFamily: "'Rajdhani', system-ui, sans-serif",
+                  fontWeight: 700,
+                  fontSize: { xs: '0.96rem', sm: '1.05rem' },
+                  letterSpacing: { xs: '0.05em', sm: '0.09em' },
+                  textTransform: 'uppercase',
+                  color: 'transparent',
+                  background: 'linear-gradient(90deg, oklch(0.87 0.03 235), oklch(0.69 0.12 230), oklch(0.8 0.08 40))',
+                  backgroundClip: 'text',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  textShadow: '0 1px 18px rgba(0, 0, 0, 0.16)',
+                }}
+              >
+                NEXUS
+                <Box
+                  component="span"
+                  sx={{
+                    fontSize: { xs: '0.9em', sm: '0.82em' },
+                    letterSpacing: { xs: '0.08em', sm: '0.14em' },
+                    color: 'text.secondary',
+                    WebkitTextFillColor: 'currentColor',
+                    background: 'none',
+                    textShadow: 'none',
+                  }}
+                >
+                  COMMAND
+                </Box>
+              </Box>
+            </Box>
+            <Box
+              component="span"
+              aria-label={`Top bar version ${APP_VERSION}`}
+              sx={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                ml: { xs: 1, sm: 0.85 },
+                px: { xs: 0.8, sm: 0.9 },
+                py: { xs: 0.3, sm: 0.35 },
+                borderRadius: 999,
+                border: '1px solid rgba(136, 179, 217, 0.24)',
+                backgroundColor: 'rgba(8, 12, 22, 0.76)',
+                color: 'text.secondary',
+                fontFamily: "'Rajdhani', system-ui, sans-serif",
+                fontSize: { xs: '0.7rem', sm: '0.78rem' },
+                fontWeight: 700,
+                letterSpacing: '0.08em',
+                lineHeight: 1,
+                boxShadow: '0 8px 18px rgba(0, 0, 0, 0.16)',
+              }}
+            >
+              {APP_VERSION}
+            </Box>
           </Typography>
 
           <IconButton
@@ -123,6 +241,10 @@ export function TopBar({ className }: TopBarProps) {
             rel="noopener noreferrer"
             aria-label="GitHub Actions"
             color="inherit"
+            sx={{
+              display: { xs: 'none', sm: 'inline-flex' },
+              padding: { sm: 0.55 },
+            }}
           >
             <GitHub titleAccess="GitHub Actions" />
           </IconButton>
@@ -134,6 +256,7 @@ export function TopBar({ className }: TopBarProps) {
             }}
             aria-label="Notifications"
             color="inherit"
+            sx={{ padding: { xs: 8, sm: 6 } }}
           >
             <Badge badgeContent={unreadCount > 99 ? '99+' : unreadCount} color="error">
               <Notifications titleAccess="Notifications" />
@@ -147,6 +270,7 @@ export function TopBar({ className }: TopBarProps) {
             }}
             aria-label="Achievements"
             color="inherit"
+            sx={{ padding: { xs: 8, sm: 6 } }}
           >
             <Badge badgeContent={`${unlockedAchievements}/${totalAchievements}`} color="primary">
               <EmojiEvents titleAccess="Achievements" />
@@ -163,8 +287,11 @@ export function TopBar({ className }: TopBarProps) {
           sx: {
             width: 480,
             maxWidth: '90vw',
-            mt: { xs: 7, sm: 8 },
-            height: { xs: 'calc(100vh - 56px)', sm: 'calc(100vh - 64px)' },
+            mt: { xs: mobileTopBarOffset, sm: desktopTopBarOffset },
+            height: {
+              xs: `calc(100vh - ${mobileTopBarOffset})`,
+              sm: `calc(100vh - ${desktopTopBarOffset})`,
+            },
           },
         }}
       >

@@ -14,7 +14,7 @@ export function createHexagon(
   return {
     x: Math.random() * canvasWidth,
     y: Math.random() * canvasHeight,
-    size: Math.random() * 100 + 50,
+    size: Math.random() * 60 + 50,
     rotation: Math.random() * Math.PI * 2,
     rotationSpeed: (Math.random() - 0.5) * 0.003,
     opacity: Math.random() * 0.08 + 0.04,
