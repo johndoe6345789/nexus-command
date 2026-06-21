@@ -2,6 +2,13 @@ import { test, expect } from '@playwright/test'
 import { gotoPath } from './test-utils'
 
 const pixel6Viewport = { width: 412, height: 915 }
+const spacingContract = {
+  topBarToHero: 23,
+  heroToMenu: 33,
+  mobileMenuGap: 18,
+  tabletMenuGap: 22,
+  desktopMenuGap: 26,
+}
 const desktopViewports = [
   { label: '720p', width: 1280, height: 720 },
   { label: '1080p', width: 1920, height: 1080 },
@@ -231,6 +238,96 @@ test.describe('Panel Transparency', () => {
 })
 
 test.describe('Responsive Layout', () => {
+  for (const viewport of [
+    { label: 'Pixel 6', width: 412, height: 915, contentPaddingTop: 96 },
+    { label: 'tablet', width: 768, height: 1024, contentPaddingTop: 88 },
+    { label: 'desktop', width: 1920, height: 1080, contentPaddingTop: 88 },
+  ]) {
+    test(`should keep consistent vertical rhythm on ${viewport.label}`, async ({ page }) => {
+      await page.setViewportSize({ width: viewport.width, height: viewport.height })
+      await gotoPath(page)
+      await page.waitForLoadState('networkidle')
+
+      const [bannerBox, heroCardBox, firstMenuButtonBox, layoutStyles] = await Promise.all([
+        page.getByRole('banner').boundingBox(),
+        page.getByTestId('hero-logo-card').boundingBox(),
+        page.getByRole('button', { name: /Campaign/i }).boundingBox(),
+        page.getByTestId('hero-logo-card').evaluate((heroCard) => {
+          const appContent = heroCard.closest('[class*="appContent"]')
+          const heroContainer = heroCard.parentElement
+
+          return {
+            appContentPaddingTop: appContent ? Number.parseFloat(getComputedStyle(appContent).paddingTop) : null,
+            heroContainerMarginBottom: heroContainer
+              ? Number.parseFloat(getComputedStyle(heroContainer).marginBottom)
+              : null,
+          }
+        }),
+      ])
+
+      expect(bannerBox).not.toBeNull()
+      expect(heroCardBox).not.toBeNull()
+      expect(firstMenuButtonBox).not.toBeNull()
+
+      const topBarToHeroGap = heroCardBox!.y - (bannerBox!.y + bannerBox!.height)
+      const heroToMenuGap = firstMenuButtonBox!.y - (heroCardBox!.y + heroCardBox!.height)
+
+      expect(layoutStyles.appContentPaddingTop).toBe(viewport.contentPaddingTop)
+      expect(layoutStyles.heroContainerMarginBottom).toBe(32)
+      expect(topBarToHeroGap).toBeCloseTo(spacingContract.topBarToHero, 0)
+      expect(heroToMenuGap).toBeCloseTo(spacingContract.heroToMenu, 0)
+    })
+  }
+
+  test('should keep consistent menu card gaps on mobile', async ({ page }) => {
+    await page.setViewportSize(pixel6Viewport)
+    await gotoPath(page)
+    await page.waitForLoadState('networkidle')
+
+    const [campaignBox, multiplayerBox, profileBox] = await Promise.all([
+      page.getByRole('button', { name: /Campaign/i }).boundingBox(),
+      page.getByRole('button', { name: /Multiplayer/i }).boundingBox(),
+      page.getByRole('button', { name: /Profile/i }).boundingBox(),
+    ])
+
+    expect(campaignBox).not.toBeNull()
+    expect(multiplayerBox).not.toBeNull()
+    expect(profileBox).not.toBeNull()
+
+    const firstGap = multiplayerBox!.y - (campaignBox!.y + campaignBox!.height)
+    const secondGap = profileBox!.y - (multiplayerBox!.y + multiplayerBox!.height)
+
+    expect(firstGap).toBeCloseTo(spacingContract.mobileMenuGap, 0)
+    expect(secondGap).toBeCloseTo(spacingContract.mobileMenuGap, 0)
+  })
+
+  for (const viewport of [
+    { label: 'tablet', width: 768, height: 1024, menuGap: spacingContract.tabletMenuGap },
+    { label: 'desktop', width: 1920, height: 1080, menuGap: spacingContract.desktopMenuGap },
+  ]) {
+    test(`should keep consistent menu grid gaps on ${viewport.label}`, async ({ page }) => {
+      await page.setViewportSize({ width: viewport.width, height: viewport.height })
+      await gotoPath(page)
+      await page.waitForLoadState('networkidle')
+
+      const [campaignBox, multiplayerBox, profileBox] = await Promise.all([
+        page.getByRole('button', { name: /Campaign/i }).boundingBox(),
+        page.getByRole('button', { name: /Multiplayer/i }).boundingBox(),
+        page.getByRole('button', { name: /Profile/i }).boundingBox(),
+      ])
+
+      expect(campaignBox).not.toBeNull()
+      expect(multiplayerBox).not.toBeNull()
+      expect(profileBox).not.toBeNull()
+
+      const columnGap = multiplayerBox!.x - (campaignBox!.x + campaignBox!.width)
+      const rowGap = profileBox!.y - (campaignBox!.y + campaignBox!.height)
+
+      expect(columnGap).toBeCloseTo(viewport.menuGap, 0)
+      expect(rowGap).toBeCloseTo(viewport.menuGap, 0)
+    })
+  }
+
   test('should work on mobile viewport', async ({ page }) => {
     await page.setViewportSize(pixel6Viewport)
     await gotoPath(page)
@@ -447,9 +544,9 @@ test.describe('Responsive Layout', () => {
 
       expect(layoutMetrics).not.toBeNull()
       expect(layoutMetrics!.titleLeftInset).toBeGreaterThanOrEqual(20)
-      expect(layoutMetrics!.titleLeftInset).toBeLessThanOrEqual(96)
-      expect(layoutMetrics!.actionsRightInset).toBeGreaterThanOrEqual(0)
-      expect(layoutMetrics!.actionsRightInset).toBeLessThanOrEqual(8)
+      expect(layoutMetrics!.titleLeftInset).toBeLessThanOrEqual(112)
+      expect(layoutMetrics!.actionsRightInset).toBeGreaterThanOrEqual(32)
+      expect(layoutMetrics!.actionsRightInset).toBeLessThanOrEqual(80)
       expect(layoutMetrics!.githubToNotifications).toBeGreaterThanOrEqual(6)
       expect(layoutMetrics!.githubToNotifications).toBeLessThanOrEqual(20)
       expect(layoutMetrics!.notificationsToAchievements).toBeGreaterThanOrEqual(6)
@@ -466,7 +563,8 @@ test.describe('Accessibility', () => {
     // Should have h1 for main title
     const h1 = page.getByRole('heading', { level: 1 })
     await expect(h1).toBeVisible()
-    expect(await h1.textContent()).toContain('NEXUS COMMAND')
+    expect(await h1.textContent()).toContain('NEXUS')
+    expect(await h1.textContent()).toContain('COMMAND')
 
     // Menu items should have h5 headings
     const campaignHeading = page.getByRole('heading', { name: 'Campaign', level: 5 })

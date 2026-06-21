@@ -13,8 +13,7 @@ test.describe('Route interactions', () => {
     await page.reload()
     await page.waitForLoadState('networkidle')
 
-    await expect(page).toHaveURL(/\/settings\/?$/)
-    await page.getByRole('tab', { name: /Profile/i }).click()
+    await expect(page).toHaveURL(/\/settings\/profile\/?$/)
     await expect(page.getByPlaceholder('Enter your name')).toHaveValue('Route Tester')
   })
 

@@ -1,4 +1,7 @@
 export { INITIAL_CONSOLE_OUTPUT } from './console'
-export { APP_VERSION, APP_NAME, APP_TAGLINE } from './app'
+export { APP_VERSION, DEPLOY_VERSION, APP_NAME, APP_TAGLINE } from './app'
+export { MOBILE_TOP_BAR_OFFSET, DESKTOP_TOP_BAR_OFFSET } from './layout'
 export { CONSOLE_MAX_LINES } from './limits'
 export { ACHIEVEMENT_DEFINITIONS } from './achievements'
+export { SETTINGS_TABS, getSettingsTabRoute, isSettingsTab } from './settings'
+export type { SettingsTab } from './settings'

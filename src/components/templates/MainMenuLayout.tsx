@@ -1,6 +1,7 @@
 import { Box, BoxProps, Typography } from '@mui/material'
 import { Logo } from '../Logo'
 import { ReactNode } from 'react'
+import layoutStyles from '@/styles/layout.module.scss'
 
 interface MainMenuLayoutProps extends BoxProps {
   tagline?: string
@@ -18,7 +19,6 @@ export function MainMenuLayout({
     <Box
       style={{
         paddingInline: '16px',
-        paddingTop: '36px',
         paddingBottom: '16px',
       }}
       sx={{
@@ -38,10 +38,14 @@ export function MainMenuLayout({
         }}
       >
         <Box
-          style={{ marginTop: '28px', marginBottom: '32px' }}
-          sx={{ display: 'flex', justifyContent: 'center' }}
+          className={layoutStyles.heroContainer}
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+          }}
         >
           <Box
+            data-testid="hero-logo-card"
             style={{
               paddingInline: '20px',
               paddingBlock: '20px',

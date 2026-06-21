@@ -1,0 +1,24 @@
+$mobile-top-bar-height: 72px;
+$desktop-top-bar-height: 64px;
+$main-content-top-gap: 24px;
+$hero-to-menu-gap: 32px;
+
+:global(:root) {
+  --mobile-top-bar-height: #{$mobile-top-bar-height};
+  --desktop-top-bar-height: #{$desktop-top-bar-height};
+}
+
+.appContent {
+  padding-top: $desktop-top-bar-height + $main-content-top-gap;
+  padding-bottom: 16px;
+
+  @media (max-width: 599.95px) {
+    padding-top: calc(
+      #{$mobile-top-bar-height} + env(safe-area-inset-top, 0px) + #{$main-content-top-gap}
+    );
+  }
+}
+
+.heroContainer {
+  margin-bottom: $hero-to-menu-gap;
+}

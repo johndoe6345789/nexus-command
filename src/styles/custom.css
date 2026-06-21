@@ -28,11 +28,10 @@
   --ring: oklch(0.55 0.12 230);
 
   --radius: 8px;
+
 }
 
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
   scroll-behavior: smooth;
 }

@@ -9,6 +9,13 @@ const routes = [
   { button: /Developer/i, heading: /Developer Tools/i, href: '/developer/', path: /\/developer\/?$/ },
 ] as const
 
+const settingsTabs = [
+  { tab: /Graphics/i, heading: /Graphics Quality/i, href: '/settings/graphics/', path: /\/settings\/graphics\/?$/ },
+  { tab: /Audio/i, heading: /Master Volume/i, href: '/settings/audio/', path: /\/settings\/audio\/?$/ },
+  { tab: /Controls/i, heading: /Mouse Sensitivity/i, href: '/settings/controls/', path: /\/settings\/controls\/?$/ },
+  { tab: /Profile/i, heading: /Display Name/i, href: '/settings/profile/', path: /\/settings\/profile\/?$/ },
+] as const
+
 test.describe('App Router navigation', () => {
   test.beforeEach(async ({ page }) => {
     await gotoPath(page)
@@ -76,5 +83,26 @@ test.describe('App Router navigation', () => {
     expect(seenDialog).toBe(true)
     await expect(page).toHaveURL(/\/$/)
     await expect(page.getByRole('heading', { name: /NEXUS COMMAND/i }).first()).toBeVisible()
+  })
+
+  for (const settingsTab of settingsTabs) {
+    test(`should deep link directly to ${settingsTab.href}`, async ({ page }) => {
+      await gotoPath(page, settingsTab.href)
+      await page.waitForLoadState('networkidle')
+
+      await expect(page).toHaveURL(settingsTab.path)
+      await expect(page.getByRole('tab', { name: settingsTab.tab })).toHaveAttribute('aria-selected', 'true')
+      await expect(page.getByRole('heading', { name: settingsTab.heading })).toBeVisible()
+    })
+  }
+
+  test('should route settings tab clicks', async ({ page }) => {
+    await gotoPath(page, '/settings/')
+
+    for (const settingsTab of settingsTabs.slice(1)) {
+      await page.getByRole('tab', { name: settingsTab.tab }).click()
+      await expect(page).toHaveURL(settingsTab.path)
+      await expect(page.getByRole('heading', { name: settingsTab.heading })).toBeVisible()
+    }
   })
 })

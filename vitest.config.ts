@@ -4,7 +4,8 @@ import path from 'path'
 export default defineConfig({
   test: {
     globals: true,
-    environment: 'node',
+    environment: 'jsdom',
+    setupFiles: ['./src/test/setup.ts'],
     exclude: ['**/node_modules/**', '**/dist/**', '**/tests/**/*.spec.ts', '**/.{idea,git,cache,output,temp}/**'],
     coverage: {
       provider: 'v8',

@@ -2,7 +2,7 @@ import { defineConfig, devices } from '@playwright/test'
 import { existsSync } from 'node:fs'
 
 const port = 34261
-const baseURL = `http://127.0.0.1:${port}`
+const baseURL = process.env.PLAYWRIGHT_TEST_BASE_URL ?? `http://127.0.0.1:${port}`
 const chromiumExecutablePath = '/home/linuxuser/.cache/ms-playwright/chromium-1223/chrome-linux64/chrome'
 const desktopDevice = devices['Desktop Chrome']
 const mobileDevice = {
@@ -48,10 +48,12 @@ export default defineConfig({
     },
   ],
 
-  webServer: {
-    command: `npm run build && python3 -m http.server ${port} --directory out --bind 127.0.0.1`,
-    url: baseURL,
-    reuseExistingServer: false,
-    timeout: 180000,
-  },
+  webServer: process.env.PLAYWRIGHT_TEST_BASE_URL
+    ? undefined
+    : {
+        command: `npm run build && python3 -m http.server ${port} --directory out --bind 127.0.0.1`,
+        url: baseURL,
+        reuseExistingServer: false,
+        timeout: 180000,
+      },
 })

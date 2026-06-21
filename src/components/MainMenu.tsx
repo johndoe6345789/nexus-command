@@ -10,7 +10,7 @@ export function MainMenu({ onNavigate }: MainMenuProps) {
     <MainMenuLayout
       tagline={APP_TAGLINE}
       footer={
-        <Typography variant="body2" align="center" color="text.secondary" sx={{ mt: 10 }}>
+        <Typography data-testid="version-footer" variant="body2" align="center" color="text.secondary" sx={{ mt: 10 }}>
           {APP_VERSION} • Press any key to continue
         </Typography>
       }

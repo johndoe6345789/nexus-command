@@ -30,7 +30,7 @@ import { ContentCard } from './atoms/ContentCard'
 import { PageHeader } from './atoms/PageHeader'
 import { SettingsProps } from './props'
 
-export function Settings({ onBack }: SettingsProps) {
+export function Settings({ onBack, activeTab: controlledActiveTab, onTabChange }: SettingsProps) {
   const [graphicsQuality, setGraphicsQuality] = useKV<string>('graphics-quality', 'high')
   const [masterVolume, setMasterVolume] = useKV<number>('master-volume', 80)
   const [musicVolume, setMusicVolume] = useKV<number>('music-volume', 60)
@@ -41,10 +41,12 @@ export function Settings({ onBack }: SettingsProps) {
   const [vsync, setVsync] = useKV<boolean>('vsync', false)
   const [antiAliasing, setAntiAliasing] = useKV<boolean>('anti-aliasing', true)
   const [motionBlur, setMotionBlur] = useKV<boolean>('motion-blur', false)
-  const [activeTab, setActiveTab] = useState(0)
+  const [internalActiveTab, setInternalActiveTab] = useState(0)
+  const activeTab = controlledActiveTab ?? internalActiveTab
 
   const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
-    setActiveTab(newValue)
+    setInternalActiveTab(newValue)
+    onTabChange?.(newValue)
   }
 
   return (

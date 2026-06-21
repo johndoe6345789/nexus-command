@@ -23,7 +23,12 @@ import { AchievementCard } from '@/components/atoms/AchievementCard'
 import { PullToRefresh } from '@/components/atoms/PullToRefresh'
 import { Logo } from '@/components/Logo'
 import { Alert, Achievement } from '@/types'
-import { ACHIEVEMENT_DEFINITIONS, APP_VERSION } from '@/constants'
+import {
+  ACHIEVEMENT_DEFINITIONS,
+  APP_VERSION,
+  DESKTOP_TOP_BAR_OFFSET,
+  MOBILE_TOP_BAR_OFFSET,
+} from '@/constants'
 import { useKV } from '@/hooks/useKV'
 
 interface TopBarProps {
@@ -35,9 +40,6 @@ interface TabPanelProps {
   value: number
   index: number
 }
-
-const mobileTopBarOffset = 'calc(72px + env(safe-area-inset-top, 0px))'
-const desktopTopBarOffset = '64px'
 
 function TabPanel({ children, value, index }: TabPanelProps) {
   return (
@@ -120,17 +122,16 @@ export function TopBar({ className }: TopBarProps) {
         sx={{
           alignItems: 'center',
           pt: 'env(safe-area-inset-top, 0px)',
-          pb: { xs: 0.5, sm: 0 },
         }}
       >
         <Toolbar
           sx={{
             width: '100%',
             boxSizing: 'border-box',
-            paddingLeft: { xs: 16, sm: 'clamp(20px, 2.4vw, 72px)' },
-            paddingRight: { xs: 16, sm: 'clamp(20px, 2.4vw, 72px)' },
-            columnGap: { xs: 4, sm: 1 },
-            minHeight: { xs: '72px', sm: '64px' },
+            paddingLeft: { xs: '16px', sm: 'clamp(24px, 3vw, 72px)' },
+            paddingRight: { xs: '16px', sm: 'clamp(24px, 3vw, 72px)' },
+            columnGap: { xs: '6px', sm: '12px' },
+            minHeight: { xs: 'var(--mobile-top-bar-height)', sm: 'var(--desktop-top-bar-height)' },
           }}
         >
           <Typography
@@ -146,9 +147,7 @@ export function TopBar({ className }: TopBarProps) {
               lineHeight: 1,
               overflow: 'visible',
               whiteSpace: 'nowrap',
-              paddingRight: { xs: 4, sm: 1 },
-              paddingTop: { xs: 4, sm: 2 },
-              paddingBottom: { xs: 4, sm: 2 },
+              paddingRight: { xs: '4px', sm: '12px' },
             }}
           >
             <Box
@@ -243,7 +242,7 @@ export function TopBar({ className }: TopBarProps) {
             color="inherit"
             sx={{
               display: { xs: 'none', sm: 'inline-flex' },
-              padding: { sm: 0.55 },
+              padding: { sm: '8px' },
             }}
           >
             <GitHub titleAccess="GitHub Actions" />
@@ -256,7 +255,7 @@ export function TopBar({ className }: TopBarProps) {
             }}
             aria-label="Notifications"
             color="inherit"
-            sx={{ padding: { xs: 8, sm: 6 } }}
+            sx={{ padding: { xs: '8px', sm: '10px' } }}
           >
             <Badge badgeContent={unreadCount > 99 ? '99+' : unreadCount} color="error">
               <Notifications titleAccess="Notifications" />
@@ -270,7 +269,7 @@ export function TopBar({ className }: TopBarProps) {
             }}
             aria-label="Achievements"
             color="inherit"
-            sx={{ padding: { xs: 8, sm: 6 } }}
+            sx={{ padding: { xs: '8px', sm: '10px' } }}
           >
             <Badge badgeContent={`${unlockedAchievements}/${totalAchievements}`} color="primary">
               <EmojiEvents titleAccess="Achievements" />
@@ -287,10 +286,10 @@ export function TopBar({ className }: TopBarProps) {
           sx: {
             width: 480,
             maxWidth: '90vw',
-            mt: { xs: mobileTopBarOffset, sm: desktopTopBarOffset },
+            mt: { xs: MOBILE_TOP_BAR_OFFSET, sm: DESKTOP_TOP_BAR_OFFSET },
             height: {
-              xs: `calc(100vh - ${mobileTopBarOffset})`,
-              sm: `calc(100vh - ${desktopTopBarOffset})`,
+              xs: `calc(100vh - ${MOBILE_TOP_BAR_OFFSET})`,
+              sm: `calc(100vh - ${DESKTOP_TOP_BAR_OFFSET})`,
             },
           },
         }}

@@ -16,6 +16,7 @@ interface MenuGridProps {
 export function MenuGrid({ items, onNavigate }: MenuGridProps) {
   return (
     <Box
+      data-testid="main-menu-grid"
       sx={{
         display: 'grid',
         gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, minmax(0, 1fr))' },

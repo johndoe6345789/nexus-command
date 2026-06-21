@@ -6,13 +6,13 @@ import { ErrorBoundary } from 'react-error-boundary'
 import { ErrorFallback } from '@/ErrorFallback'
 import { AnimatedBackground } from '@/components/AnimatedBackground'
 import { TopBar } from '@/components/organisms/TopBar'
+import { useDeployedVersionRefresh } from '@/hooks/use-deployed-version-refresh'
 import { useWelcomeAlerts } from '@/hooks/use-welcome-alerts'
+import layoutStyles from '@/styles/layout.module.scss'
 import { muiTheme } from '@/theme/mui-theme'
 
-const mobileTopBarOffset = 'calc(72px + env(safe-area-inset-top, 0px))'
-const desktopTopBarOffset = '64px'
-
 function AppChrome({ children }: { children: React.ReactNode }) {
+  useDeployedVersionRefresh()
   useWelcomeAlerts()
 
   return (
@@ -20,10 +20,7 @@ function AppChrome({ children }: { children: React.ReactNode }) {
       <AnimatedBackground />
       <TopBar />
       <Box
-        style={{
-          paddingTop: '96px',
-          paddingBottom: '16px',
-        }}
+        className={layoutStyles.appContent}
         sx={{
           position: 'relative',
           zIndex: 10,
