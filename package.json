@@ -42,7 +42,7 @@
         "recharts": "^3.6.0",
         "sass": "^1.97.2",
         "three": "^0.182.0",
-        "uuid": "^14.0.0",
+        "uuid": "^14.0.3",
         "zod": "^4.3.5"
     },
     "devDependencies": {
@@ -60,7 +60,7 @@
         "jsdom": "^29.1.1",
         "postcss": "^8.5.30",
         "typescript": "~5.9.0",
-        "vitest": "^4.1.11"
+        "vitest": "^5.0.4"
     },
     "workspaces": {
         "packages": [
