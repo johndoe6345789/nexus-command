@@ -24,7 +24,7 @@
         "@emotion/styled": "^11.14.1",
         "@hookform/resolvers": "^5.2.2",
         "@mui/icons-material": "^7.3.7",
-        "@mui/material": "^7.3.7",
+        "@mui/material": "^9.5.0",
         "@mui/material-nextjs": "^7.3.7",
         "@octokit/core": "^7.0.6",
         "@phosphor-icons/react": "^2.1.10",
